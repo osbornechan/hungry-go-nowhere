@@ -31,4 +31,3 @@ An app to keep track of current food inventory, arriving food items as well as d
 <img src="wireframe.png" width="500" />
 
 ## ERD
-<img src="erd.png" width="500" />
