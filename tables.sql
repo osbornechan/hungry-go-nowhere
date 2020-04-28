@@ -1,7 +1,7 @@
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 name TEXT,
-password VARCHAR(15)
+password TEXT
 );
 
 CREATE TABLE products (
@@ -9,9 +9,11 @@ id SERIAL PRIMARY KEY,
 name TEXT,
 brand TEXT,
 category TEXT,
-expiry DATE,
+expiry TEXT,
 img TEXT,
-qty INTEGER
+current_qty INTEGER,
+delivery_qty INTEGER,
+wishlist_qty INTEGER
 );
 
 CREATE TABLE supermarkets (
@@ -25,7 +27,7 @@ user_id INTEGER,
 product_name TEXT,
 brand TEXT,
 category TEXT,
-expiry DATE,
+expiry TEXT,
 img TEXT,
 qty INTEGER
 );

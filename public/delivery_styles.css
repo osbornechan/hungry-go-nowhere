@@ -1,0 +1,60 @@
+.nav-bar-col {
+	border: 1px solid white;
+	border-radius: 20px 20px 0 0;
+	background-color: rgb(40,40,40);
+	color: white;
+	padding: 20px;
+}
+
+.inventory-tab {
+	background-color: #94d1fc;
+}
+
+.delivery-tab {
+	background-color: #fac27e;
+}
+
+.wishlist-tab {
+	background-color: #f5827c;
+}
+
+.product-row {
+	border: 2px solid #fac27e;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 15px 20px 15px 5px;
+	width: 51%;
+	background-color: white;
+}
+
+.product-col-row {
+	margin: -10px;
+}
+
+.btn {
+	margin-top: 10px;
+}
+
+.btn-col {
+	margin-left: -13px;
+}
+
+img {
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+}
+
+.qty-box {
+	background-color: #fac27e;
+	border-radius: 5px;
+	padding: 20px 40px;
+	color: white;
+}
+
+.add-button {
+	background-color: rgb(40,40,40);
+	border: 1px solid white;
+	color: white;
+	padding: 10px 0 5px 0;
+}

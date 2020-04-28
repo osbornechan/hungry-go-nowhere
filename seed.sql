@@ -4,8 +4,8 @@ INSERT INTO users (name, password) VALUES ('Bob', 'b3a8e0e1f9ab1bfe3a36f231f676f
 
 
 /* SEED DATA FOR PRODUCTS */
-INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Eggs','Chews','Dairy & Eggs','2020-06-10','https://s3-ap-southeast-1.amazonaws.com/investingnote-production-webbucket/attachments/071a4ec43c5182223d085184dc3aeaa912d87e12.jpg?1565931532',12);
-INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Milk','Meiji','Dairy & Eggs','2020-06-09','https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRAgmzjqwYuZ20daIWVe3LuMQf-Dhcdn-yuHJAiQpuJh3nyj4sr&usqp=CAU',2);
+INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Eggs','Chews','Dairy & Eggs','2020-06-10','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/283672_XL1.jpg',12);
+INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Milk','Meiji','Dairy & Eggs','2020-06-09','https://www.directwholesale.com.sg/pub/media/catalog/product/cache/image/1000x1320/e9c3970ab036de70892d86c6d221abfe/m/g/mg5829_1414555165382.jpg',2);
 INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Pork Collar','Porkee','Meat & Seafood','2020-10-20','https://dq2y5jcmc9a4c.cloudfront.net/images/product/82/13012974_XL1.jpg?t=1568188262',4);
 INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Milo Milk','Nestle','Drinks','2021-12-15','https://cf.shopee.sg/file/e3c49f6e38050a282478f00c0db1e14e',24);
 INSERT INTO products (name, brand, category, expiry, img, qty) VALUES ('Calbee Hot & Spicy','Calbee','Snacks','2021-11-06','https://cf.shopee.sg/file/65824719999bedbdbac34ef4ae14e119',2);
