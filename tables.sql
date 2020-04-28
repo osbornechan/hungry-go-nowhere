@@ -39,12 +39,6 @@ user_id INTEGER,
 product_id INTEGER
 );
 
--- CREATE TABLE user_supermarket (
--- id SERIAL PRIMARY KEY,
--- user_id INTEGER,
--- supermarket_id INTEGER
--- );
-
 CREATE TABLE product_supermarket (
 id SERIAL PRIMARY KEY,
 product_id INTEGER,

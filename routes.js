@@ -18,4 +18,6 @@ module.exports = (app, allModels) => {
 
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
+
+    app.get('/wishlist/new', allControllers.newWishlist)
 };

@@ -1,0 +1,23 @@
+.nav-bar-col {
+	border: 1px solid white;
+	border-radius: 20px 20px 0 0;
+	background-color: rgb(40,40,40);
+	color: white;
+	padding: 20px;
+}
+
+.inventory-tab {
+	background-color: grey;
+}
+
+.delivery-tab {
+	background-color: grey;
+}
+
+.wishlist-tab {
+	background-color: #f5827c;
+}
+
+p {
+	font-size: 20px;
+}

@@ -5,10 +5,12 @@ const sha256 = require('js-sha256');
     //       CONTROLLER LOGIC
     // ==============================
 
+    // ---- MAIN PAGE -----
     let mainControllerCallback = (request, response) => {
         response.render('main');
     }
 
+    // ---- INVENTORY PAGE -----
     let inventoryControllerCallback = (request, response) => {
         db.model.getAllCurrentProducts((error, allProducts) => {
             const data = {
@@ -27,6 +29,7 @@ const sha256 = require('js-sha256');
         })
     }
 
+    // ---- WISHLIST PAGE -----
     let wishlistControllerCallback = (request, response) => {
         db.model.getAllWishlistProducts((error, allWishlistProducts) => {
             const data = {
@@ -36,6 +39,9 @@ const sha256 = require('js-sha256');
         })
     }
 
+    let newWishlistControllerCallback = (request, response) => {
+        response.render('new_wishlist');
+    }
 
     /**
     * ===========================================
@@ -43,12 +49,11 @@ const sha256 = require('js-sha256');
     * ===========================================
     */
 
-
-
     return {
     main: mainControllerCallback,
     inventory: inventoryControllerCallback,
     delivery: deliveryControllerCallback,
-    wishlist: wishlistControllerCallback
+    wishlist: wishlistControllerCallback,
+    newWishlist: newWishlistControllerCallback
     };
 }
