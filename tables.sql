@@ -35,7 +35,7 @@ user_id INTEGER
 );
 
 CREATE TABLE wishlists (
-id SERIAL PRIMARY KEY,
+wishlist_id SERIAL PRIMARY KEY,
 user_id INTEGER
 );
 

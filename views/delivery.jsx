@@ -3,26 +3,26 @@ const React = require("react");
 class Delivery extends React.Component {
   render() {
 
-    const allProductsBySupermarketList = this.props.allProductsBySupermarket.map(product => {
+    const allDeliveryProductsList = this.props.allDeliveryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
-                        <img src={product.img} alt={product.name}/>
+                        <img src={product.img} alt={product.product_name}/>
                     </div>
                     <div className='product-col col-6'>
                         <div className='product-col-row row'>
                             <p>Supermarket: {product.supermarket_name}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Product: <strong>{product.name}</strong></p>
+                            <p>Delivery Date: {product.delivery_date}</p>
+                        </div>
+                        <div className='product-col-row row'>
+                            <p>Product: <strong>{product.product_name}</strong></p>
                         </div>
                         <div className='product-col-row row'>
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Category: {product.category}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Expiry Date: {product.expiry}</p>
+                            <p>Category: {product.category_name}</p>
                         </div>
                         <div className='product-col-row row'>
                             <div className='btn-col col-4'>
@@ -33,13 +33,13 @@ class Delivery extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='product-col col-2'>
+                    <div className='product-col col-2 justify-content-end'>
                         <div className='qty-box'>
                             <div className='product-col-row row justify-content-center'>
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1>{product.qty}</h1>
+                                <h1>{product.delivery_qty}</h1>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ class Delivery extends React.Component {
                     <h4><a href='/delivery/new' className='text-white text-decoration-none'>Add New Delivery</a></h4>
                 </div>
                 <div className='row justify-content-between'>
-                    {allProductsBySupermarketList}
+                    {allDeliveryProductsList}
                 </div>
             </div>
             <br/>

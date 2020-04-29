@@ -3,23 +3,25 @@ const React = require("react");
 class Inventory extends React.Component {
   render() {
 
-    const allProductsList = this.props.allProducts.map(product => {
+    //console.log(this.props)
+
+    const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
-                        <img src={product.img} alt={product.name}/>
+                        <img src={product.img} alt={product.product_name}/>
                     </div>
                     <div className='product-col col-6'>
                         <div className='product-col-row row'>
-                            <p>Product: <strong>{product.name}</strong></p>
+                            <p>Product: <strong>{product.product_name}</strong></p>
                         </div>
                         <div className='product-col-row row'>
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Category: {product.category}</p>
+                            <p>Category: {product.category_name}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Expiry Date: {product.expiry}</p>
+                            <p>Expiry Date: {product.expiry_date}</p>
                         </div>
                         <div className='product-col-row row'>
                             <div className='btn-col col-4'>
@@ -36,7 +38,7 @@ class Inventory extends React.Component {
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1>{product.qty}</h1>
+                                <h1>{product.inventory_qty}</h1>
                             </div>
                         </div>
                     </div>
@@ -66,7 +68,7 @@ class Inventory extends React.Component {
                     <h4><a href='/inventory/new' className='text-white text-decoration-none'>Add New Product</a></h4>
                 </div>
                 <div className='row justify-content-between'>
-                    {allProductsList}
+                    {allInventoryProductsList}
                 </div>
             </div>
             <br/>

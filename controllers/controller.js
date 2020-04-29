@@ -10,7 +10,7 @@ const sha256 = require('js-sha256');
         response.render('main');
     }
 
-    // ==== Login Page ====
+    // ---- LOGIN PAGE -----
     let loginControllerCallback = (request, response) => {
         response.render('login');
     }
@@ -49,31 +49,53 @@ const sha256 = require('js-sha256');
 
     // ---- INVENTORY PAGE -----
     let inventoryControllerCallback = (request, response) => {
-        db.model.getAllCurrentProducts((error, allProducts) => {
-            const data = {
-                allProducts: allProducts
+        let userId = request.cookies['user_id'];
+
+        const whenModelIsDone = (err, allInventoryProducts) => {
+            if (err) {
+                console.log('Query error', err);
+            } else {
+                const data = {
+                    allInventoryProducts: allInventoryProducts
+                }
+                response.render('inventory', data);
             }
-            response.render('inventory', data);
-        })
+        }
+        db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
+
     let deliveryControllerCallback = (request, response) => {
-        db.model.getAllDeliveryProducts((error, allProductsBySupermarket) => {
-            const data = {
-                allProductsBySupermarket: allProductsBySupermarket
+        let userId = request.cookies['user_id'];
+
+        const whenModelIsDone = (err, allDeliveryProducts) => {
+            if (err) {
+                console.log('Query error', err);
+            } else {
+                const data = {
+                    allDeliveryProducts: allDeliveryProducts
+                }
+                response.render('delivery', data);
             }
-            response.render('delivery', data);
-        })
+        }
+        db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
     // ---- WISHLIST PAGE -----
     let wishlistControllerCallback = (request, response) => {
-        db.model.getAllWishlistProducts((error, allWishlistProducts) => {
-            const data = {
-                allWishlistProducts: allWishlistProducts
+        let userId = request.cookies['user_id'];
+
+        const whenModelIsDone = (err, allWishlistProducts) => {
+            if (err) {
+                console.log('Query error', err);
+            } else {
+                const data = {
+                    allWishlistProducts: allWishlistProducts
+                }
+                response.render('wishlist', data);
             }
-            response.render('wishlist', data);
-        })
+        }
+        db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
     let newWishlistControllerCallback = (request, response) => {

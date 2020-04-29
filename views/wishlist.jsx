@@ -3,8 +3,6 @@ const React = require("react");
 class Wishlist extends React.Component {
   render() {
 
-    console.log(this.props.allWishlistProducts)
-
     const allWishlistProductsList = this.props.allWishlistProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
@@ -18,10 +16,7 @@ class Wishlist extends React.Component {
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Category: {product.category}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Expiry Date: {product.expiry}</p>
+                            <p>Category: {product.category_name}</p>
                         </div>
                         <div className='product-col-row row'>
                             <div className='btn-col col-4'>
@@ -38,7 +33,7 @@ class Wishlist extends React.Component {
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1>{product.qty}</h1>
+                                <h1>{product.wishlist_qty}</h1>
                             </div>
                         </div>
                     </div>
