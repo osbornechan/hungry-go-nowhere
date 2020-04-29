@@ -25,10 +25,10 @@ An app to keep track of current food inventory, arriving food items as well as d
 5. As a stay-home meal preparer, I want to create a wishlist of food items that I would need to buy, so that I can make my online orders quickly when delivery slots (which are limited) becomes available.
 
 ## User Flow
-<img src="user_flow.png" width="500" />
+<img src="./diagram/user_flow.png" width="500" />
 
 ## Wireframing
-<img src="wireframe.png" width="500" />
+<img src="./diagram/wireframe.png" width="500" />
 
 ## ERD
-<img src="erd.png" width="500" />
+<img src="./diagram/erd2.png" width="500" />
