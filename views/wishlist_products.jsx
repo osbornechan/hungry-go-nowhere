@@ -6,17 +6,17 @@ class Wishlist_Products extends React.Component {
     const allProductsList = this.props.allProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
-                        <img src={product.img} alt={product.product_name} name='img' value={product.img}/>
+                        <img src={product.img} alt={product.product_name}/>
                     </div>
                     <div className='product-col col-6 product-text'>
                         <div className='product-col-row row'>
-                            <p name='product_name' value={product.product_name}>Product: <strong>{product.product_name}</strong></p>
+                            <p>Product: <strong>{product.product_name}</strong></p>
                         </div>
                         <div className='product-col-row row'>
-                            <p name='brand' value={product.brand}>Brand: {product.brand}</p>
+                            <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p name='category' value={product.category_name}>Category: {product.category_name}</p>
+                            <p>Category: {product.category_name}</p>
                         </div>
                     </div>
                     <div className='product-col col-2'>
@@ -25,7 +25,7 @@ class Wishlist_Products extends React.Component {
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1><input type='number' name='qty' className='input-qty text-center'/></h1>
+                                <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
                             </div>
                         </div>
                     </div>
@@ -51,23 +51,23 @@ class Wishlist_Products extends React.Component {
                         <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
                     </div>
                 </div>
-                <form method='POST' action='/products'>
+                <form method='POST' action='/wishlist'>
                     <div className='instructions row justify-content-center'>
                         <div className='col-5'>
                             <div className='row justify-content-center'>
-                                <h4>Add from Existing List below</h4>
+                                <h4>Add from past products below</h4>
+                                <p>Enter product quantities below.</p>
                             </div>
-                            <br/>
                             <div className='row justify-content-center'>
-                                <input type='submit' value='Add to List' className='btn btn-info'/>
+                                <input type='submit' value='Add Past Product' className='btn btn-info'/>
                             </div>
                         </div>
-                        <div className='col-2 d-flex justify-content-center align-center'>
-                            <h4>OR</h4>
+                        <div className='col-2 d-flex justify-content-center'>
+                            <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back to Previous</a></button>
                         </div>
                         <div className='col-5'>
                             <div className='row justify-content-center'>
-                                <h4>Add a New Product</h4>
+                                <h4>Add a new product</h4>
                             </div>
                             <br/>
                             <div className='row justify-content-center'>

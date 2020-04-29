@@ -54,7 +54,12 @@ class New_Wishlist_Product extends React.Component {
                         </div>
                         <br/>
                         <div className='row justify-content-center'>
-                            <input type='submit' className='btn btn-primary' value='Submit'/>
+                            <div clasName='col-6'>
+                                <input type='submit' className='btn btn-primary' value='Submit'/>
+                            </div>
+                            <div  clasName='col-6'>
+                                <button className='btn back-btn'><a href='/wishlist/products' className='text-white text-decoration-none'>Back to Previous</a></button>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -7,11 +7,11 @@
 }
 
 .inventory-tab {
-	background-color: grey;
+	background-color: darkgrey;
 }
 
 .delivery-tab {
-	background-color: grey;
+	background-color: darkgrey;
 }
 
 .wishlist-tab {
@@ -33,4 +33,9 @@ input {
 	border-radius: 5px;
 	padding: 40px 20px;
 	margin: -10px;
+}
+
+.back-btn {
+	background-color: #484848;
+	margin-left: 20px;
 }

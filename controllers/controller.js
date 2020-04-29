@@ -110,15 +110,15 @@ const sha256 = require('js-sha256');
         })
     }
 
-    let insertWishlistControllerCallback = (request, response) => {
+    let insertNewProductToWishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
         let wishlistProduct = request.body;
         let wishlistQty = wishlistProduct.qty;
         let category = wishlistProduct.category;
 
-        const whenModelIsDone = (err, newWishlistProduct) => {
-            if (err) {
-                console.log('Query error', err);
+        const whenModelIsDone = (error, newWishlistProduct) => {
+            if (error) {
+                console.log('Query error', error);
             } else {
                 response.redirect('wishlist');
             }
@@ -127,13 +127,47 @@ const sha256 = require('js-sha256');
     }
 
     // ----- Add from EXISTING list of products to Wishlist -------
-    let existingProductsControllerCallback = (request, response) => {
+    let existingWishlistProductsControllerCallback = (request, response) => {
         db.model.getAllProducts((error, allProducts) => {
             const data = {
                 allProducts: allProducts
             }
             response.render('wishlist_products', data);
         })
+    }
+
+    let insertExistingProductToWishlistControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let productIdList = Object.entries(request.body);
+
+        let productIdToAdd = [];
+        for (const i of productIdList) {
+            if (i[1] !== '') {
+                productIdToAdd.push(i)
+            }
+        }
+
+        const whenModelIsDone = (error, addExistingProducts) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('wishlist');
+            }
+        }
+        db.model.insertExistingWishlistProduct(userId, productIdToAdd, whenModelIsDone);
+    }
+
+    let deleteWishlistProductControllerCallback = (request, response) => {
+        let productIdToDelete = Object.keys(request.body)[0];
+
+        const whenModelIsDone = (error, deleteWishlistProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('wishlist');
+            }
+        }
+        db.model.deleteFromWishlistProduct(productIdToDelete, whenModelIsDone);
     }
 
     /**
@@ -149,8 +183,10 @@ const sha256 = require('js-sha256');
     inventory: inventoryControllerCallback,
     delivery: deliveryControllerCallback,
     wishlist: wishlistControllerCallback,
-    existingProducts: existingProductsControllerCallback,
+    existingWishlistProducts: existingWishlistProductsControllerCallback,
+    insertExistingProductToWishlist: insertExistingProductToWishlistControllerCallback,
     newWishlist: newWishlistControllerCallback,
-    insertWishlist: insertWishlistControllerCallback
+    insertNewProductToWishlist: insertNewProductToWishlistControllerCallback,
+    deleteWishlistProduct: deleteWishlistProductControllerCallback
     };
 }

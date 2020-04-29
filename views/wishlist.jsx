@@ -23,7 +23,9 @@ class Wishlist extends React.Component {
                                 <button className='btn btn-info'><a href='#' className='text-white text-decoration-none'>Edit</a></button>
                             </div>
                             <div className='btn-col col-3'>
-                                <button className='btn btn-danger'><a href='#' className='text-white text-decoration-none'>Delete</a></button>
+                                <form method='POST' action='/wishlist?_method=delete'>
+                                    <input type='submit' name={product.product_id} value='Delete' className='btn btn-danger'/>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -60,7 +62,7 @@ class Wishlist extends React.Component {
                     </div>
                 </div>
                 <div className='add-button row justify-content-center'>
-                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add New Wishlist</a></h4>
+                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add New Product to Wishlist</a></h4>
                 </div>
                 <div className='row justify-content-between'>
                     {allWishlistProductsList}

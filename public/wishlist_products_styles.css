@@ -7,11 +7,11 @@
 }
 
 .inventory-tab {
-	background-color: grey;
+	background-color: darkgrey;
 }
 
 .delivery-tab {
-	background-color: grey;
+	background-color: darkgrey;
 }
 
 .wishlist-tab {
@@ -19,7 +19,7 @@
 }
 
 .product-row {
-	border: 2px solid grey;
+	border: 2px solid darkgrey;
 	border-radius: 5px;
 	margin: 5px;
 	padding: 15px 20px 15px 5px;
@@ -53,9 +53,16 @@ img {
 	font-size: 30px;
 }
 
+.back-btn {
+	background-color: #484848;
+	height: 40px;
+	margin-top: 59px;
+	margin-left: 20px;
+}
+
 .instructions {
 	border: 15px double #f5827c;
 	border-radius: 5px;
-	padding: 30px 20px;
+	padding: 20px 20px;
 	margin
 }
