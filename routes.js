@@ -10,6 +10,10 @@ module.exports = (app, allModels) => {
     // ==== Main Page ====
     app.get('/', allControllers.main);
 
+    // ==== Login Page ====
+    app.get('/login/', allControllers.login);
+    app.post('/inventory/', allControllers.verifyLogin);
+
     // ==== Inventory Page ====
     app.get('/inventory/', allControllers.inventory);
 

@@ -19,7 +19,7 @@ class Main extends React.Component {
                 <p className='text-center'>#sgunited #stayhomesg #ccb</p>
                 <br/>
                 <div className='row justify-content-center'>
-                    <button className='btn btn-primary'><a href='/home/' className='text-white text-decoration-none'>Login</a></button>
+                    <button className='btn btn-primary'><a href='/login/' className='text-white text-decoration-none'>Login</a></button>
                 </div>
                 <br/>
                 <div className='row justify-content-center'>
