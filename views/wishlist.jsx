@@ -8,7 +8,7 @@ class Wishlist extends React.Component {
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
                     </div>
-                    <div className='product-col col-6'>
+                    <div className='product-col col-6 product-text'>
                         <div className='product-col-row row'>
                             <p>Product: <strong>{product.product_name}</strong></p>
                         </div>
@@ -60,7 +60,7 @@ class Wishlist extends React.Component {
                     </div>
                 </div>
                 <div className='add-button row justify-content-center'>
-                    <h4><a href='/wishlist/new' className='text-white text-decoration-none'>Add New Wishlist</a></h4>
+                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add New Wishlist</a></h4>
                 </div>
                 <div className='row justify-content-between'>
                     {allWishlistProductsList}

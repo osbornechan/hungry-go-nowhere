@@ -23,5 +23,10 @@ module.exports = (app, allModels) => {
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
 
-    app.get('/wishlist/new', allControllers.newWishlist)
+    //Check if product is existing or new
+    app.get('/wishlist/products/', allControllers.existingProducts);
+    //app.post('/products', allControllers.updateProducts);
+
+    app.get('/wishlist/products/new', allControllers.newWishlist);
+    app.post('/wishlist', allControllers.insertWishlist);
 };

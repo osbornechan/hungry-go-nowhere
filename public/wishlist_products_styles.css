@@ -1,0 +1,61 @@
+.nav-bar-col {
+	border: 1px solid white;
+	border-radius: 20px 20px 0 0;
+	background-color: rgb(40,40,40);
+	color: white;
+	padding: 20px;
+}
+
+.inventory-tab {
+	background-color: grey;
+}
+
+.delivery-tab {
+	background-color: grey;
+}
+
+.wishlist-tab {
+	background-color: #f5827c;
+}
+
+.product-row {
+	border: 2px solid grey;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 15px 20px 15px 5px;
+	width: 51%;
+	background-color: white;
+}
+
+.product-text {
+	margin-top: 25px;
+}
+
+.product-col-row {
+	margin: -10px;
+}
+
+img {
+	width: 120px;
+	height: 120px;
+	border-radius: 10px;
+}
+
+.input-qty {
+	border: 1px solid grey;
+	border-radius: 5px;
+	width: 80px;
+	height: 80px;
+	padding-left: 10px;
+}
+
+.btn {
+	font-size: 30px;
+}
+
+.instructions {
+	border: 15px double #f5827c;
+	border-radius: 5px;
+	padding: 30px 20px;
+	margin
+}

@@ -5,18 +5,17 @@ const sha256 = require('js-sha256');
     //       CONTROLLER LOGIC
     // ==============================
 
-    // ---- MAIN PAGE -----
+    // ======= MAIN PAGE ======
     let mainControllerCallback = (request, response) => {
         response.render('main');
     }
 
-    // ---- LOGIN PAGE -----
+    // ====== LOGIN PAGE ======
     let loginControllerCallback = (request, response) => {
         response.render('login');
     }
 
     let verifyLoginControllerCallback = (request, response) => {
-        console.log(request.body);
         const hash = sha256(request.body.password)
 
         db.model.getAllUsers((error, allUsers) => {
@@ -47,7 +46,7 @@ const sha256 = require('js-sha256');
         })
     }
 
-    // ---- INVENTORY PAGE -----
+    // ====== INVENTORY PAGE ======
     let inventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -64,7 +63,7 @@ const sha256 = require('js-sha256');
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
-
+    // ======= DELIVERY PAGE =======
     let deliveryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -81,7 +80,7 @@ const sha256 = require('js-sha256');
         db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
-    // ---- WISHLIST PAGE -----
+    // ====== WISHLIST PAGE ======
     let wishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -98,8 +97,43 @@ const sha256 = require('js-sha256');
         db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
+    // ----- Add NEW product to Wishlist -------
     let newWishlistControllerCallback = (request, response) => {
-        response.render('new_wishlist');
+        let userId = request.cookies['user_id'];
+
+        db.model.getAllCategories((error, allCategories) => {
+            const data = {
+                allCategories: allCategories,
+                userId: userId
+            }
+            response.render('new_wishlist_product', data);
+        })
+    }
+
+    let insertWishlistControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let wishlistProduct = request.body;
+        let wishlistQty = wishlistProduct.qty;
+        let category = wishlistProduct.category;
+
+        const whenModelIsDone = (err, newWishlistProduct) => {
+            if (err) {
+                console.log('Query error', err);
+            } else {
+                response.redirect('wishlist');
+            }
+        }
+        db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
+    }
+
+    // ----- Add from EXISTING list of products to Wishlist -------
+    let existingProductsControllerCallback = (request, response) => {
+        db.model.getAllProducts((error, allProducts) => {
+            const data = {
+                allProducts: allProducts
+            }
+            response.render('wishlist_products', data);
+        })
     }
 
     /**
@@ -115,6 +149,8 @@ const sha256 = require('js-sha256');
     inventory: inventoryControllerCallback,
     delivery: deliveryControllerCallback,
     wishlist: wishlistControllerCallback,
-    newWishlist: newWishlistControllerCallback
+    existingProducts: existingProductsControllerCallback,
+    newWishlist: newWishlistControllerCallback,
+    insertWishlist: insertWishlistControllerCallback
     };
 }

@@ -1,12 +1,16 @@
 const React = require("react");
 
-class New_Wishlist extends React.Component {
+class New_Wishlist_Product extends React.Component {
   render() {
+
+    let allCategoriesList = this.props.allCategories.map(category => {
+        return (<option>{category.category_name}</option>);
+    })
 
     return (
       <html>
         <head>
-            <link rel='stylesheet' href='../new_wishlist_styles.css'/>
+            <link rel='stylesheet' href='/new_wishlist_product_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -25,7 +29,7 @@ class New_Wishlist extends React.Component {
                 <br/>
                 <div className='form-container'>
                     <div className='row justify-content-center'>
-                        <h3>New Wishlist</h3>
+                        <h3>New Product to Wishlist</h3>
                     </div>
                     <br/>
                     <form method='POST' action='/wishlist'>
@@ -36,17 +40,19 @@ class New_Wishlist extends React.Component {
                             <p>Brand: <input type='text' name='brand' placeholder='Enter brand name'/></p>
                         </div>
                         <div className='row justify-content-center'>
-                            <p>Category: <input type='text' name='category' placeholder='Change to dropdown'/></p>
-                        </div>
-                        <div className='row justify-content-center'>
-                            <p>Expiry: <input type='text' name='expiry' placeholder='YYYY-MM-DD'/></p>
-                        </div>
-                        <div className='row justify-content-center'>
                             <p>Image URL: <input type='text' name='img' placeholder='Enter image URL'/></p>
                         </div>
                         <div className='row justify-content-center'>
                             <p>Quantity: <input type='number' name='qty' placeholder='Enter quantity'/></p>
                         </div>
+                        <div className='row justify-content-center'>
+                            <p>Category: <select name='category'>
+                                            <option></option>
+                                            {allCategoriesList}
+                                         </select>
+                            </p>
+                        </div>
+                        <br/>
                         <div className='row justify-content-center'>
                             <input type='submit' className='btn btn-primary' value='Submit'/>
                         </div>
@@ -59,4 +65,4 @@ class New_Wishlist extends React.Component {
   }
 }
 
-module.exports = New_Wishlist;
+module.exports = New_Wishlist_Product;

@@ -69,11 +69,92 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    let insertNewWishlistProduct = (userId, wishlistProduct, wishlistQty, category, callback) => {
+        //Query category_id of new product
+        let query = "SELECT category_id FROM categories WHERE category_name='" + category + "'";
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                //Add to new product to products table
+                let newProductCategoryId = parseInt(result.rows[0].category_id);
+
+                query = 'INSERT INTO products (product_name, brand, category_id, img) VALUES ($1, $2, $3, $4)';
+                let values = [wishlistProduct.product_name, wishlistProduct.brand, newProductCategoryId, wishlistProduct.img];
+
+                dbPoolInstance.query(query, values, (error, result) => {
+                    if (error) {
+                        callback(error, null);
+                    } else {
+                        //Query product_id of newly added product
+                        query = "SELECT product_id FROM products WHERE product_name='" + wishlistProduct.product_name + "'";
+
+                        dbPoolInstance.query(query, (error, result) => {
+                            if (error) {
+                                callback(error, null);
+                            } else {
+                                //Add to wishlist_products relationship table
+                                let newProductId = parseInt(result.rows[0].product_id);
+                                query = 'INSERT INTO wishlists_products (wishlist_id, product_id, wishlist_qty) VALUES ($1, $2, $3)';
+                                values = [userId, newProductId, wishlistQty];
+
+                                dbPoolInstance.query(query, values, (error, result) => {
+                                    if (error) {
+                                        callback(error, null);
+                                    } else {
+                                        console.log('Added new product to wishlist!');
+                                        callback(null, null)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+    let getAllCategories = (callback) => {
+        let query = 'SELECT * FROM categories';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    callback(null, result.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
+    let getAllProducts = (callback) => {
+        let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id)';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    callback(null, result.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
 
     return {
         getAllUsers,
         getAllInventoryProducts,
         getAllDeliveryProducts,
         getAllWishlistProducts,
+        insertNewWishlistProduct,
+        getAllCategories,
+        getAllProducts,
     };
 };
