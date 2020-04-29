@@ -1,46 +1,64 @@
 CREATE TABLE users (
-id SERIAL PRIMARY KEY,
-name TEXT,
+user_id SERIAL PRIMARY KEY,
+user_name TEXT,
 password TEXT
 );
 
 CREATE TABLE products (
-id SERIAL PRIMARY KEY,
-name TEXT,
+product_id SERIAL PRIMARY KEY,
+product_name TEXT,
 brand TEXT,
-category TEXT,
-expiry TEXT,
 img TEXT,
-current_qty INTEGER,
-delivery_qty INTEGER,
-wishlist_qty INTEGER
+category_id INTEGER
+);
+
+CREATE TABLE categories (
+category_id SERIAL PRIMARY KEY,
+category_name TEXT
 );
 
 CREATE TABLE supermarkets (
-id SERIAL PRIMARY KEY,
-name TEXT
+supermarket_id SERIAL PRIMARY KEY,
+supermarket_name TEXT
 );
 
-CREATE TABLE wishlist (
-id SERIAL PRIMARY KEY,
+CREATE TABLE deliveries (
+delivery_id SERIAL PRIMARY KEY,
 user_id INTEGER,
-product_name TEXT,
-brand TEXT,
-category TEXT,
-expiry TEXT,
-img TEXT,
-qty INTEGER
+supermarket_id INTEGER,
+delivery_date TEXT
 );
+
+CREATE TABLE inventories (
+inventory_id SERIAL PRIMARY KEY,
+user_id INTEGER
+);
+
+CREATE TABLE wishlists (
+id SERIAL PRIMARY KEY,
+user_id INTEGER
+);
+
 
 /* RELATIONSHIP TABLES */
-CREATE TABLE user_product (
-id SERIAL PRIMARY KEY,
-user_id INTEGER,
-product_id INTEGER
+CREATE TABLE deliveries_products (
+delivery_product_id SERIAL PRIMARY KEY,
+delivery_id INTEGER,
+product_id INTEGER,
+delivery_qty INTEGER
 );
 
-CREATE TABLE product_supermarket (
-id SERIAL PRIMARY KEY,
+CREATE TABLE inventories_products (
+inventory_product_id SERIAL PRIMARY KEY,
+inventory_id INTEGER,
 product_id INTEGER,
-supermarket_id INTEGER
+inventory_qty INTEGER,
+expiry_date TEXT
+);
+
+CREATE TABLE wishlists_products (
+wishlist_product_id SERIAL PRIMARY KEY,
+wishlist_id INTEGER,
+product_id INTEGER,
+wishlist_qty INTEGER
 );
