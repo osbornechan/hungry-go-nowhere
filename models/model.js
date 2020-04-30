@@ -116,9 +116,8 @@ module.exports = (dbPoolInstance) => {
     }
 
     let insertExistingWishlistProduct = (userId, productIdToAdd, callback) => {
-        //
+        //e.g. productIdQty = [[1,6],[2,4]]
         productIdToAdd.forEach((productIdQty, index) => {
-            //e.g. productIdQty = [[1,6],[2.4]]
             let query = 'INSERT INTO wishlists_products (wishlist_id, product_id, wishlist_qty) VALUES ($1, $2, $3)';
             let values = [userId, productIdQty[0], productIdQty[1]];
 
@@ -131,6 +130,22 @@ module.exports = (dbPoolInstance) => {
                     }
                 }
             })
+        })
+    }
+
+    let getAllNonWishlistProducts = (callback) => {
+        let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) LEFT JOIN wishlists_products ON (products.product_id = wishlists_products.product_id) WHERE wishlists_products.product_id IS NULL';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    callback(null, result.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
         })
     }
 
@@ -188,6 +203,7 @@ module.exports = (dbPoolInstance) => {
         getAllInventoryProducts,
         getAllDeliveryProducts,
         getAllWishlistProducts,
+        getAllNonWishlistProducts,
         insertNewWishlistProduct,
         insertExistingWishlistProduct,
         getAllCategories,

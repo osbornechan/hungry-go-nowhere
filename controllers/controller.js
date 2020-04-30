@@ -128,9 +128,9 @@ const sha256 = require('js-sha256');
 
     // ----- Add from EXISTING list of products to Wishlist -------
     let existingWishlistProductsControllerCallback = (request, response) => {
-        db.model.getAllProducts((error, allProducts) => {
+        db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
             const data = {
-                allProducts: allProducts
+                allNonWishlistProducts: allNonWishlistProducts
             }
             response.render('wishlist_products', data);
         })

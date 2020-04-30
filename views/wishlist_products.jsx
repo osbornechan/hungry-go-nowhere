@@ -3,7 +3,7 @@ const React = require("react");
 class Wishlist_Products extends React.Component {
   render() {
 
-    const allProductsList = this.props.allProducts.map(product => {
+    const allNonWishlistProductsList = this.props.allNonWishlistProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
@@ -76,7 +76,7 @@ class Wishlist_Products extends React.Component {
                         </div>
                     </div>
                     <div className='row justify-content-between'>
-                        {allProductsList}
+                        {allNonWishlistProductsList}
                     </div>
                 </form>
             </div>

@@ -62,7 +62,7 @@ class Wishlist extends React.Component {
                     </div>
                 </div>
                 <div className='add-button row justify-content-center'>
-                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add New Product to Wishlist</a></h4>
+                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add Product to Wishlist</a></h4>
                 </div>
                 <div className='row justify-content-between'>
                     {allWishlistProductsList}
