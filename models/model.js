@@ -201,6 +201,24 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    // --------- EDIT PRODUCT QTY IN WISHLIST -----------
+    let updateWishlistProductQty = (productIdToEdit, callback) => {
+        productIdToEdit.forEach((productIdQty, index) => {
+            let query = 'UPDATE wishlists_products SET wishlist_qty=' + parseInt(productIdQty[1]) + ' WHERE product_id=' + parseInt(productIdQty[0]);
+
+            dbPoolInstance.query(query, (error, result) => {
+                if (error) {
+                    callback(error, null);
+                } else {
+                    if (index === productIdToEdit.length - 1) {
+                        console.log('Updated wishlist product quantities!');
+                        callback(null, null);
+                    }
+                }
+            })
+        })
+    }
+
     // --------- DELETE PRODUCT FROM WISHLIST -----------
     let deleteFromWishlistProduct = (productIdToDelete, callback) => {
         let query = 'DELETE FROM wishlists_products WHERE product_id=' + productIdToDelete;
@@ -233,6 +251,7 @@ module.exports = (dbPoolInstance) => {
         getAllNonWishlistProducts,
         insertExistingWishlistProduct,
         insertNewWishlistProduct,
+        updateWishlistProductQty,
         deleteFromWishlistProduct,
     };
 };

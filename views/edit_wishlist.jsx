@@ -1,9 +1,9 @@
 const React = require("react");
 
-class Wishlist_Products extends React.Component {
+class Edit_Wishlist extends React.Component {
   render() {
 
-    const allNonWishlistProductsList = this.props.allNonWishlistProducts.map(product => {
+    const allWishlistProductsList = this.props.allWishlistProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
@@ -25,7 +25,7 @@ class Wishlist_Products extends React.Component {
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
+                                <h1><input type='number' name={product.product_id} value={product.wishlist_qty} className='input-qty text-center'/></h1>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ class Wishlist_Products extends React.Component {
     return (
       <html>
         <head>
-            <link rel="stylesheet" href="/wishlist_products_styles.css"/>
+            <link rel='stylesheet' href='../edit_wishlist_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -51,32 +51,20 @@ class Wishlist_Products extends React.Component {
                         <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
                     </div>
                 </div>
-                <form method='POST' action='/wishlist/products'>
+                <form method='POST' action='/wishlist?_method=put'>
                     <div className='instructions row justify-content-center'>
-                        <div className='col-5'>
+                        <div className='col-12'>
                             <div className='row justify-content-center'>
-                                <h4>Add from past products below</h4>
-                                <p>Enter product quantities below.</p>
-                            </div>
-                            <div className='row justify-content-center'>
-                                <input type='submit' value='Add Past Product' className='btn btn-info'/>
-                            </div>
-                        </div>
-                        <div className='col-2 d-flex justify-content-center'>
-                            <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back to Previous</a></button>
-                        </div>
-                        <div className='col-5'>
-                            <div className='row justify-content-center'>
-                                <h4>Add a new product</h4>
+                                <h4>Edit the quantity below</h4>
                             </div>
                             <br/>
                             <div className='row justify-content-center'>
-                                <button className='btn btn-primary'><a href='/wishlist/products/new/' className='text-white text-decoration-none'>Add New Product</a></button>
+                                <input type='submit' value='Submit' className='btn btn-primary'/>
                             </div>
                         </div>
                     </div>
                     <div className='row justify-content-between'>
-                        {allNonWishlistProductsList}
+                        {allWishlistProductsList}
                     </div>
                 </form>
             </div>
@@ -87,4 +75,4 @@ class Wishlist_Products extends React.Component {
   }
 }
 
-module.exports = Wishlist_Products;
+module.exports = Edit_Wishlist;

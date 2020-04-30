@@ -20,7 +20,7 @@ class Wishlist extends React.Component {
                         </div>
                         <div className='product-col-row row'>
                             <div className='btn-col col-4'>
-                                <button className='btn btn-info'><a href='#' className='text-white text-decoration-none'>Edit</a></button>
+                                <button className='btn btn-info'><a href='/wishlist/edit' className='text-white text-decoration-none'>Edit</a></button>
                             </div>
                             <div className='btn-col col-3'>
                                 <form method='POST' action='/wishlist?_method=delete'>

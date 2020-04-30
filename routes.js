@@ -23,9 +23,13 @@ module.exports = (app, allModels) => {
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
 
+    // ==== Edit wishlist product quantity ====
+    app.get('/wishlist/edit', allControllers.wishlistQty);
+    app.put('/wishlist', allControllers.editWishlistQty);
+
     // ----- Add past product to wishlist ------
     app.get('/wishlist/products/', allControllers.existingWishlistProducts);
-    app.post('/wishlist', allControllers.insertExistingProductToWishlist);
+    app.post('/wishlist/products', allControllers.insertExistingProductToWishlist);
 
     // ----- Add new product to wishlist ------
     app.get('/wishlist/products/new', allControllers.newWishlist);
