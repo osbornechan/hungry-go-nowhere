@@ -69,6 +69,21 @@ const sha256 = require('js-sha256');
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
+
+    // ------- DELETE PRODUCT FROM INVENTORY -------
+    let deleteInventoryProductControllerCallback = (request, response) => {
+        let productIdToDelete = Object.keys(request.body)[0];
+
+        const whenModelIsDone = (error, deleteInventoryProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.deleteFromInventoryProduct(productIdToDelete, whenModelIsDone);
+    }
+
     /* ================================================================
     ///////////////      DELIVERY CONTROLLERS           ///////////////
     ================================================================ */
@@ -227,6 +242,7 @@ const sha256 = require('js-sha256');
     verifyLogin: verifyLoginControllerCallback,
     // INVENTORY CONTROLLERS
     inventory: inventoryControllerCallback,
+    deleteInventoryProduct: deleteInventoryProductControllerCallback,
     // DELIVERY CONTROLLERS
     delivery: deliveryControllerCallback,
     // WISHLIST CONTROLLERS

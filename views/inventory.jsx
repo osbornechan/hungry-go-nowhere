@@ -25,9 +25,11 @@ class Inventory extends React.Component {
                             <div className='btn-col col-4'>
                                 <button className='btn btn-info'><a href='#' className='text-white text-decoration-none'>Edit</a></button>
                             </div>
-                            <div className='btn-col col-3'>
-                                <button className='btn btn-danger'><a href='#' className='text-white text-decoration-none'>Delete</a></button>
-                            </div>
+                            <form method='POST' action='/inventory?_method=delete'>
+                                <div className='btn-col col-3'>
+                                    <input type='submit' name={product.product_id} value='Delete' className='btn btn-danger'/>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div className='product-col col-2'>

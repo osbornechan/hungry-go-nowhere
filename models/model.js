@@ -77,6 +77,23 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    let deleteFromInventoryProduct = (productIdToDelete, callback) => {
+        let query = 'DELETE FROM inventories_products WHERE product_id=' + productIdToDelete;
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    console.log('Deleted product from inventory!');
+                    callback(null, null);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
     /* ================================================================
     ///////////////////      DELIVERY QUERIES           ///////////////
     ================================================================ */
@@ -244,6 +261,7 @@ module.exports = (dbPoolInstance) => {
         getAllProducts,
         // INVENTORY QUERIES
         getAllInventoryProducts,
+        deleteFromInventoryProduct,
         // DELIVERY QUERIES
         getAllDeliveryProducts,
         // WISHLIST QUERIES

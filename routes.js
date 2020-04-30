@@ -14,8 +14,15 @@ module.exports = (app, allModels) => {
     app.get('/login/', allControllers.login);
     app.post('/inventory/', allControllers.verifyLogin);
 
+
     // ==== Inventory Page ====
     app.get('/inventory/', allControllers.inventory);
+
+
+
+    // ----- Delete product from inventory ------
+    app.delete('/inventory', allControllers.deleteInventoryProduct);
+
 
     // ==== Delivery Page ====
     app.get('/delivery/', allControllers.delivery);
