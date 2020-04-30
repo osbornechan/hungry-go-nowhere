@@ -77,6 +77,90 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    // ----- DISPLAY PRODUCTS NOT IN INVENTORY PAGE ------
+    let getAllNonInventoryProducts = (callback) => {
+        let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) LEFT JOIN inventories_products ON (products.product_id = inventories_products.product_id) WHERE inventories_products.product_id IS NULL';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    callback(null, result.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
+    // ----- ADD PAST PRODUCT TO INVENTORY ------
+    let insertExistingInventoryProduct = (userId, productIdToAdd, callback) => {
+        //e.g. productIdQty = [[1,6],[2,4]]
+        productIdToAdd.forEach((productIdQty, index) => {
+            let query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty) VALUES ($1, $2, $3)';
+            let values = [userId, productIdQty[0], productIdQty[1]];
+
+            dbPoolInstance.query(query, values, (error, result) => {
+                if (error) {
+                    callback(error, null);
+                } else {
+                    if (index === productIdToAdd.length - 1) {
+                        callback(null, null);
+                    }
+                }
+            })
+        })
+    }
+
+    // ----- ADD NEW PRODUCT TO INVENTORY ------
+    let insertNewInventoryProduct = (userId, inventoryProduct, inventoryQty, category, callback) => {
+        //Query category_id of new product
+        let query = "SELECT category_id FROM categories WHERE category_name='" + category + "'";
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                //Add to new product to products table
+                let newProductCategoryId = parseInt(result.rows[0].category_id);
+
+                query = 'INSERT INTO products (product_name, brand, category_id, img) VALUES ($1, $2, $3, $4)';
+                let values = [inventoryProduct.product_name, inventoryProduct.brand, newProductCategoryId, inventoryProduct.img];
+
+                dbPoolInstance.query(query, values, (error, result) => {
+                    if (error) {
+                        callback(error, null);
+                    } else {
+                        //Query product_id of newly added product
+                        query = "SELECT product_id FROM products WHERE product_name='" + inventoryProduct.product_name + "'";
+
+                        dbPoolInstance.query(query, (error, result) => {
+                            if (error) {
+                                callback(error, null);
+                            } else {
+                                //Add to wishlist_products relationship table
+                                let newProductId = parseInt(result.rows[0].product_id);
+                                query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty) VALUES ($1, $2, $3)';
+                                values = [userId, newProductId, inventoryQty];
+
+                                dbPoolInstance.query(query, values, (error, result) => {
+                                    if (error) {
+                                        callback(error, null);
+                                    } else {
+                                        console.log('Added new product to inventory!');
+                                        callback(null, null)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+    // --------- DELETE PRODUCT FROM INVENTORY -----------
     let deleteFromInventoryProduct = (productIdToDelete, callback) => {
         let query = 'DELETE FROM inventories_products WHERE product_id=' + productIdToDelete;
 
@@ -135,7 +219,7 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
-    // ----- DISPLAY PAST PRODUCTS PAGE ------
+    // ----- DISPLAY PRODUCTS NOT IN WISHLIST PAGE ------
     let getAllNonWishlistProducts = (callback) => {
         let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) LEFT JOIN wishlists_products ON (products.product_id = wishlists_products.product_id) WHERE wishlists_products.product_id IS NULL';
 
@@ -261,6 +345,9 @@ module.exports = (dbPoolInstance) => {
         getAllProducts,
         // INVENTORY QUERIES
         getAllInventoryProducts,
+        getAllNonInventoryProducts,
+        insertExistingInventoryProduct,
+        insertNewInventoryProduct,
         deleteFromInventoryProduct,
         // DELIVERY QUERIES
         getAllDeliveryProducts,

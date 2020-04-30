@@ -39,6 +39,10 @@
 	margin-left: -13px;
 }
 
+.back-btn {
+	background-color: #484848;
+}
+
 img {
 	width: 120px;
 	height: 120px;
@@ -61,7 +65,16 @@ img {
 }
 
 .instructions {
-	border: 15px double #f5827c;
-	border-radius: 5px;
+	background-color: #f5827c;
+	border-radius: 0 0 5px 5px;
 	padding: 20px 20px;
+	margin: 0 -13px;
+}
+
+.form-bowl {
+	background-color: white;
+	width: 43%;
+	padding: 30px;
+	border-radius: 5px 5px 240px 240px;
+	margin: 0 auto;
 }

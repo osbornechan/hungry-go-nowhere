@@ -69,6 +69,86 @@ const sha256 = require('js-sha256');
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
+    // ----- FORM TO ADD FROM EXISTING/PAST PRODUCTS TO INVENTORY -------
+    let existingInventoryProductsControllerCallback = (request, response) => {
+        db.model.getAllNonInventoryProducts((error, allNonInventoryProducts) => {
+            const data = {
+                allNonInventoryProducts: allNonInventoryProducts
+            }
+            response.render('inventory_products', data);
+        })
+    }
+
+    // ----- ADD EXISTING/PAST PRODUCTS TO INVENTORY -------
+    let insertExistingProductToInventoryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        //Change key-value pairs in object into array of arrays
+        let productIdList = Object.entries(request.body);
+
+        let productIdToAdd = [];
+        for (const i of productIdList) {
+            //Push into new array only products that were added
+            if (i[1] !== '') {
+                productIdToAdd.push(i)
+            }
+        }
+
+        const whenModelIsDone = (error, result) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.insertExistingInventoryProduct(userId, productIdToAdd, whenModelIsDone);
+    }
+
+    // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
+    let newInventoryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+
+        db.model.getAllCategories((error, allCategories) => {
+            const data = {
+                allCategories: allCategories,
+                userId: userId
+            }
+            response.render('new_inventory_product', data);
+        })
+    }
+
+    // ------- ADD NEW PRODUCT TO INVENTORY --------
+    let insertNewProductToInventoryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let inventoryProduct = request.body;
+        let inventoryQty = inventoryProduct.qty;
+        let category = inventoryProduct.category;
+
+        const whenModelIsDone = (error, newInventoryProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, whenModelIsDone);
+    }
+
+    // ------- EDIT INVENTORY PRODUCT QUANTITY -------
+    let inventoryQtyControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+
+        const whenModelIsDone = (error, allInventoryProducts) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                const data = {
+                    allInventoryProducts: allInventoryProducts
+                }
+                response.render('edit_inventory', data);
+            }
+        }
+        db.model.getAllInventoryProducts(userId, whenModelIsDone);
+    }
 
     // ------- DELETE PRODUCT FROM INVENTORY -------
     let deleteInventoryProductControllerCallback = (request, response) => {
@@ -141,6 +221,7 @@ const sha256 = require('js-sha256');
 
         let productIdToAdd = [];
         for (const i of productIdList) {
+            //Push into new array only products that were added
             if (i[1] !== '') {
                 productIdToAdd.push(i)
             }
@@ -186,7 +267,7 @@ const sha256 = require('js-sha256');
         db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
     }
 
-    // ------- EDIT PRODUCT QUANTITY -------
+    // ------- EDIT WISHLIST PRODUCT QUANTITY -------
     let wishlistQtyControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -242,6 +323,11 @@ const sha256 = require('js-sha256');
     verifyLogin: verifyLoginControllerCallback,
     // INVENTORY CONTROLLERS
     inventory: inventoryControllerCallback,
+    existingInventoryProducts: existingInventoryProductsControllerCallback,
+    insertExistingProductToInventory: insertExistingProductToInventoryControllerCallback,
+    newInventory: newInventoryControllerCallback,
+    insertNewProductToInventory: insertNewProductToInventoryControllerCallback,
+    inventoryQty: inventoryQtyControllerCallback,
     deleteInventoryProduct: deleteInventoryProductControllerCallback,
     // DELIVERY CONTROLLERS
     delivery: deliveryControllerCallback,

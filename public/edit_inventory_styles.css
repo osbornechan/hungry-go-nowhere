@@ -11,11 +11,11 @@
 }
 
 .delivery-tab {
-	background-color: #fac27e;
+	background-color: darkgrey;
 }
 
 .wishlist-tab {
-	background-color: #f5827c;
+	background-color: darkgrey;
 }
 
 .product-row {
@@ -31,30 +31,50 @@
 	margin: -10px;
 }
 
-.btn {
-	margin-top: 10px;
+.product-text {
+	padding-top: 25px;
 }
 
 .btn-col {
 	margin-left: -13px;
 }
 
+.back-btn {
+	background-color: #484848;
+}
+
 img {
-	width: 150px;
-	height: 150px;
+	width: 120px;
+	height: 120px;
 	border-radius: 10px;
 }
 
 .qty-box {
 	background-color: #94d1fc;
 	border-radius: 5px;
-	padding: 20px 40px;
+	padding: 20px 45px;
 	color: white;
 }
 
-.add-button {
+.input-qty {
+	border: 1px solid grey;
+	border-radius: 5px;
+	width: 70px;
+	height: 70px;
+	padding-left: 4px;
+}
+
+.instructions {
 	background-color: #94d1fc;
-	border: 1px solid white;
-	color: white;
-	padding: 10px 0 5px 0;
+	border-radius: 0 0 5px 5px;
+	padding: 20px 20px;
+	margin: 0 -13px;
+}
+
+.form-bowl {
+	background-color: white;
+	width: 43%;
+	padding: 30px;
+	border-radius: 5px 5px 240px 240px;
+	margin: 0 auto;
 }

@@ -18,7 +18,17 @@ module.exports = (app, allModels) => {
     // ==== Inventory Page ====
     app.get('/inventory/', allControllers.inventory);
 
+    // ----- Add past product to inventory ------
+    app.get('/inventory/products/', allControllers.existingInventoryProducts);
+    app.post('/inventory/products', allControllers.insertExistingProductToInventory);
 
+    // ----- Add new product to inventory ------
+    app.get('/inventory/products/new', allControllers.newInventory);
+    app.post('/inventory/new', allControllers.insertNewProductToInventory);
+
+    // ----- Edit inventory product quantity -----
+    app.get('/inventory/edit', allControllers.inventoryQty);
+    //app.put('/inventory', allControllers.editInventoryQty);
 
     // ----- Delete product from inventory ------
     app.delete('/inventory', allControllers.deleteInventoryProduct);
@@ -27,10 +37,11 @@ module.exports = (app, allModels) => {
     // ==== Delivery Page ====
     app.get('/delivery/', allControllers.delivery);
 
+
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
 
-    // ==== Edit wishlist product quantity ====
+    // ----- Edit wishlist product quantity -----
     app.get('/wishlist/edit', allControllers.wishlistQty);
     app.put('/wishlist', allControllers.editWishlistQty);
 

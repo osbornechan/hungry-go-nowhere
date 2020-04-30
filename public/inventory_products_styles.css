@@ -7,7 +7,7 @@
 }
 
 .inventory-tab {
-	background-color: darkgrey;
+	background-color: #94d1fc;
 }
 
 .delivery-tab {
@@ -15,7 +15,7 @@
 }
 
 .wishlist-tab {
-	background-color: #f5827c;
+	background-color: darkgrey;
 }
 
 .product-row {
@@ -61,7 +61,7 @@ img {
 }
 
 .instructions {
-	background-color: #f5827c;
+	background-color: #94d1fc;
 	border-radius: 0 0 5px 5px;
 	padding: 20px 20px;
 }

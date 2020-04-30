@@ -1,6 +1,6 @@
 const React = require("react");
 
-class New_Wishlist_Product extends React.Component {
+class New_Inventory_Product extends React.Component {
   render() {
 
     let allCategoriesList = this.props.allCategories.map(category => {
@@ -10,7 +10,7 @@ class New_Wishlist_Product extends React.Component {
     return (
       <html>
         <head>
-            <link rel='stylesheet' href='/new_wishlist_product_styles.css'/>
+            <link rel='stylesheet' href='/new_inventory_product_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -29,10 +29,10 @@ class New_Wishlist_Product extends React.Component {
                 <div className='form-container'>
                     <div className='form-bowl'>
                         <div className='row justify-content-center'>
-                            <h3>New Product to Wishlist</h3>
+                            <h3>New Product to Inventory</h3>
                         </div>
                         <br/>
-                        <form method='POST' action='/wishlist/new'>
+                        <form method='POST' action='/inventory/new'>
                             <div className='row justify-content-center'>
                                 <p>Product: <input type='text' name='product_name' placeholder='Enter product name'/></p>
                             </div>
@@ -58,7 +58,7 @@ class New_Wishlist_Product extends React.Component {
                                     <input type='submit' className='btn btn-primary' value='Submit'/>
                                 </div>
                                 <div  className='col-6'>
-                                    <button className='btn back-btn'><a href='/wishlist/products' className='text-white text-decoration-none'>Back</a></button>
+                                    <button className='btn back-btn'><a href='/inventory/products' className='text-white text-decoration-none'>Back</a></button>
                                 </div>
                             </div>
                         </form>
@@ -74,4 +74,4 @@ class New_Wishlist_Product extends React.Component {
   }
 }
 
-module.exports = New_Wishlist_Product;
+module.exports = New_Inventory_Product;

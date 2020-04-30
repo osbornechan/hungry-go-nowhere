@@ -35,7 +35,7 @@ class Edit_Wishlist extends React.Component {
     return (
       <html>
         <head>
-            <link rel='stylesheet' href='../edit_wishlist_styles.css'/>
+            <link rel='stylesheet' href='/edit_wishlist_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -52,15 +52,23 @@ class Edit_Wishlist extends React.Component {
                     </div>
                 </div>
                 <form method='POST' action='/wishlist?_method=put'>
-                    <div className='instructions row justify-content-center'>
-                        <div className='col-12'>
+                    <div className='instructions'>
+                        <div className='form-bowl'>
                             <div className='row justify-content-center'>
                                 <h4>Edit the quantity below</h4>
                             </div>
                             <br/>
                             <div className='row justify-content-center'>
-                                <input type='submit' value='Submit' className='btn btn-primary'/>
+                                <div className='col-5 d-flex justify-content-end' style={{marginLeft:'20px'}}>
+                                    <input type='submit' value='Submit' className='btn btn-primary'/>
+                                </div>
+                                <div className='col-5'>
+                                    <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back</a></button>
+                                </div>
                             </div>
+                        </div>
+                        <div className='row justify-content-center'>
+                            <div className='col-2' style={{backgroundColor: 'white', height:'15px'}}></div>
                         </div>
                     </div>
                     <div className='row justify-content-between'>

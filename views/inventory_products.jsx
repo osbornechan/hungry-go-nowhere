@@ -1,9 +1,9 @@
 const React = require("react");
 
-class Wishlist_Products extends React.Component {
+class Inventory_Products extends React.Component {
   render() {
 
-    const allNonWishlistProductsList = this.props.allNonWishlistProducts.map(product => {
+    const allNonInventoryProductsList = this.props.allNonInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
@@ -35,7 +35,7 @@ class Wishlist_Products extends React.Component {
     return (
       <html>
         <head>
-            <link rel="stylesheet" href="/wishlist_products_styles.css"/>
+            <link rel="stylesheet" href="/inventory_products_styles.css"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -51,7 +51,7 @@ class Wishlist_Products extends React.Component {
                         <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
                     </div>
                 </div>
-                <form method='POST' action='/wishlist/products'>
+                <form method='POST' action='/inventory/products'>
                     <div className='instructions row justify-content-center'>
                         <div className='col-5 left-instructions'>
                             <div className='row justify-content-center'>
@@ -64,7 +64,7 @@ class Wishlist_Products extends React.Component {
                         </div>
                         <div className='col-2' style={{marginLeft: "-10px", marginTop:'20px'}}>
                             <div className='row justify-content-center'>
-                                <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back</a></button>
+                                <button className='btn back-btn'><a href='/inventory/' className='text-white text-decoration-none'>Back</a></button>
                             </div>
                         </div>
                         <div className='col-5 right-instructions'>
@@ -73,7 +73,7 @@ class Wishlist_Products extends React.Component {
                             </div>
                             <br/>
                             <div className='row justify-content-center'>
-                                <button className='btn btn-primary'><a href='/wishlist/products/new/' className='text-white text-decoration-none'>Add New Product</a></button>
+                                <button className='btn btn-primary'><a href='/inventory/products/new/' className='text-white text-decoration-none'>Add New Product</a></button>
                             </div>
                         </div>
                         <div className='row'>
@@ -86,7 +86,7 @@ class Wishlist_Products extends React.Component {
                     </div>
                     </div>
                     <div className='row justify-content-between'>
-                        {allNonWishlistProductsList}
+                        {allNonInventoryProductsList}
                     </div>
                 </form>
             </div>
@@ -97,4 +97,4 @@ class Wishlist_Products extends React.Component {
   }
 }
 
-module.exports = Wishlist_Products;
+module.exports = Inventory_Products;
