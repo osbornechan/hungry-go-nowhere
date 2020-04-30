@@ -5,12 +5,16 @@ const sha256 = require('js-sha256');
     //       CONTROLLER LOGIC
     // ==============================
 
-    // ======= MAIN PAGE ======
+    /* ================================================================
+    //////////////////      LOGIN CONTROLLERS           ///////////////
+    ================================================================ */
+
+    // ------- MAIN PAGE -----
     let mainControllerCallback = (request, response) => {
         response.render('main');
     }
 
-    // ====== LOGIN PAGE ======
+    // ------ LOGIN PAGE ------
     let loginControllerCallback = (request, response) => {
         response.render('login');
     }
@@ -39,14 +43,16 @@ const sha256 = require('js-sha256');
             if (correctUsername === true && correctPassword === true) {
                 response.cookie('user_name', request.body.user_name);
                 response.cookie('user_id', userId)
-                response.redirect('inventory');
+                response.redirect('/inventory/');
             } else {
                 response.send('Incorrect username/ password.');
             }
         })
     }
 
-    // ====== INVENTORY PAGE ======
+    /* ================================================================
+    ///////////////      INVENTORY CONTROLLERS           /////////////
+    ================================================================ */
     let inventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -63,7 +69,9 @@ const sha256 = require('js-sha256');
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
-    // ======= DELIVERY PAGE =======
+    /* ================================================================
+    ///////////////      DELIVERY CONTROLLERS           ///////////////
+    ================================================================ */
     let deliveryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -80,7 +88,10 @@ const sha256 = require('js-sha256');
         db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
-    // ====== WISHLIST PAGE ======
+    /* ================================================================
+    ////////////////      WISHLIST CONTROLLERS           /////////////
+    ================================================================ */
+    // ------- WISHLIST PAGE -------
     let wishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
@@ -97,36 +108,7 @@ const sha256 = require('js-sha256');
         db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
-    // ----- Add NEW product to Wishlist -------
-    let newWishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-
-        db.model.getAllCategories((error, allCategories) => {
-            const data = {
-                allCategories: allCategories,
-                userId: userId
-            }
-            response.render('new_wishlist_product', data);
-        })
-    }
-
-    let insertNewProductToWishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let wishlistProduct = request.body;
-        let wishlistQty = wishlistProduct.qty;
-        let category = wishlistProduct.category;
-
-        const whenModelIsDone = (error, newWishlistProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('wishlist');
-            }
-        }
-        db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
-    }
-
-    // ----- Add from EXISTING list of products to Wishlist -------
+    // ----- FORM TO ADD FROM EXISTING/PAST PRODUCTS TO WISHLIST -------
     let existingWishlistProductsControllerCallback = (request, response) => {
         db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
             const data = {
@@ -136,6 +118,7 @@ const sha256 = require('js-sha256');
         })
     }
 
+    // ----- ADD EXISTING/PAST PRODUCTS TO WISHLIST -------
     let insertExistingProductToWishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
         //Change key-value pairs in object into array of arrays
@@ -152,12 +135,43 @@ const sha256 = require('js-sha256');
             if (error) {
                 console.log('Query error', error);
             } else {
-                response.redirect('wishlist');
+                response.redirect('/wishlist/');
             }
         }
         db.model.insertExistingWishlistProduct(userId, productIdToAdd, whenModelIsDone);
     }
 
+    // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
+    let newWishlistControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+
+        db.model.getAllCategories((error, allCategories) => {
+            const data = {
+                allCategories: allCategories,
+                userId: userId
+            }
+            response.render('new_wishlist_product', data);
+        })
+    }
+
+    // ------- ADD NEW PRODUCT TO WISHLIST --------
+    let insertNewProductToWishlistControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let wishlistProduct = request.body;
+        let wishlistQty = wishlistProduct.qty;
+        let category = wishlistProduct.category;
+
+        const whenModelIsDone = (error, newWishlistProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/wishlist/');
+            }
+        }
+        db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
+    }
+
+    // ------- DELETE PRODUCT FROM WISHLIST -------
     let deleteWishlistProductControllerCallback = (request, response) => {
         let productIdToDelete = Object.keys(request.body)[0];
 
@@ -165,7 +179,7 @@ const sha256 = require('js-sha256');
             if (error) {
                 console.log('Query error', error);
             } else {
-                response.redirect('wishlist');
+                response.redirect('/wishlist/');
             }
         }
         db.model.deleteFromWishlistProduct(productIdToDelete, whenModelIsDone);
@@ -181,13 +195,16 @@ const sha256 = require('js-sha256');
     main: mainControllerCallback,
     login: loginControllerCallback,
     verifyLogin: verifyLoginControllerCallback,
+    // INVENTORY CONTROLLERS
     inventory: inventoryControllerCallback,
+    // DELIVERY CONTROLLERS
     delivery: deliveryControllerCallback,
+    // WISHLIST CONTROLLERS
     wishlist: wishlistControllerCallback,
     existingWishlistProducts: existingWishlistProductsControllerCallback,
     insertExistingProductToWishlist: insertExistingProductToWishlistControllerCallback,
     newWishlist: newWishlistControllerCallback,
     insertNewProductToWishlist: insertNewProductToWishlistControllerCallback,
-    deleteWishlistProduct: deleteWishlistProductControllerCallback
+    deleteWishlistProduct: deleteWishlistProductControllerCallback,
     };
 }

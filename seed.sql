@@ -18,11 +18,12 @@ INSERT INTO products (product_name, brand, img, category_id) VALUES ('Spicy Alfr
 /* SEED DATA FOR CATEGORIES */
 INSERT INTO categories (category_name) VALUES ('Dairy & Eggs');
 INSERT INTO categories (category_name) VALUES ('Meat & Seafood');
-INSERT INTO categories (category_name) VALUES ('Drinks');
-INSERT INTO categories (category_name) VALUES ('Snacks');
-INSERT INTO categories (category_name) VALUES ('Sauce & Condiment');
 INSERT INTO categories (category_name) VALUES ('Fruit & Vegetable');
 INSERT INTO categories (category_name) VALUES ('Canned & Instant Food');
+INSERT INTO categories (category_name) VALUES ('Frozen Foods');
+INSERT INTO categories (category_name) VALUES ('Biscuits & Snacks');
+INSERT INTO categories (category_name) VALUES ('Drinks');
+INSERT INTO categories (category_name) VALUES ('Spice & Condiment');
 
 
 /* SEED DATA FOR SUPERMARKETS */

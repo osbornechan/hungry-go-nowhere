@@ -22,12 +22,15 @@ module.exports = (app, allModels) => {
 
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
-    app.delete('/wishlist', allControllers.deleteWishlistProduct)
 
-    //Check if product is existing or new
+    // ----- Add past product to wishlist ------
     app.get('/wishlist/products/', allControllers.existingWishlistProducts);
     app.post('/wishlist', allControllers.insertExistingProductToWishlist);
 
+    // ----- Add new product to wishlist ------
     app.get('/wishlist/products/new', allControllers.newWishlist);
-    app.post('/wishlist', allControllers.insertNewProductToWishlist);
+    app.post('/wishlist/new', allControllers.insertNewProductToWishlist);
+
+    // ----- Delete product from wishlist ------
+    app.delete('/wishlist', allControllers.deleteWishlistProduct)
 };

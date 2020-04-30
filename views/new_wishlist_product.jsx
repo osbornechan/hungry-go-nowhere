@@ -32,7 +32,7 @@ class New_Wishlist_Product extends React.Component {
                         <h3>New Product to Wishlist</h3>
                     </div>
                     <br/>
-                    <form method='POST' action='/wishlist'>
+                    <form method='POST' action='/wishlist/new'>
                         <div className='row justify-content-center'>
                             <p>Product: <input type='text' name='product_name' placeholder='Enter product name'/></p>
                         </div>
@@ -54,10 +54,10 @@ class New_Wishlist_Product extends React.Component {
                         </div>
                         <br/>
                         <div className='row justify-content-center'>
-                            <div clasName='col-6'>
+                            <div className='col-5 d-flex justify-content-end'>
                                 <input type='submit' className='btn btn-primary' value='Submit'/>
                             </div>
-                            <div  clasName='col-6'>
+                            <div  className='col-6'>
                                 <button className='btn back-btn'><a href='/wishlist/products' className='text-white text-decoration-none'>Back to Previous</a></button>
                             </div>
                         </div>
