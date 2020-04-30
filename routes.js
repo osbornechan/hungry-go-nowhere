@@ -22,7 +22,7 @@ module.exports = (app, allModels) => {
 
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);
-    app.delete('/wishlist/', allControllers.deleteWishlistProduct)
+    app.delete('/wishlist', allControllers.deleteWishlistProduct)
 
     //Check if product is existing or new
     app.get('/wishlist/products/', allControllers.existingWishlistProducts);

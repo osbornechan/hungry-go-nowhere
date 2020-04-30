@@ -138,6 +138,7 @@ const sha256 = require('js-sha256');
 
     let insertExistingProductToWishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        //Change key-value pairs in object into array of arrays
         let productIdList = Object.entries(request.body);
 
         let productIdToAdd = [];
@@ -147,7 +148,7 @@ const sha256 = require('js-sha256');
             }
         }
 
-        const whenModelIsDone = (error, addExistingProducts) => {
+        const whenModelIsDone = (error, result) => {
             if (error) {
                 console.log('Query error', error);
             } else {
