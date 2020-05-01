@@ -3,7 +3,7 @@ const React = require("react");
 class Inventory_Products extends React.Component {
   render() {
 
-    const allNonInventoryProductsList = this.props.allNonInventoryProducts.map(product => {
+    const allProductsList = this.props.allProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
@@ -17,6 +17,9 @@ class Inventory_Products extends React.Component {
                         </div>
                         <div className='product-col-row row'>
                             <p>Category: {product.category_name}</p>
+                        </div>
+                        <div className='product-col-row row'>
+                            <p>Expiry Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'120px'}}/></p>
                         </div>
                     </div>
                     <div className='product-col col-2'>
@@ -35,6 +38,7 @@ class Inventory_Products extends React.Component {
     return (
       <html>
         <head>
+            <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="/inventory_products_styles.css"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
@@ -56,6 +60,8 @@ class Inventory_Products extends React.Component {
                         <div className='col-5 left-instructions'>
                             <div className='row justify-content-center'>
                                 <h4>Add from past products</h4>
+                            </div>
+                            <div className='row justify-content-center'>
                                 <p>Enter product quantities below.</p>
                             </div>
                             <div className='row justify-content-center'>
@@ -86,7 +92,7 @@ class Inventory_Products extends React.Component {
                     </div>
                     </div>
                     <div className='row justify-content-between'>
-                        {allNonInventoryProductsList}
+                        {allProductsList}
                     </div>
                 </form>
             </div>

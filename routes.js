@@ -27,8 +27,8 @@ module.exports = (app, allModels) => {
     app.post('/inventory/new', allControllers.insertNewProductToInventory);
 
     // ----- Edit inventory product quantity -----
-    app.get('/inventory/edit', allControllers.inventoryQty);
-    //app.put('/inventory', allControllers.editInventoryQty);
+    app.get('/inventory/edit', allControllers.inventoryDetails);
+    app.put('/inventory', allControllers.editInventoryDetails);
 
     // ----- Delete product from inventory ------
     app.delete('/inventory', allControllers.deleteInventoryProduct);
@@ -54,5 +54,5 @@ module.exports = (app, allModels) => {
     app.post('/wishlist/new', allControllers.insertNewProductToWishlist);
 
     // ----- Delete product from wishlist ------
-    app.delete('/wishlist', allControllers.deleteWishlistProduct)
+    app.delete('/wishlist', allControllers.deleteWishlistProduct);
 };

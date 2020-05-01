@@ -42,7 +42,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     let getAllProducts = (callback) => {
-        let query = 'SELECT * FROM products ORDER BY product_id ASC';
+        let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) ORDER BY products.product_id ASC';
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -62,7 +62,7 @@ module.exports = (dbPoolInstance) => {
     ================================================================ */
 
     let getAllInventoryProducts = (userId, callback) => {
-        let query = 'SELECT users.user_name, inventories_products.product_id, inventories_products.inventory_qty, inventories_products.expiry_date, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN inventories ON (inventories.user_id = users.user_id) INNER JOIN inventories_products ON (inventories.inventory_id = inventories_products.inventory_id) INNER JOIN products ON (inventories_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY products.product_id ASC';
+        let query = 'SELECT users.user_name, inventories_products.inventory_product_id, inventories_products.product_id, inventories_products.inventory_qty, inventories_products.expiry_date, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN inventories ON (inventories.user_id = users.user_id) INNER JOIN inventories_products ON (inventories.inventory_id = inventories_products.inventory_id) INNER JOIN products ON (inventories_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY products.product_id ASC';
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -78,34 +78,38 @@ module.exports = (dbPoolInstance) => {
     }
 
     // ----- DISPLAY PRODUCTS NOT IN INVENTORY PAGE ------
-    let getAllNonInventoryProducts = (callback) => {
-        let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) LEFT JOIN inventories_products ON (products.product_id = inventories_products.product_id) WHERE inventories_products.product_id IS NULL';
+    // let getAllNonInventoryProducts = (callback) => {
+    //     let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) LEFT JOIN inventories_products ON (products.product_id = inventories_products.product_id) WHERE inventories_products.product_id IS NULL';
 
-        dbPoolInstance.query(query, (error, result) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                if (result.rows.length > 0) {
-                    callback(null, result.rows);
-                } else {
-                    callback(null, null);
-                }
-            }
-        })
-    }
+    //     dbPoolInstance.query(query, (error, result) => {
+    //         if (error) {
+    //             callback(error, null);
+    //         } else {
+    //             if (result.rows.length > 0) {
+    //                 callback(null, result.rows);
+    //             } else {
+    //                 callback(null, null);
+    //             }
+    //         }
+    //     })
+    // }
 
     // ----- ADD PAST PRODUCT TO INVENTORY ------
-    let insertExistingInventoryProduct = (userId, productIdToAdd, callback) => {
-        //e.g. productIdQty = [[1,6],[2,4]]
-        productIdToAdd.forEach((productIdQty, index) => {
-            let query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty) VALUES ($1, $2, $3)';
-            let values = [userId, productIdQty[0], productIdQty[1]];
+    let insertExistingInventoryProduct = (userId, productDetailsToAdd, callback) => {
+        //e.g. productDetailsQty = [[1,[2020-06-20,6]],[[2,[2020-07-02,4]]
+        productDetailsToAdd.forEach((productDetails, index) => {
+            let productId = productDetails[0];
+            let productExpiry = productDetails[1][0];
+            let productQty = productDetails[1][1];
+
+            let query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty, expiry_date) VALUES ($1, $2, $3, $4)';
+            let values = [userId, productId, productQty, productExpiry];
 
             dbPoolInstance.query(query, values, (error, result) => {
                 if (error) {
                     callback(error, null);
                 } else {
-                    if (index === productIdToAdd.length - 1) {
+                    if (index === productDetailsToAdd.length - 1) {
                         callback(null, null);
                     }
                 }
@@ -158,6 +162,28 @@ module.exports = (dbPoolInstance) => {
                 })
             }
         })
+    }
+
+    // --------- EDIT PRODUCT DETAILS IN INVENTORY -----------
+    let updateInventoryProductDetails = (productDetailsToEdit, callback) => {
+        productDetailsToEdit.forEach((productDetails, index) => {
+            let inventoryProductId = productDetails[0];
+            let productExpiry = productDetails[1][0];
+            let productQty = parseInt(productDetails[1][1]);
+
+            let query = "UPDATE inventories_products SET inventory_qty=" + productQty + ", expiry_date='" + productExpiry + "' WHERE inventory_product_id=" + inventoryProductId;
+
+            dbPoolInstance.query(query, (error, result) => {
+                if (error) {
+                    callback(error, null);
+                } else {
+                    if (index === productDetailsToEdit.length - 1) {
+                        console.log('Updated inventory product details!');
+                        callback(null, null);
+                    }
+                }
+            })
+        });
     }
 
     // --------- DELETE PRODUCT FROM INVENTORY -----------
@@ -345,9 +371,10 @@ module.exports = (dbPoolInstance) => {
         getAllProducts,
         // INVENTORY QUERIES
         getAllInventoryProducts,
-        getAllNonInventoryProducts,
+        //getAllNonInventoryProducts,
         insertExistingInventoryProduct,
         insertNewInventoryProduct,
+        updateInventoryProductDetails,
         deleteFromInventoryProduct,
         // DELIVERY QUERIES
         getAllDeliveryProducts,

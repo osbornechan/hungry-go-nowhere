@@ -71,9 +71,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM EXISTING/PAST PRODUCTS TO INVENTORY -------
     let existingInventoryProductsControllerCallback = (request, response) => {
-        db.model.getAllNonInventoryProducts((error, allNonInventoryProducts) => {
+        db.model.getAllProducts((error, allProducts) => {
             const data = {
-                allNonInventoryProducts: allNonInventoryProducts
+                allProducts: allProducts
             }
             response.render('inventory_products', data);
         })
@@ -83,13 +83,13 @@ const sha256 = require('js-sha256');
     let insertExistingProductToInventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
         //Change key-value pairs in object into array of arrays
-        let productIdList = Object.entries(request.body);
+        let productDetailsList = Object.entries(request.body);
 
-        let productIdToAdd = [];
-        for (const i of productIdList) {
-            //Push into new array only products that were added
-            if (i[1] !== '') {
-                productIdToAdd.push(i)
+        //Add only edited product details to array
+        let productDetailsToAdd = [];
+        for (const i of productDetailsList) {
+            if (i[1][0] !== '') {
+                productDetailsToAdd.push(i);
             }
         }
 
@@ -100,7 +100,7 @@ const sha256 = require('js-sha256');
                 response.redirect('/inventory/');
             }
         }
-        db.model.insertExistingInventoryProduct(userId, productIdToAdd, whenModelIsDone);
+        db.model.insertExistingInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
     }
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
@@ -134,7 +134,7 @@ const sha256 = require('js-sha256');
     }
 
     // ------- EDIT INVENTORY PRODUCT QUANTITY -------
-    let inventoryQtyControllerCallback = (request, response) => {
+    let inventoryDetailsControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
         const whenModelIsDone = (error, allInventoryProducts) => {
@@ -148,6 +148,19 @@ const sha256 = require('js-sha256');
             }
         }
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
+    }
+
+    let editInventoryDetailsControllerCallback = (request, response) => {
+        let productDetailsToEdit = Object.entries(request.body);
+
+        const whenModelIsDone = (error, inventoryProductDetails) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.updateInventoryProductDetails(productDetailsToEdit, whenModelIsDone);
     }
 
     // ------- DELETE PRODUCT FROM INVENTORY -------
@@ -327,7 +340,8 @@ const sha256 = require('js-sha256');
     insertExistingProductToInventory: insertExistingProductToInventoryControllerCallback,
     newInventory: newInventoryControllerCallback,
     insertNewProductToInventory: insertNewProductToInventoryControllerCallback,
-    inventoryQty: inventoryQtyControllerCallback,
+    inventoryDetails: inventoryDetailsControllerCallback,
+    editInventoryDetails: editInventoryDetailsControllerCallback,
     deleteInventoryProduct: deleteInventoryProductControllerCallback,
     // DELIVERY CONTROLLERS
     delivery: deliveryControllerCallback,

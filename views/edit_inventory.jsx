@@ -2,7 +2,7 @@ const React = require("react");
 
 class Edit_Inventory extends React.Component {
   render() {
-
+    console.log(this.props.allInventoryProducts)
     const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
@@ -18,6 +18,9 @@ class Edit_Inventory extends React.Component {
                         <div className='product-col-row row'>
                             <p>Category: {product.category_name}</p>
                         </div>
+                        <div className='product-col-row row'>
+                            <p>Expiry Date: <input type='text' name={product.inventory_product_id} value={product.expiry_date} placeholder='YYYY-MM-DD' style={{width:'120px'}}/></p>
+                        </div>
                     </div>
                     <div className='product-col col-2'>
                         <div className='qty-box'>
@@ -25,7 +28,7 @@ class Edit_Inventory extends React.Component {
                                 <p>Qty</p>
                             </div>
                             <div className='product-col-row row justify-content-center'>
-                                <h1><input type='number' name={product.product_id} value={product.inventory_qty} className='input-qty text-center'/></h1>
+                                <h1><input type='number' name={product.inventory_product_id} value={product.inventory_qty} className='input-qty text-center'/></h1>
                             </div>
                         </div>
                     </div>
@@ -35,6 +38,7 @@ class Edit_Inventory extends React.Component {
     return (
       <html>
         <head>
+            <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
             <link rel='stylesheet' href='/edit_inventory_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
@@ -55,7 +59,7 @@ class Edit_Inventory extends React.Component {
                     <div className='instructions'>
                         <div className='form-bowl'>
                             <div className='row justify-content-center'>
-                                <h4>Edit the quantity below</h4>
+                                <h4>Edit product details below</h4>
                             </div>
                             <br/>
                             <div className='row justify-content-center'>

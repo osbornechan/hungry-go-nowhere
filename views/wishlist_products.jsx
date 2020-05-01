@@ -35,6 +35,7 @@ class Wishlist_Products extends React.Component {
     return (
       <html>
         <head>
+            <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="/wishlist_products_styles.css"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
@@ -56,6 +57,8 @@ class Wishlist_Products extends React.Component {
                         <div className='col-5 left-instructions'>
                             <div className='row justify-content-center'>
                                 <h4>Add from past products</h4>
+                            </div>
+                             <div className='row justify-content-center'>
                                 <p>Enter product quantities below.</p>
                             </div>
                             <div className='row justify-content-center'>
