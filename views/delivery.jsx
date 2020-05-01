@@ -22,9 +22,6 @@ class Delivery extends React.Component {
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Category: {product.category_name}</p>
-                        </div>
-                        <div className='product-col-row row'>
                             <div className='btn-col col-4'>
                                 <button className='btn btn-info'><a href='#' className='text-white text-decoration-none'>Edit</a></button>
                             </div>
@@ -33,7 +30,7 @@ class Delivery extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='product-col col-2 justify-content-end'>
+                    <div className='product-col col-2 d-flex justify-content-center'>
                         <div className='qty-box'>
                             <div className='product-col-row row justify-content-center'>
                                 <p>Qty</p>
@@ -55,22 +52,26 @@ class Delivery extends React.Component {
         </head>
         <body>
             <div className='container'>
-                <div className='nav-bar-row row justify-content-center'>
-                    <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                        <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
+                <div className='row justify-content-center'>
+                    <div className='col-10'>
+                        <div className='nav-bar-row row justify-content-center'>
+                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
+                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
+                            </div>
+                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
+                            </div>
+                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
+                            </div>
+                        </div>
+                        <div className='add-button row justify-content-center'>
+                            <h4><a href='/delivery/new' className='text-white text-decoration-none'>Add New Delivery</a></h4>
+                        </div>
+                        <div className='row justify-content-between'>
+                            {allDeliveryProductsList}
+                        </div>
                     </div>
-                    <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                    </div>
-                    <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
-                    </div>
-                </div>
-                <div className='add-button row justify-content-center'>
-                    <h4><a href='/delivery/new' className='text-white text-decoration-none'>Add New Delivery</a></h4>
-                </div>
-                <div className='row justify-content-between'>
-                    {allDeliveryProductsList}
                 </div>
             </div>
             <br/>

@@ -4,7 +4,6 @@
 
 .nav-bar-col {
 	border: 1px solid white;
-	background-color: rgb(40,40,40);
 	color: white;
 	padding: 20px;
 }
@@ -35,7 +34,7 @@
 }
 
 .product-text {
-	padding-top: 15px;
+	padding-top: 5px;
 }
 
 .btn {
@@ -47,8 +46,8 @@
 }
 
 img {
-	width: 150px;
-	height: 150px;
+	width: 130px;
+	height: 130px;
 	border-radius: 10px;
 }
 
@@ -57,9 +56,10 @@ img {
 	border-radius: 5px;
 	padding: 20px 40px;
 	color: white;
+	height: 80%;
 }
 
-.add-button {
+.add-button-col {
 	background-color: #f5827c;
 	border: 1px solid white;
 	color: white;

@@ -122,6 +122,7 @@ const sha256 = require('js-sha256');
         let inventoryProduct = request.body;
         let inventoryQty = inventoryProduct.qty;
         let category = inventoryProduct.category;
+        let expiry = inventoryProduct.expiry;
 
         const whenModelIsDone = (error, newInventoryProduct) => {
             if (error) {
@@ -130,7 +131,7 @@ const sha256 = require('js-sha256');
                 response.redirect('/inventory/');
             }
         }
-        db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, whenModelIsDone);
+        db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, expiry, whenModelIsDone);
     }
 
     // ------- EDIT INVENTORY PRODUCT QUANTITY -------

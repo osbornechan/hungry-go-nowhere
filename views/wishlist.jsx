@@ -19,9 +19,6 @@ class Wishlist extends React.Component {
                             <p>Category: {product.category_name}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <div className='btn-col col-4'>
-                                <button className='btn btn-info'><a href='/wishlist/edit' className='text-white text-decoration-none'>Edit</a></button>
-                            </div>
                             <div className='btn-col col-3'>
                                 <form method='POST' action='/wishlist?_method=delete'>
                                     <input type='submit' name={product.product_id} value='Delete' className='btn btn-danger'/>
@@ -29,7 +26,7 @@ class Wishlist extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='product-col col-2'>
+                    <div className='product-col col-2 d-flex justify-content-center'>
                         <div className='qty-box'>
                             <div className='product-col-row row justify-content-center'>
                                 <p>Qty</p>
@@ -51,22 +48,31 @@ class Wishlist extends React.Component {
         </head>
         <body>
             <div className='container'>
-                <div className='nav-bar-row row justify-content-center'>
-                    <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                        <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
+                <div className='row justify-content-center'>
+                    <div className='col-10'>
+                        <div className='nav-bar-row row justify-content-center'>
+                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
+                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
+                            </div>
+                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
+                            </div>
+                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
+                            </div>
+                        </div>
+                        <div className='row justify-content-center'>
+                            <div className='add-button-col col-6 d-flex justify-content-center'>
+                                <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add Product</a></h4>
+                            </div>
+                            <div className='add-button-col col-6 d-flex justify-content-center'>
+                                <h4><a href='/wishlist/edit' className='text-white text-decoration-none'>Edit Product</a></h4>
+                            </div>
+                        </div>
+                        <div className='row justify-content-between'>
+                            {allWishlistProductsList}
+                        </div>
                     </div>
-                    <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                    </div>
-                    <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
-                    </div>
-                </div>
-                <div className='add-button row justify-content-center'>
-                    <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add Product to Wishlist</a></h4>
-                </div>
-                <div className='row justify-content-between'>
-                    {allWishlistProductsList}
                 </div>
             </div>
             <br/>

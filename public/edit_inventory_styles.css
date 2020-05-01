@@ -35,7 +35,7 @@
 }
 
 .product-text {
-	padding-top: 15px;
+	padding-top: 25px;
 }
 
 .btn-col {
@@ -57,6 +57,7 @@ img {
 	border-radius: 5px;
 	padding: 20px 45px;
 	color: white;
+	width: 50%;
 }
 
 .input-qty {
@@ -78,6 +79,6 @@ img {
 	background-color: white;
 	width: 43%;
 	padding: 30px;
-	border-radius: 5px 5px 240px 240px;
+	border-radius: 5px 5px 120px 120px;
 	margin: 0 auto;
 }

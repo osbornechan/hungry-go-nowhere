@@ -118,7 +118,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     // ----- ADD NEW PRODUCT TO INVENTORY ------
-    let insertNewInventoryProduct = (userId, inventoryProduct, inventoryQty, category, callback) => {
+    let insertNewInventoryProduct = (userId, inventoryProduct, inventoryQty, category, expiry, callback) => {
         //Query category_id of new product
         let query = "SELECT category_id FROM categories WHERE category_name='" + category + "'";
 
@@ -145,8 +145,8 @@ module.exports = (dbPoolInstance) => {
                             } else {
                                 //Add to wishlist_products relationship table
                                 let newProductId = parseInt(result.rows[0].product_id);
-                                query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty) VALUES ($1, $2, $3)';
-                                values = [userId, newProductId, inventoryQty];
+                                query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty, expiry_date) VALUES ($1, $2, $3, $4)';
+                                values = [userId, newProductId, inventoryQty, expiry];
 
                                 dbPoolInstance.query(query, values, (error, result) => {
                                     if (error) {

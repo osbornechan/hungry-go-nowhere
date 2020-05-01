@@ -41,57 +41,61 @@ class Wishlist_Products extends React.Component {
         </head>
         <body>
             <div className='container'>
-                <div className='nav-bar-row row justify-content-center'>
-                    <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                        <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
-                    </div>
-                    <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                    </div>
-                    <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                        <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
+                <div className='row justify-content-center'>
+                    <div className='col-10'>
+                        <div className='nav-bar-row row justify-content-center'>
+                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
+                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
+                            </div>
+                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
+                            </div>
+                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
+                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
+                            </div>
+                        </div>
+                        <form method='POST' action='/wishlist/products'>
+                            <div className='instructions row justify-content-center'>
+                                <div className='col-5 left-instructions'>
+                                    <div className='row justify-content-center'>
+                                        <h4>Add from past products</h4>
+                                    </div>
+                                     <div className='row justify-content-center'>
+                                        <p>Enter product quantities below.</p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <input type='submit' value='Add Past Product' className='btn btn-info'/>
+                                    </div>
+                                </div>
+                                <div className='col-2' style={{marginLeft: "-10px", marginTop:'20px'}}>
+                                    <div className='row justify-content-center'>
+                                        <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back</a></button>
+                                    </div>
+                                </div>
+                                <div className='col-5 right-instructions'>
+                                    <div className='row justify-content-center' style={{paddingTop:"10px"}}>
+                                        <h4>Add a new product</h4>
+                                    </div>
+                                    <br/>
+                                    <div className='row justify-content-center'>
+                                        <button className='btn btn-primary'><a href='/wishlist/products/new/' className='text-white text-decoration-none'>Add New Product</a></button>
+                                    </div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col-6'>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginRight:'185px'}}></div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginLeft:'185px'}}></div>
+                                </div>
+                            </div>
+                            </div>
+                            <div className='row justify-content-between'>
+                                {allNonWishlistProductsList}
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <form method='POST' action='/wishlist/products'>
-                    <div className='instructions row justify-content-center'>
-                        <div className='col-5 left-instructions'>
-                            <div className='row justify-content-center'>
-                                <h4>Add from past products</h4>
-                            </div>
-                             <div className='row justify-content-center'>
-                                <p>Enter product quantities below.</p>
-                            </div>
-                            <div className='row justify-content-center'>
-                                <input type='submit' value='Add Past Product' className='btn btn-info'/>
-                            </div>
-                        </div>
-                        <div className='col-2' style={{marginLeft: "-10px", marginTop:'20px'}}>
-                            <div className='row justify-content-center'>
-                                <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back</a></button>
-                            </div>
-                        </div>
-                        <div className='col-5 right-instructions'>
-                            <div className='row justify-content-center' style={{paddingTop:"10px"}}>
-                                <h4>Add a new product</h4>
-                            </div>
-                            <br/>
-                            <div className='row justify-content-center'>
-                                <button className='btn btn-primary'><a href='/wishlist/products/new/' className='text-white text-decoration-none'>Add New Product</a></button>
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <div className='col-6'>
-                                <div className='row' style={{backgroundColor: 'white', height:'15px', width:'225px', marginRight:'190px'}}></div>
-                            </div>
-                            <div className='col-6'>
-                                <div className='row' style={{backgroundColor: 'white', height:'15px', width:'225px', marginLeft:'190px'}}></div>
-                        </div>
-                    </div>
-                    </div>
-                    <div className='row justify-content-between'>
-                        {allNonWishlistProductsList}
-                    </div>
-                </form>
             </div>
             <br/>
         </body>

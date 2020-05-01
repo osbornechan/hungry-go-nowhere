@@ -4,7 +4,6 @@
 
 .nav-bar-col {
 	border: 1px solid white;
-	background-color: rgb(40,40,40);
 	color: white;
 	padding: 20px;
 }
@@ -43,8 +42,8 @@
 }
 
 img {
-	width: 150px;
-	height: 150px;
+	width: 130px;
+	height: 130px;
 	border-radius: 10px;
 }
 
@@ -54,6 +53,7 @@ img {
 	width: 50%;
 	padding: 20px 40px;
 	color: white;
+	height: 70%;
 }
 
 .add-button {
