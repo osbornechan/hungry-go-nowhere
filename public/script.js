@@ -1,11 +1,10 @@
-let fairprice = document.querySelector('#fairprice');
-let coldStorage = document.querySelector('#coldStorage');
-let redMart = document.querySelector('#redMart');
+const coldStorage = document.getElementById('Cold Storage');
+const redMart = document.querySelector('#RedMart');
+const fairprice = document.querySelector('#Fairprice');
 
-let products = document.querySelectorAll('.product-row')
+const supermarketProducts = document.querySelectorAll('.supermarket-product')
 
-products.forEach(product => {
-    console.log(product.classList.value)
+supermarketProducts.forEach(product => {
     if (product.classList.value.includes('Fairprice')) {
         fairprice.appendChild(product);
     } else if (product.classList.value.includes('Cold Storage')) {

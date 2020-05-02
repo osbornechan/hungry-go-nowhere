@@ -184,12 +184,12 @@ const sha256 = require('js-sha256');
     let deliveryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
 
-        const whenModelIsDone = (err, allDeliveryProducts) => {
+        const whenModelIsDone = (err, deliveryData) => {
             if (err) {
                 console.log('Query error', err);
             } else {
                 const data = {
-                    allDeliveryProducts: allDeliveryProducts
+                    deliveryData: deliveryData
                 }
                 response.render('delivery', data);
             }

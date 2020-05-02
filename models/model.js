@@ -216,7 +216,24 @@ module.exports = (dbPoolInstance) => {
                 callback(error, null);
             } else {
                 if (result.rows.length > 0) {
-                    callback(null, result.rows);
+                    let allSupermarketProducts = result.rows;
+                    let query = 'SELECT * FROM supermarkets';
+
+                    dbPoolInstance.query(query, (error, result) => {
+                        if (error) {
+                            callback(error, null);
+                        } else {
+                            if (result.rows.length > 0) {
+                                const deliveryData = {
+                                    allSupermarketProducts: allSupermarketProducts,
+                                    supermarkets: result.rows
+                                }
+                                callback(null, deliveryData);
+                            } else {
+                                callback(null, null);
+                            }
+                        }
+                    })
                 } else {
                     callback(null, null);
                 }
