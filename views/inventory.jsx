@@ -3,6 +3,7 @@ const React = require("react");
 class Inventory extends React.Component {
   render() {
 
+    console.log(this.props.allInventoryProducts)
     const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
@@ -62,10 +63,13 @@ class Inventory extends React.Component {
                             </div>
                         </div>
                         <div className='row justify-content-center'>
-                            <div className='add-button-col col-6 d-flex justify-content-center'>
+                            <div className='add-button-col col-2 d-flex justify-content-center'>
+                                Sort
+                            </div>
+                            <div className='add-button-col col-5 d-flex justify-content-center'>
                                 <h4><a href='/inventory/products' className='text-white text-decoration-none'>Add Product</a></h4>
                             </div>
-                            <div className='add-button-col col-6 d-flex justify-content-center'>
+                            <div className='add-button-col col-5 d-flex justify-content-center'>
                                 <h4><a href='/inventory/edit' className='text-white text-decoration-none'>Edit Product</a></h4>
                             </div>
                         </div>

@@ -2,7 +2,7 @@ const React = require("react");
 
 class Edit_Inventory extends React.Component {
   render() {
-    console.log(this.props.allInventoryProducts)
+
     const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>

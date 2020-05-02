@@ -4,14 +4,13 @@ class Delivery extends React.Component {
   render() {
 
     const allDeliveryProductsList = this.props.allDeliveryProducts.map(product => {
-        return (<div className='product-row row'>
+        let productClass = 'product-row row ' + product.supermarket_name;
+        //let productId
+        return (<div className={productClass}>
                     <div className='product-col col-4'>
                         <img src={product.img} alt={product.product_name}/>
                     </div>
                     <div className='product-col col-6'>
-                        <div className='product-col-row row'>
-                            <p>Supermarket: {product.supermarket_name}</p>
-                        </div>
                         <div className='product-col-row row'>
                             <p>Delivery Date: {product.delivery_date}</p>
                         </div>
@@ -22,9 +21,6 @@ class Delivery extends React.Component {
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <div className='btn-col col-4'>
-                                <button className='btn btn-info'><a href='#' className='text-white text-decoration-none'>Edit</a></button>
-                            </div>
                             <div className='btn-col col-3'>
                                 <button className='btn btn-danger'><a href='#' className='text-white text-decoration-none'>Delete</a></button>
                             </div>
@@ -68,13 +64,29 @@ class Delivery extends React.Component {
                         <div className='add-button row justify-content-center'>
                             <h4><a href='/delivery/new' className='text-white text-decoration-none'>Add New Delivery</a></h4>
                         </div>
-                        <div className='row justify-content-between'>
+                        <div className='supermarket-banner row justify-content-center'>
+                            <img src='https://pluspng.com/img-png/fairprice-logo-png-ntuc-fairprice-logo-logotype-4380.png' style={{width:'30%', height:'30%', padding:'5px'}}/>
+                        </div>
+                        <div className='row justify-content-between' id='fairprice'>
                             {allDeliveryProductsList}
+                        </div>
+                        <div className='supermarket-banner row justify-content-center'>
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDRL44fJQ5UZABdP5FwxWYIo-ohUB6j3NsLQmVYonj_zUuxs6E&usqp=CAU' style={{width:'40%', height:'40%', padding:'5px'}}/>
+                        </div>
+                        <div className='row justify-content-between' id='coldStorage'>
+
+                        </div>
+                         <div className='supermarket-banner row justify-content-center'>
+                            <img src='https://dsgcp.com/assets/Uploads/redmart-logo-red.png' style={{width:'30%', height:'30%', padding:'5px'}}/>
+                        </div>
+                        <div className='row justify-content-between' id='redMart'>
+
                         </div>
                     </div>
                 </div>
             </div>
             <br/>
+            <script src='../script.js'></script>
         </body>
       </html>
     );
