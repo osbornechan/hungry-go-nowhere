@@ -42,7 +42,7 @@ class Edit_Wishlist extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>

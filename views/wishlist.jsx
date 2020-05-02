@@ -21,7 +21,7 @@ class Wishlist extends React.Component {
                         <div className='product-col-row row'>
                             <div className='btn-col col-3'>
                                 <form method='POST' action='/wishlist?_method=delete'>
-                                    <input type='submit' name={product.product_id} value='Delete' className='btn btn-danger'/>
+                                    <input type='submit' name={product.wishlist_product_id} value='Delete' className='btn btn-danger'/>
                                 </form>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ class Wishlist extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
@@ -63,10 +63,10 @@ class Wishlist extends React.Component {
                         </div>
                         <div className='row justify-content-center'>
                             <div className='add-button-col col-6 d-flex justify-content-center'>
-                                <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>Add Product</a></h4>
+                                <h4><a href='/wishlist/products/' className='text-white text-decoration-none'>+ Add Product</a></h4>
                             </div>
                             <div className='add-button-col col-6 d-flex justify-content-center'>
-                                <h4><a href='/wishlist/edit' className='text-white text-decoration-none'>Edit Product</a></h4>
+                                <h4><a href='/wishlist/edit' className='text-white text-decoration-none'># Edit Product</a></h4>
                             </div>
                         </div>
                         <div className='row justify-content-between'>

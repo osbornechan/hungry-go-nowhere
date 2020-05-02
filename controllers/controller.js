@@ -6,7 +6,7 @@ const sha256 = require('js-sha256');
     // ==============================
 
     /* ================================================================
-    //////////////////      LOGIN CONTROLLERS           ///////////////
+    //////////////////     *LOGIN CONTROLLERS           ///////////////
     ================================================================ */
 
     // ------- MAIN PAGE -----
@@ -51,7 +51,7 @@ const sha256 = require('js-sha256');
     }
 
     /* ================================================================
-    ///////////////      INVENTORY CONTROLLERS           /////////////
+    ///////////////     *INVENTORY CONTROLLERS           /////////////
     ================================================================ */
     let inventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
@@ -166,7 +166,7 @@ const sha256 = require('js-sha256');
 
     // ------- DELETE PRODUCT FROM INVENTORY -------
     let deleteInventoryProductControllerCallback = (request, response) => {
-        let productIdToDelete = Object.keys(request.body)[0];
+        let inventoryProductIdToDelete = Object.keys(request.body)[0];
 
         const whenModelIsDone = (error, deleteInventoryProduct) => {
             if (error) {
@@ -175,11 +175,11 @@ const sha256 = require('js-sha256');
                 response.redirect('/inventory/');
             }
         }
-        db.model.deleteFromInventoryProduct(productIdToDelete, whenModelIsDone);
+        db.model.deleteFromInventoryProduct(inventoryProductIdToDelete, whenModelIsDone);
     }
 
     /* ================================================================
-    ///////////////      DELIVERY CONTROLLERS           ///////////////
+    ///////////////     *DELIVERY CONTROLLERS           ///////////////
     ================================================================ */
     let deliveryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
@@ -197,8 +197,40 @@ const sha256 = require('js-sha256');
         db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
+    // ---------- ADD NEW SUPERMARKET ------------
+    let newSupermarketControllerCallback = (request, response) => {
+        response.render('new_supermarket');
+    }
+
+    let addSupermarketControllerCallback = (request, response) => {
+        let newSupermarket = request.body;
+
+        const whenModelIsDone = (error, newSupermarket) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/delivery/');
+            }
+        }
+        db.model.insertSupermarket(newSupermarket, whenModelIsDone);
+    }
+
+    // ------- DELETE PRODUCT FROM DELIVERY -------
+    let deleteDeliveryProductControllerCallback = (request, response) => {
+        let deliveryProductIdToDelete = Object.keys(request.body)[0];
+
+        const whenModelIsDone = (error, deleteDeliveryProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/delivery/');
+            }
+        }
+        db.model.deleteFromDeliveryProduct(deliveryProductIdToDelete, whenModelIsDone);
+    }
+
     /* ================================================================
-    ////////////////      WISHLIST CONTROLLERS           /////////////
+    ////////////////     *WISHLIST CONTROLLERS           /////////////
     ================================================================ */
     // ------- WISHLIST PAGE -------
     let wishlistControllerCallback = (request, response) => {
@@ -313,7 +345,7 @@ const sha256 = require('js-sha256');
 
     // ------- DELETE PRODUCT FROM WISHLIST -------
     let deleteWishlistProductControllerCallback = (request, response) => {
-        let productIdToDelete = Object.keys(request.body)[0];
+        let wishlistProductIdToDelete = Object.keys(request.body)[0];
 
         const whenModelIsDone = (error, deleteWishlistProduct) => {
             if (error) {
@@ -322,7 +354,7 @@ const sha256 = require('js-sha256');
                 response.redirect('/wishlist/');
             }
         }
-        db.model.deleteFromWishlistProduct(productIdToDelete, whenModelIsDone);
+        db.model.deleteFromWishlistProduct(wishlistProductIdToDelete, whenModelIsDone);
     }
 
     /**
@@ -346,6 +378,9 @@ const sha256 = require('js-sha256');
     deleteInventoryProduct: deleteInventoryProductControllerCallback,
     // DELIVERY CONTROLLERS
     delivery: deliveryControllerCallback,
+    newSupermarket: newSupermarketControllerCallback,
+    addSupermarket: addSupermarketControllerCallback,
+    deleteDeliveryProduct: deleteDeliveryProductControllerCallback,
     // WISHLIST CONTROLLERS
     wishlist: wishlistControllerCallback,
     existingWishlistProducts: existingWishlistProductsControllerCallback,

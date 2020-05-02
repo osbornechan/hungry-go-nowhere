@@ -3,7 +3,6 @@ const React = require("react");
 class Inventory extends React.Component {
   render() {
 
-    console.log(this.props.allInventoryProducts)
     const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
         return (<div className='product-row row'>
                     <div className='product-col col-4'>
@@ -22,7 +21,7 @@ class Inventory extends React.Component {
                         <div className='product-col-row row'>
                             <form method='POST' action='/inventory?_method=delete'>
                                 <div className='btn-col col-3'>
-                                    <input type='submit' name={product.product_id} value='Delete' className='btn btn-danger'/>
+                                    <input type='submit' name={product.inventory_product_id} value='Delete' className='btn btn-danger'/>
                                 </div>
                             </form>
                         </div>
@@ -50,7 +49,7 @@ class Inventory extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
@@ -67,10 +66,10 @@ class Inventory extends React.Component {
                                 Sort
                             </div>
                             <div className='add-button-col col-5 d-flex justify-content-center'>
-                                <h4><a href='/inventory/products' className='text-white text-decoration-none'>Add Product</a></h4>
+                                <h4><a href='/inventory/products' className='text-white text-decoration-none'>+ Add Product</a></h4>
                             </div>
                             <div className='add-button-col col-5 d-flex justify-content-center'>
-                                <h4><a href='/inventory/edit' className='text-white text-decoration-none'>Edit Product</a></h4>
+                                <h4><a href='/inventory/edit' className='text-white text-decoration-none'># Edit Product</a></h4>
                             </div>
                         </div>
                         <div className='row justify-content-between'>

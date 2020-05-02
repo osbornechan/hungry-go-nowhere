@@ -6,7 +6,7 @@ module.exports = (dbPoolInstance) => {
     // `dbPoolInstance` is accessible within this function scope
 
     /* ================================================================
-    ///////////////////      GENERAL QUERIES           ///////////////
+    ///////////////////     *GENERAL QUERIES           ///////////////
     ================================================================ */
 
     let getAllUsers = (callback) => {
@@ -58,7 +58,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     /* ================================================================
-    //////////////////      INVENTORY QUERIES           //////////////
+    //////////////////      *INVENTORY QUERIES           //////////////
     ================================================================ */
 
     let getAllInventoryProducts = (userId, callback) => {
@@ -187,8 +187,8 @@ module.exports = (dbPoolInstance) => {
     }
 
     // --------- DELETE PRODUCT FROM INVENTORY -----------
-    let deleteFromInventoryProduct = (productIdToDelete, callback) => {
-        let query = 'DELETE FROM inventories_products WHERE product_id=' + productIdToDelete;
+    let deleteFromInventoryProduct = (inventoryProductIdToDelete, callback) => {
+        let query = 'DELETE FROM inventories_products WHERE inventory_product_id=' + inventoryProductIdToDelete;
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -205,11 +205,11 @@ module.exports = (dbPoolInstance) => {
     }
 
     /* ================================================================
-    ///////////////////      DELIVERY QUERIES           ///////////////
+    ///////////////////     *DELIVERY QUERIES           ///////////////
     ================================================================ */
 
     let getAllDeliveryProducts = (userId, callback) => {
-        let query = 'SELECT users.user_name, deliveries.delivery_id, deliveries.delivery_date, supermarkets.supermarket_name, delivery_qty, products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN deliveries ON (users.user_id = deliveries.user_id) INNER JOIN supermarkets ON (deliveries.supermarket_id = supermarkets.supermarket_id) INNER JOIN deliveries_products ON (deliveries.delivery_id = deliveries_products.delivery_id) INNER JOIN products ON (deliveries_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY deliveries.delivery_date ASC';
+        let query = 'SELECT users.user_name, deliveries.delivery_id, deliveries.delivery_date, supermarkets.supermarket_name, deliveries_products.delivery_product_id,  deliveries_products.delivery_qty, products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN deliveries ON (users.user_id = deliveries.user_id) INNER JOIN supermarkets ON (deliveries.supermarket_id = supermarkets.supermarket_id) INNER JOIN deliveries_products ON (deliveries.delivery_id = deliveries_products.delivery_id) INNER JOIN products ON (deliveries_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY deliveries.delivery_date ASC';
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -241,13 +241,50 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    // -------- ADD NEW SUPERMARKET ----------
+    let insertSupermarket = (newSupermarket, callback) => {
+        let query = 'INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ($1, $2, $3)';
+        let values = [newSupermarket.supermarket_name, newSupermarket.logo, newSupermarket.website];
+
+        dbPoolInstance.query(query, values, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    console.log('Added new supermarket!');
+                    callback(null, null);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
+    // --------- DELETE PRODUCT FROM DELIVERY -----------
+    let deleteFromDeliveryProduct = (deliveryProductIdToDelete, callback) => {
+        let query = 'DELETE FROM deliveries_products WHERE delivery_product_id=' + deliveryProductIdToDelete;
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    console.log('Deleted product from delivery!');
+                    callback(null, null);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
     /* ================================================================
-    ///////////////////      WISHLIST QUERIES           ///////////////
+    ///////////////////     *WISHLIST QUERIES           ///////////////
     ================================================================ */
 
     // ----- DISPLAY WISHLIST PAGE ------
     let getAllWishlistProducts = (userId, callback) => {
-        let query = 'SELECT users.user_name, wishlists_products.wishlist_qty, products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN wishlists ON (users.user_id = wishlists.user_id) INNER JOIN wishlists_products ON (wishlists.wishlist_id = wishlists_products.wishlist_id) INNER JOIN products ON (wishlists_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY products.product_id ASC';
+        let query = 'SELECT users.user_name, wishlists_products.wishlist_product_id, wishlists_products.wishlist_qty, products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM users INNER JOIN wishlists ON (users.user_id = wishlists.user_id) INNER JOIN wishlists_products ON (wishlists.wishlist_id = wishlists_products.wishlist_id) INNER JOIN products ON (wishlists_products.product_id = products.product_id) INNER JOIN categories ON (products.category_id = categories.category_id) WHERE users.user_id=' + userId + ' ORDER BY products.product_id ASC';
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -364,8 +401,8 @@ module.exports = (dbPoolInstance) => {
     }
 
     // --------- DELETE PRODUCT FROM WISHLIST -----------
-    let deleteFromWishlistProduct = (productIdToDelete, callback) => {
-        let query = 'DELETE FROM wishlists_products WHERE product_id=' + productIdToDelete;
+    let deleteFromWishlistProduct = (wishlistProductIdToDelete, callback) => {
+        let query = 'DELETE FROM wishlists_products WHERE wishlist_product_id=' + wishlistProductIdToDelete;
 
         dbPoolInstance.query(query, (error, result) => {
             if (error) {
@@ -395,6 +432,8 @@ module.exports = (dbPoolInstance) => {
         deleteFromInventoryProduct,
         // DELIVERY QUERIES
         getAllDeliveryProducts,
+        insertSupermarket,
+        deleteFromDeliveryProduct,
         // WISHLIST QUERIES
         getAllWishlistProducts,
         getAllNonWishlistProducts,

@@ -17,7 +17,7 @@ class New_Wishlist_Product extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
@@ -43,7 +43,7 @@ class New_Wishlist_Product extends React.Component {
                                         <p>Brand: <input type='text' name='brand' placeholder='Enter brand name'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Image URL: <input type='text' name='img' placeholder='Enter image URL'/></p>
+                                        <p>Image: <input type='text' name='img' placeholder='Enter image URL'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
                                         <p>Quantity: <input type='number' name='qty' placeholder='Enter quantity'/></p>
@@ -73,6 +73,7 @@ class New_Wishlist_Product extends React.Component {
                     </div>
                 </div>
             </div>
+            <br/>
         </body>
       </html>
     );

@@ -37,6 +37,13 @@ module.exports = (app, allModels) => {
     // ==== Delivery Page ====
     app.get('/delivery/', allControllers.delivery);
 
+    // ----- Add new supermarket ------
+    app.get('/delivery/supermarket/new', allControllers.newSupermarket);
+    app.post('/delivery/supermarket', allControllers.addSupermarket);
+
+    // ----- Delete product from inventory ------
+    app.delete('/delivery', allControllers.deleteDeliveryProduct);
+
 
     // ==== Wishlist Page ====
     app.get('/wishlist/', allControllers.wishlist);

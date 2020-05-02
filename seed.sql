@@ -13,6 +13,15 @@ INSERT INTO products (product_name, brand, img, category_id) VALUES ('Garlic Chi
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Cavendish Banana','Pasar','https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRLM9JoMhGHGQh7Yk-2mfNbe2XTSkkT31ssRgUs-ynXbLxTu5yx&usqp=CAU',6);
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Chilli Tuna','Ayam Brand','https://laz-img-sg.alicdn.com/p/5cbf63b51d41659f80f4ed40f5b93315.jpg_340x340q80.jpg_.webp',7);
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Spicy Alfredo Fusilli','Maggi','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/13147242_LXL1.jpg',7);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Lettuce','Pasar','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/11870108_XL1.jpg',3);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Cheese','Kraft','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/322090_RXL1.jpg',1);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Bacon','Oscar Mayer','https://target.scene7.com/is/image/Target/GUEST_e2af5cfa-9f2a-415c-b5b8-2d2391982bb1?wid=488&hei=488&fmt=pjpeg',2);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Nuggets','Farmland','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/355504_LXL1.jpg',5);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Carrots','Pasar','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/13000321_BXL1.jpg',3);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Egg Tofu','Unicurd','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/13012876_LXL1.jpg',1);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Pizza','Ristorante','https://www.waangoo.com/content/images/thumbs/0019546_dr-oetker-ristorante-mozzarella-pizza-frozen_600.jpeg',5);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Vanilla Ice Cream','Movenpick','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/13002251_LXL1.jpg',5);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Orange Juice',"Florida's Natural",'https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/12570035_LXL1.jpg',7);
 
 
 /* SEED DATA FOR CATEGORIES */
@@ -27,9 +36,9 @@ INSERT INTO categories (category_name) VALUES ('Spice & Condiment');
 
 
 /* SEED DATA FOR SUPERMARKETS */
-INSERT INTO supermarkets (supermarket_name) VALUES ('Fairprice');
-INSERT INTO supermarkets (supermarket_name) VALUES ('Cold Storage');
-INSERT INTO supermarkets (supermarket_name) VALUES ('RedMart');
+INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('Fairprice', 'https://pluspng.com/img-png/fairprice-logo-png-ntuc-fairprice-logo-logotype-4380.png','https://www.fairprice.com.sg/');
+INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('Cold Storage', 'https://d3cmfj7epb3vcb.cloudfront.net/files/59a2498e49c5fbae02fe9276260607a750b2dda7e6fc2ff37ad477e8ba03d82f.png','https://coldstorage.com.sg/');
+INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('RedMart', 'https://dsgcp.com/assets/Uploads/redmart-logo-red.png','https://redmart.lazada.sg/#home');
 
 
 /* SEED DATA FOR DELIVERIES */

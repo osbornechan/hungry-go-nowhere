@@ -16,7 +16,7 @@ class Edit_Inventory extends React.Component {
                             <p>Brand: {product.brand}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Expiry Date: <input type='text' name={product.inventory_product_id} value={product.expiry_date} placeholder='YYYY-MM-DD' style={{width:'120px'}}/></p>
+                            <p>Expiry Date: <input type='text' name={product.inventory_product_id} value={product.expiry_date} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
                         </div>
                     </div>
                     <div className='product-col col-2 d-flex justify-content-center'>
@@ -42,7 +42,7 @@ class Edit_Inventory extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
@@ -71,7 +71,7 @@ class Edit_Inventory extends React.Component {
                                     </div>
                                 </div>
                                 <div className='row justify-content-center'>
-                                    <div className='col-2' style={{backgroundColor: 'white', height:'15px'}}></div>
+                                    <div className='col-2' style={{backgroundColor: 'white', height:'15px', marginLeft:'10px'}}></div>
                                 </div>
                             </div>
                             <div className='row justify-content-between'>

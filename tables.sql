@@ -19,7 +19,9 @@ category_name TEXT
 
 CREATE TABLE supermarkets (
 supermarket_id SERIAL PRIMARY KEY,
-supermarket_name TEXT
+supermarket_name TEXT,
+logo TEXT,
+website TEXT
 );
 
 CREATE TABLE deliveries (

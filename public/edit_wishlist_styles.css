@@ -47,17 +47,16 @@
 }
 
 img {
-	width: 120px;
-	height: 120px;
+	width: 110px;
+	height: 110px;
 	border-radius: 10px;
 }
 
 .qty-box {
 	background-color: #f5827c;
 	border-radius: 5px;
-	padding: 20px 45px;
+	padding: 20px 25px;
 	color: white;
-	width: 50%;
 }
 
 .input-qty {

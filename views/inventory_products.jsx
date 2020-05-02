@@ -19,7 +19,7 @@ class Inventory_Products extends React.Component {
                             <p>Category: {product.category_name}</p>
                         </div>
                         <div className='product-col-row row'>
-                            <p>Expiry Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'120px'}}/></p>
+                            <p>Expiry Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
                         </div>
                     </div>
                     <div className='product-col col-2'>
@@ -45,7 +45,7 @@ class Inventory_Products extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-10'>
+                    <div className='col-9'>
                         <div className='nav-bar-row row justify-content-center'>
                             <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
                                 <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
@@ -86,10 +86,10 @@ class Inventory_Products extends React.Component {
                                 </div>
                                 <div className='row'>
                                     <div className='col-6'>
-                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginRight:'185px'}}></div>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginRight:'155px'}}></div>
                                     </div>
                                     <div className='col-6'>
-                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginLeft:'185px'}}></div>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginLeft:'156px'}}></div>
                                 </div>
                             </div>
                             </div>
