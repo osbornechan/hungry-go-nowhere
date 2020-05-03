@@ -26,7 +26,7 @@ class Edit_Inventory extends React.Component {
                                     <p>Qty</p>
                                 </div>
                                 <div className='product-col-row row justify-content-center'>
-                                    <h1><input type='number' name={product.inventory_product_id} value={product.inventory_qty} className='input-qty text-center'/></h1>
+                                    <h1><input type='number' min='1' name={product.inventory_product_id} value={product.inventory_qty} className='input-qty text-center'/></h1>
                                 </div>
                             </div>
                         </div>

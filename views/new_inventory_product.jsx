@@ -46,7 +46,7 @@ class New_Inventory_Product extends React.Component {
                                         <p>Image: <input type='text' name='img' placeholder='Enter image URL'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Quantity: <input type='number' name='qty' placeholder='Enter quantity'/></p>
+                                        <p>Quantity: <input type='number' min='1' name='qty' placeholder='Enter quantity'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
                                         <p>Expiry Date: <input type='text' name='expiry' placeholder='YYYY-MM-DD'/></p>

@@ -290,22 +290,24 @@ module.exports = (dbPoolInstance) => {
         //e.g. productDetailsToAdd = [productId, [delivery_date, supermarket_name, delivery_qty]]
         //Get supermarket_id
         productDetailsToAdd.forEach((newProduct, index) => {
-            let query = "SELECT supermarket_id FROM supermarkets WHERE supermarket_name='" + newProduct[1][1] + "'";
+            console.log('newProduct:', newProduct)
+            let query = "SELECT supermarket_id FROM supermarkets WHERE supermarket_name='" + newProduct[1][0] + "'";
 
             dbPoolInstance.query(query, (error, result) => {
                 if (error) {
                     callback(error, null);
                 } else {
+                    console.log('supermarketid:',result.rows)
                     let supermarketId = parseInt(result.rows[0].supermarket_id);
                     query = 'INSERT INTO deliveries (user_id, supermarket_id, delivery_date) VALUES ($1, $2, $3)';
-                    let values = [userId, supermarketId, newProduct[1][0]];
+                    let values = [userId, supermarketId, newProduct[1][1]];
 
                     dbPoolInstance.query(query, values, (error, result) => {
                         if (error) {
                             callback(error, null);
                         } else {
                             //Get newly added delivery_id
-                            query = "SELECT delivery_id FROM deliveries WHERE supermarket_id=" + supermarketId + " AND delivery_date='" + newProduct[1][0] + "' AND user_id=" + userId;
+                            query = "SELECT delivery_id FROM deliveries WHERE supermarket_id=" + supermarketId + " AND delivery_date='" + newProduct[1][1] + "' AND user_id=" + userId;
 
                             dbPoolInstance.query(query, (error, result) => {
                                 if (error) {
@@ -431,6 +433,41 @@ module.exports = (dbPoolInstance) => {
                                         })
                                     }
                                 })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+     // ---------- MARGE
+    let mergeDeliveryWithInventory = (userId, deliveryProductId, callback) => {
+        let query = 'SELECT * FROM deliveries_products WHERE delivery_product_id=' + deliveryProductId;
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                let deliveryQty = result.rows[0].delivery_qty;
+                let productId = result.rows[0].product_id;
+                //Delete from deliveries_products
+                query = 'DELETE FROM deliveries_products WHERE delivery_product_id=' + deliveryProductId;
+
+                dbPoolInstance.query(query, (error, result) => {
+                    if (error) {
+                        callback(error, null);
+                    } else {
+                        //Add to inventories_products
+                        query = 'INSERT INTO inventories_products (inventory_id, product_id, inventory_qty) VALUES ($1, $2, $3)';
+                        let values = [userId, productId, deliveryQty];
+
+                        dbPoolInstance.query(query, values, (error, result) => {
+                            if (error) {
+                                callback(null, null);
+                            } else {
+                                console.log('Merged delivery product with inventory!');
+                                callback(null, null);
                             }
                         })
                     }
@@ -616,6 +653,7 @@ module.exports = (dbPoolInstance) => {
         insertPastDeliveryProduct,
         getAllNewDeliveryDetails,
         insertNewDeliveryProduct,
+        mergeDeliveryWithInventory,
         deleteFromDeliveryProduct,
         // WISHLIST QUERIES
         getAllWishlistProducts,

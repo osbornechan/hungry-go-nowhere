@@ -49,6 +49,9 @@ module.exports = (app, allModels) => {
     app.get('/delivery/new', allControllers.newDelivery);
     app.post('/delivery', allControllers.insertNewProductToDelivery);
 
+    // ----- Merge with Inventory -------
+    app.post('/delivery/inventory/', allControllers.mergeWithInventory);
+
     // ----- Delete product from inventory ------
     app.delete('/delivery', allControllers.deleteDeliveryProduct);
 

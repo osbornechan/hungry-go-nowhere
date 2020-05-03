@@ -4,11 +4,12 @@ class Delivery extends React.Component {
   render() {
 
     const supermarketsList = this.props.deliveryData.supermarkets.map(supermarket => {
+        let supermarketPage = '/delivery/supermarket/' + supermarket.supermarket_name.replace(/\s+/g, '-');
         return (<div>
                     <div className='supermarket-banner row'>
                         <a href={supermarket.website} target="_blank"><img src={supermarket.logo} style={{width:'40%', height:'90%', padding:'5px 20px', marginLeft:'250px'}}/></a>
                     </div>
-                    <div className='row justify-content-between' id={supermarket.supermarket_name}>
+                    <div className='supermarket-container row justify-content-between' id={supermarket.supermarket_name}>
                     </div>
                 </div>)
     })
@@ -30,13 +31,18 @@ class Delivery extends React.Component {
                             <div className='product-col-row row'>
                                 <p>Brand: {product.brand}</p>
                             </div>
-                            <form method='POST' action='/delivery?_method=delete'>
-                                <div className='product-col-row row'>
+                            <div className='product-col-row row'>
+                                <form method='POST' action='/delivery/inventory/'>
+                                    <div className='btn-col col-3'>
+                                        <input type='submit' name={product.delivery_product_id} value='Merge' className='btn btn-info'/>
+                                    </div>
+                                </form>
+                                <form method='POST' action='/delivery?_method=delete'>
                                     <div className='btn-col col-3'>
                                         <input type='submit' name={product.delivery_product_id} value='Delete' className='btn btn-danger'/>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                         <div className='product-col col-2 d-flex justify-content-center'>
                             <div className='qty-box'>

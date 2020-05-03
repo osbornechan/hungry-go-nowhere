@@ -37,7 +37,7 @@ class Delivery_Products extends React.Component {
                                     <p>Qty</p>
                                 </div>
                                 <div className='product-col-row row justify-content-center'>
-                                    <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
+                                    <h1><input type='number' min='1' name={product.product_id} className='input-qty text-center'/></h1>
                                 </div>
                             </div>
                         </div>

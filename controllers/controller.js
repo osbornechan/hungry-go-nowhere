@@ -274,7 +274,7 @@ const sha256 = require('js-sha256');
             if (error) {
                 console.log('Query error', error);
             } else {
-                //response.redirect('/delivery/');
+                response.redirect('/delivery/');
             }
         }
         db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
@@ -408,6 +408,22 @@ const sha256 = require('js-sha256');
         db.model.updateWishlistProductQty(productIdToEdit, whenModelIsDone);
     }
 
+
+    let mergeWithInventoryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let deliveryProductId = Object.keys(request.body)[0];
+
+        const whenModelIsDone = (error, wishlistProductQty) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.mergeDeliveryWithInventory(userId, deliveryProductId, whenModelIsDone);
+    }
+
+
     // ------- DELETE PRODUCT FROM WISHLIST -------
     let deleteWishlistProductControllerCallback = (request, response) => {
         let wishlistProductIdToDelete = Object.keys(request.body)[0];
@@ -449,6 +465,7 @@ const sha256 = require('js-sha256');
     insertPastProductToDelivery: insertPastProductToDeliveryControllerCallback,
     newDelivery: newDeliveryControllerCallback,
     insertNewProductToDelivery: insertNewProductToDeliveryControllerCallback,
+    mergeWithInventory: mergeWithInventoryControllerCallback,
     deleteDeliveryProduct: deleteDeliveryProductControllerCallback,
     // WISHLIST CONTROLLERS
     wishlist: wishlistControllerCallback,
