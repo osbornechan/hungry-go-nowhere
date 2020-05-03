@@ -4,31 +4,33 @@ class Inventory_Products extends React.Component {
   render() {
 
     const allProductsList = this.props.allProducts.map(product => {
-        return (<div className='product-row row'>
-                    <div className='product-col col-4'>
-                        <img src={product.img} alt={product.product_name}/>
-                    </div>
-                    <div className='product-col col-6 product-text'>
-                        <div className='product-col-row row'>
-                            <p>Product: <strong>{product.product_name}</strong></p>
+        return (<div className='product-row col-6'>
+                    <div className='row justify-content-center'>
+                        <div className='product-col col-4'>
+                            <img src={product.img} alt={product.product_name}/>
                         </div>
-                        <div className='product-col-row row'>
-                            <p>Brand: {product.brand}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Category: {product.category_name}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Expiry Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
-                        </div>
-                    </div>
-                    <div className='product-col col-2'>
-                        <div className='qty-box'>
-                            <div className='product-col-row row justify-content-center'>
-                                <p>Qty</p>
+                        <div className='product-col col-6 product-text'>
+                            <div className='product-col-row row'>
+                                <p>Product: <strong>{product.product_name}</strong></p>
                             </div>
-                            <div className='product-col-row row justify-content-center'>
-                                <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
+                            <div className='product-col-row row'>
+                                <p>Brand: {product.brand}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <p>Category: {product.category_name}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <p>Expiry Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
+                            </div>
+                        </div>
+                        <div className='product-col col-2'>
+                            <div className='qty-box'>
+                                <div className='product-col-row row justify-content-center'>
+                                    <p>Qty</p>
+                                </div>
+                                <div className='product-col-row row justify-content-center'>
+                                    <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -64,7 +66,7 @@ class Inventory_Products extends React.Component {
                                         <h4>Add from past products</h4>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Enter product quantities below.</p>
+                                        <p>Enter product details below.</p>
                                     </div>
                                     <div className='row justify-content-center'>
                                         <input type='submit' value='Add Past Product' className='btn btn-info'/>

@@ -1,13 +1,21 @@
 const React = require("react");
 
-class New_Supermarket extends React.Component {
+class New_Delivery extends React.Component {
   render() {
+
+    let allSupermarketsList = this.props.allSupermarkets.map(supermarket => {
+        return (<option>{supermarket.supermarket_name}</option>);
+    })
+
+    let allCategoriesList = this.props.allCategories.map(category => {
+        return (<option>{category.category_name}</option>);
+    })
 
     return (
       <html>
         <head>
             <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
-            <link rel='stylesheet' href='/new_supermarket_styles.css'/>
+            <link rel='stylesheet' href='/new_delivery_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -28,18 +36,38 @@ class New_Supermarket extends React.Component {
                         <div className='form-container'>
                             <div className='form-bowl'>
                                 <div className='row justify-content-center'>
-                                    <h3>New Supermarket</h3>
+                                    <h3>New Delivery Product</h3>
                                 </div>
                                 <br/>
-                                <form method='POST' action='/delivery/supermarket'>
+                                <form method='POST' action='/delivery'>
                                     <div className='row justify-content-center'>
-                                        <p>Name: <input type='text' name='supermarket_name' placeholder='Enter name'/></p>
+                                        <p>Supermarket: <select name='supermarket'>
+                                                        <option></option>
+                                                        {allSupermarketsList}
+                                                     </select>
+                                        </p>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Logo: <input type='text' name='logo' placeholder='Enter logo URL'/></p>
+                                        <p>Delivery Date: <input type='text' name='delivery_date' placeholder='Enter YYYY-MM-DD'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Website: <input type='text' name='website' placeholder='Enter image URL'/></p>
+                                        <p>Product: <input type='text' name='product_name' placeholder='Enter product name'/></p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <p>Brand: <input type='text' name='brand' placeholder='Enter brand name'/></p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <p>Image: <input type='text' name='img' placeholder='Enter image URL'/></p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <p>Quantity: <input type='number' name='qty' placeholder='Enter quantity'/></p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <p>Category: <select name='category'>
+                                                        <option></option>
+                                                        {allCategoriesList}
+                                                     </select>
+                                        </p>
                                     </div>
                                     <br/>
                                     <div className='row justify-content-center'>
@@ -47,7 +75,7 @@ class New_Supermarket extends React.Component {
                                             <input type='submit' className='btn btn-primary' value='Submit'/>
                                         </div>
                                         <div  className='col-6'>
-                                            <button className='btn back-btn'><a href='/delivery/' className='text-white text-decoration-none'>Back</a></button>
+                                            <button className='btn back-btn'><a href='/delivery/products' className='text-white text-decoration-none'>Back</a></button>
                                         </div>
                                     </div>
                                 </form>
@@ -66,4 +94,4 @@ class New_Supermarket extends React.Component {
   }
 }
 
-module.exports = New_Supermarket;
+module.exports = New_Delivery;

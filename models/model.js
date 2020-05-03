@@ -95,7 +95,7 @@ module.exports = (dbPoolInstance) => {
     // }
 
     // ----- ADD PAST PRODUCT TO INVENTORY ------
-    let insertExistingInventoryProduct = (userId, productDetailsToAdd, callback) => {
+    let insertPastInventoryProduct = (userId, productDetailsToAdd, callback) => {
         //e.g. productDetailsQty = [[1,[2020-06-20,6]],[[2,[2020-07-02,4]]
         productDetailsToAdd.forEach((productDetails, index) => {
             let productId = productDetails[0];
@@ -260,6 +260,185 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    let getAllDeliveryDetails = (callback) => {
+        let query = 'SELECT * FROM supermarkets ORDER BY supermarket_id ASC';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                let allSupermarkets = result.rows;
+                let query = 'SELECT products.product_id, products.product_name, products.brand, products.img, categories.category_name FROM products INNER JOIN categories ON (products.category_id = categories.category_id) ORDER BY products.product_id ASC';
+
+                dbPoolInstance.query(query, (error, result) => {
+                    if (error) {
+                        callback(error, null);
+                    } else {
+                        const allDeliveryDetails = {
+                            allSupermarkets: allSupermarkets,
+                            allProducts: result.rows
+                        }
+                        callback(null, allDeliveryDetails)
+                    }
+                })
+            }
+        })
+    }
+
+    // -------- ADD PAST PRODUCTS TO DELIVERY ----------
+    let insertPastDeliveryProduct = (userId, productDetailsToAdd, callback) => {
+        //e.g. productDetailsToAdd = [productId, [delivery_date, supermarket_name, delivery_qty]]
+        //Get supermarket_id
+        productDetailsToAdd.forEach((newProduct, index) => {
+            let query = "SELECT supermarket_id FROM supermarkets WHERE supermarket_name='" + newProduct[1][1] + "'";
+
+            dbPoolInstance.query(query, (error, result) => {
+                if (error) {
+                    callback(error, null);
+                } else {
+                    let supermarketId = parseInt(result.rows[0].supermarket_id);
+                    query = 'INSERT INTO deliveries (user_id, supermarket_id, delivery_date) VALUES ($1, $2, $3)';
+                    let values = [userId, supermarketId, newProduct[1][0]];
+
+                    dbPoolInstance.query(query, values, (error, result) => {
+                        if (error) {
+                            callback(error, null);
+                        } else {
+                            //Get newly added delivery_id
+                            query = "SELECT delivery_id FROM deliveries WHERE supermarket_id=" + supermarketId + " AND delivery_date='" + newProduct[1][0] + "' AND user_id=" + userId;
+
+                            dbPoolInstance.query(query, (error, result) => {
+                                if (error) {
+                                    callback(error, null);
+                                } else {
+                                    let newDeliveryId = result.rows[0].delivery_id;
+                                    query = 'INSERT INTO deliveries_products (delivery_id, product_id, delivery_qty) VALUES ($1, $2, $3)';
+                                    values = [newDeliveryId, newProduct[0], newProduct[1][2]];
+
+                                    dbPoolInstance.query(query, values, (error, result) => {
+                                        if (error) {
+                                            callback(error, null);
+                                        } else {
+                                            if (index === productDetailsToAdd.length - 1) {
+                                                console.log('Added new delivery product!');
+                                                callback(null,null);
+                                            }
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+    let getAllNewDeliveryDetails = (callback) => {
+        //Get all supermarkets
+        let query = 'SELECT * FROM supermarkets ORDER BY supermarket_id ASC';
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    //Get all categories
+                    let allSupermarkets = result.rows;
+                    query = 'SELECT * FROM categories ORDER BY category_id ASC';
+
+                    dbPoolInstance.query(query, (error, result) => {
+                        if (error) {
+                            callback(error, null);
+                        } else {
+                            const newDeliveryDetails = {
+                                allSupermarkets: allSupermarkets,
+                                allCategories: result.rows
+                            }
+                            callback(null, newDeliveryDetails);
+                        }
+                    })
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
+    // -------- ADD NEW PRODUCT TO DELIVERY ----------
+    let insertNewDeliveryProduct = (userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, callback) => {
+        //Get supermarket_id of new delivery product
+        let query = "SELECT supermarket_id FROM supermarkets WHERE supermarket_name='" + supermarketName + "'";
+
+        dbPoolInstance.query(query, (error, result) => {
+            if (error) {
+                callback(null, null);
+            } else {
+                //Get category_id of new delivery product
+                let supermarketId = parseInt(result.rows[0].supermarket_id);
+                query = "SELECT category_id FROM categories WHERE category_name='" + category + "'";
+
+                dbPoolInstance.query(query, (error, result) => {
+                    if (error) {
+                        callback(null, null);
+                    } else {
+                        let categoryId = parseInt(result.rows[0].category_id);
+                        query = 'INSERT INTO products (product_name, brand, img, category_id) VALUES ($1, $2, $3, $4)';
+                        let values = [deliveryProduct.product_name, deliveryProduct.brand, deliveryProduct.img, categoryId]
+
+                        dbPoolInstance.query(query, values, (error, result) => {
+                            if (error) {
+                                callback(null, null);
+                            } else {
+                                //Get product_id of newly added product
+                                query = "SELECT product_id FROM products WHERE product_name='" + deliveryProduct.product_name + "'";
+
+                                dbPoolInstance.query(query, (error, result) => {
+                                    if (error) {
+                                        callback(null, null);
+                                    } else {
+                                        let newProductId = parseInt(result.rows[0].product_id);
+                                        query = 'INSERT INTO deliveries (user_id, supermarket_id, delivery_date) VALUES ($1, $2, $3)';
+                                        values = [userId, supermarketId, deliveryDate];
+
+                                        dbPoolInstance.query(query, values, (error, result) => {
+                                            if (error) {
+                                                callback(null, null);
+                                            } else {
+                                                //Get delivery_id of newly added delivery product
+                                                query = "SELECT delivery_id FROM deliveries WHERE supermarket_id=" + supermarketId + " AND delivery_date='" + deliveryDate + "' AND user_id=" + userId;
+
+                                                dbPoolInstance.query(query, (error, result) => {
+                                                    if (error) {
+                                                        callback(null, null);
+                                                    } else {
+                                                        let deliveryId = parseInt(result.rows[0].delivery_id);
+                                                        query = 'INSERT INTO deliveries_products (delivery_id, product_id, delivery_qty) VALUES ($1, $2, $3)';
+                                                        values = [deliveryId, newProductId, deliveryQty];
+
+                                                        dbPoolInstance.query(query, values, (error, result) => {
+                                                            if (error) {
+                                                                callback(null, null);
+                                                            } else {
+                                                                console.log('Added new delivery product!')
+                                                                callback(null, null)
+                                                            }
+                                                        })
+
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
     // --------- DELETE PRODUCT FROM DELIVERY -----------
     let deleteFromDeliveryProduct = (deliveryProductIdToDelete, callback) => {
         let query = 'DELETE FROM deliveries_products WHERE delivery_product_id=' + deliveryProductIdToDelete;
@@ -317,7 +496,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     // ----- ADD PAST PRODUCT TO WISHLIST ------
-    let insertExistingWishlistProduct = (userId, productIdToAdd, callback) => {
+    let insertPastWishlistProduct = (userId, productIdToAdd, callback) => {
         //e.g. productIdQty = [[1,6],[2,4]]
         productIdToAdd.forEach((productIdQty, index) => {
             let query = 'INSERT INTO wishlists_products (wishlist_id, product_id, wishlist_qty) VALUES ($1, $2, $3)';
@@ -426,18 +605,22 @@ module.exports = (dbPoolInstance) => {
         // INVENTORY QUERIES
         getAllInventoryProducts,
         //getAllNonInventoryProducts,
-        insertExistingInventoryProduct,
+        insertPastInventoryProduct,
         insertNewInventoryProduct,
         updateInventoryProductDetails,
         deleteFromInventoryProduct,
         // DELIVERY QUERIES
         getAllDeliveryProducts,
+        getAllDeliveryDetails,
         insertSupermarket,
+        insertPastDeliveryProduct,
+        getAllNewDeliveryDetails,
+        insertNewDeliveryProduct,
         deleteFromDeliveryProduct,
         // WISHLIST QUERIES
         getAllWishlistProducts,
         getAllNonWishlistProducts,
-        insertExistingWishlistProduct,
+        insertPastWishlistProduct,
         insertNewWishlistProduct,
         updateWishlistProductQty,
         deleteFromWishlistProduct,

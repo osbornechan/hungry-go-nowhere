@@ -1,9 +1,13 @@
 const React = require("react");
 
-class Edit_Inventory extends React.Component {
+class Delivery_Products extends React.Component {
   render() {
 
-    const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
+    const allSupermarketsList = this.props.allDeliveryDetails.allSupermarkets.map(supermarket => {
+        return (<option>{supermarket.supermarket_name}</option>)
+    });
+
+    const allProductsList = this.props.allDeliveryDetails.allProducts.map(product => {
         return (<div className='product-row col-6'>
                     <div className='row justify-content-center'>
                         <div className='product-col col-4'>
@@ -16,17 +20,24 @@ class Edit_Inventory extends React.Component {
                             <div className='product-col-row row'>
                                 <p>Brand: {product.brand}</p>
                             </div>
+                            <div className='row justify-content-center'>
+                                <p>Supermarket: <select name={product.product_id}>
+                                                <option></option>
+                                                {allSupermarketsList}
+                                             </select>
+                                </p>
+                            </div>
                             <div className='product-col-row row'>
-                                <p>Expiry Date: <input type='text' name={product.inventory_product_id} value={product.expiry_date} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
+                                <p>Delivery Date: <input type='text' name={product.product_id} placeholder='YYYY-MM-DD' style={{width:'110px'}}/></p>
                             </div>
                         </div>
-                        <div className='product-col col-2 d-flex justify-content-center'>
+                        <div className='product-col col-2'>
                             <div className='qty-box'>
                                 <div className='product-col-row row justify-content-center'>
                                     <p>Qty</p>
                                 </div>
                                 <div className='product-col-row row justify-content-center'>
-                                    <h1><input type='number' name={product.inventory_product_id} value={product.inventory_qty} className='input-qty text-center'/></h1>
+                                    <h1><input type='number' name={product.product_id} className='input-qty text-center'/></h1>
                                 </div>
                             </div>
                         </div>
@@ -34,11 +45,12 @@ class Edit_Inventory extends React.Component {
                 </div>)
     })
 
+
     return (
       <html>
         <head>
             <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
-            <link rel='stylesheet' href='/edit_inventory_styles.css'/>
+            <link rel="stylesheet" href="../delivery_products_styles.css"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -56,28 +68,44 @@ class Edit_Inventory extends React.Component {
                                 <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
                             </div>
                         </div>
-                        <form method='POST' action='/inventory?_method=put'>
-                            <div className='instructions'>
-                                <div className='form-bowl'>
+                        <form method='POST' action='/delivery/products'>
+                            <div className='instructions row justify-content-center'>
+                                <div className='col-5 left-instructions'>
                                     <div className='row justify-content-center'>
-                                        <h4>Edit product details below</h4>
+                                        <h4>Add from past products</h4>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <p>Enter product details below.</p>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <input type='submit' value='Add Past Product' className='btn btn-info'/>
+                                    </div>
+                                </div>
+                                <div className='col-2' style={{marginLeft: "-10px", marginTop:'20px'}}>
+                                    <div className='row justify-content-center'>
+                                        <button className='btn back-btn'><a href='/delivery/' className='text-white text-decoration-none'>Back</a></button>
+                                    </div>
+                                </div>
+                                <div className='col-5 right-instructions'>
+                                    <div className='row justify-content-center' style={{paddingTop:"10px"}}>
+                                        <h4>Add a new product</h4>
                                     </div>
                                     <br/>
                                     <div className='row justify-content-center'>
-                                        <div className='col-5 d-flex justify-content-end' style={{marginLeft:'20px'}}>
-                                            <input type='submit' value='Submit' className='btn btn-primary'/>
-                                        </div>
-                                        <div className='col-5'>
-                                            <button className='btn back-btn'><a href='/inventory/' className='text-white text-decoration-none'>Back</a></button>
-                                        </div>
+                                        <button className='btn btn-primary'><a href='/delivery/new/' className='text-white text-decoration-none'>Add New Product</a></button>
                                     </div>
                                 </div>
-                                <div className='row justify-content-center'>
-                                    <div className='col-2' style={{backgroundColor: 'white', height:'15px', marginLeft:'10px'}}></div>
+                                <div className='row'>
+                                    <div className='col-6'>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginRight:'155px'}}></div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className='row' style={{backgroundColor: 'white', height:'15px', width:'125px', marginLeft:'156px'}}></div>
                                 </div>
                             </div>
+                            </div>
                             <div className='row justify-content-between'>
-                                {allInventoryProductsList}
+                                {allProductsList}
                             </div>
                         </form>
                     </div>
@@ -90,4 +118,4 @@ class Edit_Inventory extends React.Component {
   }
 }
 
-module.exports = Edit_Inventory;
+module.exports = Delivery_Products;

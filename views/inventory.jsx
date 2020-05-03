@@ -4,35 +4,37 @@ class Inventory extends React.Component {
   render() {
 
     const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
-        return (<div className='product-row row'>
-                    <div className='product-col col-4'>
-                        <img src={product.img} alt={product.product_name}/>
-                    </div>
-                    <div className='product-col col-6'>
-                        <div className='product-col-row row'>
-                            <p>Product: <strong>{product.product_name}</strong></p>
+        return (<div className='product-row col-6'>
+                    <div className='row justify-content-center'>
+                        <div className='product-col col-4'>
+                            <img src={product.img} alt={product.product_name}/>
                         </div>
-                        <div className='product-col-row row'>
-                            <p>Brand: {product.brand}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Expiry Date: {product.expiry_date}</p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <form method='POST' action='/inventory?_method=delete'>
-                                <div className='btn-col col-3'>
-                                    <input type='submit' name={product.inventory_product_id} value='Delete' className='btn btn-danger'/>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className='product-col col-2 d-flex justify-content-center'>
-                        <div className='qty-box'>
-                            <div className='product-col-row row justify-content-center'>
-                                <p>Qty</p>
+                        <div className='product-col col-6'>
+                            <div className='product-col-row row'>
+                                <p>Product: <strong>{product.product_name}</strong></p>
                             </div>
-                            <div className='product-col-row row justify-content-center'>
-                                <h1>{product.inventory_qty}</h1>
+                            <div className='product-col-row row'>
+                                <p>Brand: {product.brand}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <p>Expiry Date: {product.expiry_date}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <form method='POST' action='/inventory?_method=delete'>
+                                    <div className='btn-col col-3'>
+                                        <input type='submit' name={product.inventory_product_id} value='Delete' className='btn btn-danger'/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className='product-col col-2 d-flex justify-content-center'>
+                            <div className='qty-box'>
+                                <div className='product-col-row row justify-content-center'>
+                                    <p>Qty</p>
+                                </div>
+                                <div className='product-col-row row justify-content-center'>
+                                    <h1>{product.inventory_qty}</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,7 +71,7 @@ class Inventory extends React.Component {
                                 <h4><a href='/inventory/products' className='text-white text-decoration-none'>+ Add Product</a></h4>
                             </div>
                             <div className='add-button-col col-5 d-flex justify-content-center'>
-                                <h4><a href='/inventory/edit' className='text-white text-decoration-none'># Edit Product</a></h4>
+                                <h4><a href='/inventory/edit' className='text-white text-decoration-none'># Edit Inventory</a></h4>
                             </div>
                         </div>
                         <div className='row justify-content-between'>

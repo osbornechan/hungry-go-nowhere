@@ -69,8 +69,8 @@ const sha256 = require('js-sha256');
         db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
-    // ----- FORM TO ADD FROM EXISTING/PAST PRODUCTS TO INVENTORY -------
-    let existingInventoryProductsControllerCallback = (request, response) => {
+    // ----- FORM TO ADD FROM PAST PRODUCTS TO INVENTORY -------
+    let pastInventoryProductsControllerCallback = (request, response) => {
         db.model.getAllProducts((error, allProducts) => {
             const data = {
                 allProducts: allProducts
@@ -79,8 +79,8 @@ const sha256 = require('js-sha256');
         })
     }
 
-    // ----- ADD EXISTING/PAST PRODUCTS TO INVENTORY -------
-    let insertExistingProductToInventoryControllerCallback = (request, response) => {
+    // ----- ADD PAST PRODUCTS TO INVENTORY -------
+    let insertPastProductToInventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
         //Change key-value pairs in object into array of arrays
         let productDetailsList = Object.entries(request.body);
@@ -100,7 +100,7 @@ const sha256 = require('js-sha256');
                 response.redirect('/inventory/');
             }
         }
-        db.model.insertExistingInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
+        db.model.insertPastInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
     }
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
@@ -215,6 +215,71 @@ const sha256 = require('js-sha256');
         db.model.insertSupermarket(newSupermarket, whenModelIsDone);
     }
 
+    // ----- FORM TO ADD FROM PAST PRODUCTS TO DELIVERY -------
+    let pastDeliveryProductsControllerCallback = (request, response) => {
+        db.model.getAllDeliveryDetails((error, allDeliveryDetails) => {
+            const data = {
+                allDeliveryDetails: allDeliveryDetails
+            }
+            response.render('delivery_products', data);
+        })
+    }
+
+    // ----- ADD PAST PRODUCTS TO DELIVERY -------
+    let insertPastProductToDeliveryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        //Change key-value pairs in object into array of arrays
+        let productDetailsList = Object.entries(request.body);
+
+        //Add only edited product details to array
+        let productDetailsToAdd = [];
+        for (const i of productDetailsList) {
+            if (i[1][0] !== '') {
+                productDetailsToAdd.push(i);
+            }
+        }
+
+        const whenModelIsDone = (error, result) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/delivery/');
+            }
+        }
+        db.model.insertPastDeliveryProduct(userId, productDetailsToAdd, whenModelIsDone);
+    }
+
+
+    // ----- FORM TO ADD NEW PRODUCT TO DELIVERY -------
+    let newDeliveryControllerCallback = (request, response) => {
+        db.model.getAllNewDeliveryDetails((error, newDeliveryDetails) => {
+            const data = {
+                allSupermarkets: newDeliveryDetails.allSupermarkets,
+                allCategories: newDeliveryDetails.allCategories
+            }
+            response.render('new_delivery', data);
+        })
+    }
+
+    // ------- ADD NEW PRODUCT TO DELIVERY --------
+    let insertNewProductToDeliveryControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let deliveryProduct = request.body;
+        let deliveryQty = deliveryProduct.qty;
+        let category = deliveryProduct.category;
+        let supermarketName = deliveryProduct.supermarket;
+        let deliveryDate = deliveryProduct.delivery_date;
+
+        const whenModelIsDone = (error, newDeliveryProduct) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                //response.redirect('/delivery/');
+            }
+        }
+        db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
+    }
+
     // ------- DELETE PRODUCT FROM DELIVERY -------
     let deleteDeliveryProductControllerCallback = (request, response) => {
         let deliveryProductIdToDelete = Object.keys(request.body)[0];
@@ -249,8 +314,8 @@ const sha256 = require('js-sha256');
         db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
-    // ----- FORM TO ADD FROM EXISTING/PAST PRODUCTS TO WISHLIST -------
-    let existingWishlistProductsControllerCallback = (request, response) => {
+    // ----- FORM TO ADD FROM PAST PRODUCTS TO WISHLIST -------
+    let pastWishlistProductsControllerCallback = (request, response) => {
         db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
             const data = {
                 allNonWishlistProducts: allNonWishlistProducts
@@ -259,8 +324,8 @@ const sha256 = require('js-sha256');
         })
     }
 
-    // ----- ADD EXISTING/PAST PRODUCTS TO WISHLIST -------
-    let insertExistingProductToWishlistControllerCallback = (request, response) => {
+    // ----- ADD PAST PRODUCTS TO WISHLIST -------
+    let insertPastProductToWishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
         //Change key-value pairs in object into array of arrays
         let productIdList = Object.entries(request.body);
@@ -280,7 +345,7 @@ const sha256 = require('js-sha256');
                 response.redirect('/wishlist/');
             }
         }
-        db.model.insertExistingWishlistProduct(userId, productIdToAdd, whenModelIsDone);
+        db.model.insertPastWishlistProduct(userId, productIdToAdd, whenModelIsDone);
     }
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
@@ -369,8 +434,8 @@ const sha256 = require('js-sha256');
     verifyLogin: verifyLoginControllerCallback,
     // INVENTORY CONTROLLERS
     inventory: inventoryControllerCallback,
-    existingInventoryProducts: existingInventoryProductsControllerCallback,
-    insertExistingProductToInventory: insertExistingProductToInventoryControllerCallback,
+    pastInventoryProducts: pastInventoryProductsControllerCallback,
+    insertPastProductToInventory: insertPastProductToInventoryControllerCallback,
     newInventory: newInventoryControllerCallback,
     insertNewProductToInventory: insertNewProductToInventoryControllerCallback,
     inventoryDetails: inventoryDetailsControllerCallback,
@@ -380,11 +445,15 @@ const sha256 = require('js-sha256');
     delivery: deliveryControllerCallback,
     newSupermarket: newSupermarketControllerCallback,
     addSupermarket: addSupermarketControllerCallback,
+    pastDeliveryProducts: pastDeliveryProductsControllerCallback,
+    insertPastProductToDelivery: insertPastProductToDeliveryControllerCallback,
+    newDelivery: newDeliveryControllerCallback,
+    insertNewProductToDelivery: insertNewProductToDeliveryControllerCallback,
     deleteDeliveryProduct: deleteDeliveryProductControllerCallback,
     // WISHLIST CONTROLLERS
     wishlist: wishlistControllerCallback,
-    existingWishlistProducts: existingWishlistProductsControllerCallback,
-    insertExistingProductToWishlist: insertExistingProductToWishlistControllerCallback,
+    pastWishlistProducts: pastWishlistProductsControllerCallback,
+    insertPastProductToWishlist: insertPastProductToWishlistControllerCallback,
     newWishlist: newWishlistControllerCallback,
     insertNewProductToWishlist: insertNewProductToWishlistControllerCallback,
     wishlistQty: wishlistQtyControllerCallback,

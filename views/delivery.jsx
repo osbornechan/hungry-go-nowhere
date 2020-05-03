@@ -14,37 +14,38 @@ class Delivery extends React.Component {
     })
 
     const allSupermarketProductsList = this.props.deliveryData.allSupermarketProducts.map(product => {
-        let productClass = 'supermarket-product product-row row ' + product.supermarket_name;
-        let productInfo;
+        let productClass = 'supermarket-product product-row col-6 ' + product.supermarket_name;
         return (<div className={productClass}>
-                    <div className='product-col col-4'>
-                        <img src={product.img} alt={product.product_name}/>
-                    </div>
-                    <div className='product-col col-6'>
-                        <div className='product-col-row row'>
-                            <p>Delivery Date: {product.delivery_date}</p>
+                    <div className='row justify-content-center'>
+                        <div className='product-col col-4'>
+                            <img src={product.img} alt={product.product_name}/>
                         </div>
-                        <div className='product-col-row row'>
-                            <p>Product: <strong>{product.product_name}</strong></p>
-                        </div>
-                        <div className='product-col-row row'>
-                            <p>Brand: {product.brand}</p>
-                        </div>
-                        <form method='POST' action='/delivery?_method=delete'>
+                        <div className='product-col col-6'>
                             <div className='product-col-row row'>
-                                <div className='btn-col col-3'>
-                                    <input type='submit' name={product.delivery_product_id} value='Delete' className='btn btn-danger'/>
+                                <p>Delivery Date: {product.delivery_date}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <p>Product: <strong>{product.product_name}</strong></p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <p>Brand: {product.brand}</p>
+                            </div>
+                            <form method='POST' action='/delivery?_method=delete'>
+                                <div className='product-col-row row'>
+                                    <div className='btn-col col-3'>
+                                        <input type='submit' name={product.delivery_product_id} value='Delete' className='btn btn-danger'/>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div className='product-col col-2 d-flex justify-content-center'>
-                        <div className='qty-box'>
-                            <div className='product-col-row row justify-content-center'>
-                                <p>Qty</p>
-                            </div>
-                            <div className='product-col-row row justify-content-center'>
-                                <h1>{product.delivery_qty}</h1>
+                            </form>
+                        </div>
+                        <div className='product-col col-2 d-flex justify-content-center'>
+                            <div className='qty-box'>
+                                <div className='product-col-row row justify-content-center'>
+                                    <p>Qty</p>
+                                </div>
+                                <div className='product-col-row row justify-content-center'>
+                                    <h1>{product.delivery_qty}</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,11 +75,14 @@ class Delivery extends React.Component {
                             </div>
                         </div>
                         <div className='row justify-content-center'>
-                            <div className='add-button-col col-6 d-flex justify-content-center'>
+                            <div className='add-button-col col-4 d-flex justify-content-center'>
                                 <h4><a href='/delivery/supermarket/new' className='text-white text-decoration-none'>+ Add Supermarket</a></h4>
                             </div>
-                            <div className='add-button-col col-6 d-flex justify-content-center'>
-                                <h4><a href='/delivery/new' className='text-white text-decoration-none'>++ Add New Delivery</a></h4>
+                            <div className='add-button-col col-4 d-flex justify-content-center'>
+                                <h4><a href='/delivery/products' className='text-white text-decoration-none'>+ Add Delivery</a></h4>
+                            </div>
+                            <div className='add-button-col col-4 d-flex justify-content-center'>
+                                <h4><a href='#' className='text-white text-decoration-none'># Edit Delivery</a></h4>
                             </div>
                         </div>
                         {supermarketsList}

@@ -31,6 +31,10 @@ input {
 	padding: 5px;
 }
 
+select {
+	height: 40px;
+}
+
 .form-container {
 	background-color: #f5827c;
 	border-radius: 0 0 5px 5px;

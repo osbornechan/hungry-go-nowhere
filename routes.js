@@ -19,8 +19,8 @@ module.exports = (app, allModels) => {
     app.get('/inventory/', allControllers.inventory);
 
     // ----- Add past product to inventory ------
-    app.get('/inventory/products/', allControllers.existingInventoryProducts);
-    app.post('/inventory/products', allControllers.insertExistingProductToInventory);
+    app.get('/inventory/products/', allControllers.pastInventoryProducts);
+    app.post('/inventory/products', allControllers.insertPastProductToInventory);
 
     // ----- Add new product to inventory ------
     app.get('/inventory/products/new', allControllers.newInventory);
@@ -41,6 +41,14 @@ module.exports = (app, allModels) => {
     app.get('/delivery/supermarket/new', allControllers.newSupermarket);
     app.post('/delivery/supermarket', allControllers.addSupermarket);
 
+    // ----- Add past product to delivery ------
+    app.get('/delivery/products/', allControllers.pastDeliveryProducts);
+    app.post('/delivery/products', allControllers.insertPastProductToDelivery);
+
+    // ----- Add new delivery order ------
+    app.get('/delivery/new', allControllers.newDelivery);
+    app.post('/delivery', allControllers.insertNewProductToDelivery);
+
     // ----- Delete product from inventory ------
     app.delete('/delivery', allControllers.deleteDeliveryProduct);
 
@@ -53,8 +61,8 @@ module.exports = (app, allModels) => {
     app.put('/wishlist', allControllers.editWishlistQty);
 
     // ----- Add past product to wishlist ------
-    app.get('/wishlist/products/', allControllers.existingWishlistProducts);
-    app.post('/wishlist/products', allControllers.insertExistingProductToWishlist);
+    app.get('/wishlist/products/', allControllers.pastWishlistProducts);
+    app.post('/wishlist/products', allControllers.insertPastProductToWishlist);
 
     // ----- Add new product to wishlist ------
     app.get('/wishlist/products/new', allControllers.newWishlist);

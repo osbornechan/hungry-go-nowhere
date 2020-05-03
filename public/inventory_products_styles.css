@@ -22,11 +22,9 @@
 }
 
 .product-row {
-	border: 2px solid darkgrey;
+	border: 1px solid darkgrey;
 	border-radius: 5px;
-	margin: 5px;
 	padding: 15px 20px 15px 5px;
-	width: 51%;
 	background-color: white;
 }
 
@@ -42,6 +40,12 @@ img {
 	width: 110px;
 	height: 110px;
 	border-radius: 10px;
+	padding-top: 10px;
+}
+
+.qty-box {
+	margin-top: 12px;
+	margin-right: 15px;
 }
 
 .input-qty {
