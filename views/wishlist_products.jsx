@@ -44,17 +44,33 @@ class Wishlist_Products extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-9'>
+                    <div className='nav-bar col-2'>
                         <div className='nav-bar-row row justify-content-center'>
-                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
-                            </div>
-                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                            </div>
-                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
-                            </div>
+                            <a href='/inventory/'><img src='/logo-reverse.png' className='logo'/></a>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5>Welcome, {this.props.userName}!</h5>
+                            <button className='btn' style={{width:'100%'}}>Log Out</button>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/wishlist/products/' className='text-white text-decoration-none'>+ Add Product</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/wishlist/edit' className='text-white text-decoration-none'># Edit Wishlist</a></h6>
+                        </div>
+                    </div>
+                    <div className='col-9'>
+                        <div className='top-bar-row row justify-content-center'>
+                            <h2>Wishlist</h2>
                         </div>
                         <form method='POST' action='/wishlist/products'>
                             <div className='instructions row justify-content-center'>
@@ -70,9 +86,6 @@ class Wishlist_Products extends React.Component {
                                     </div>
                                 </div>
                                 <div className='col-2' style={{marginLeft: "-10px", marginTop:'20px'}}>
-                                    <div className='row justify-content-center'>
-                                        <button className='btn back-btn'><a href='/wishlist/' className='text-white text-decoration-none'>Back</a></button>
-                                    </div>
                                 </div>
                                 <div className='col-5 right-instructions'>
                                     <div className='row justify-content-center' style={{paddingTop:"10px"}}>

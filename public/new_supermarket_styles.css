@@ -2,23 +2,35 @@
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.nav-bar-col {
-	border: 1px solid white;
-	background-color: rgb(40,40,40);
+.nav-bar {
+	background-color: black;
+}
+
+.logo {
+	width: 100%;
+	padding: 0;
+}
+
+.nav-bar-row {
+	border: 1px solid #484848;
+	padding: 5px;
 	color: white;
-	padding: 20px;
 }
 
-.inventory-tab {
-	background-color: darkgrey;
+.nav-text {
+	padding-top: 10px;
 }
 
-.delivery-tab {
-	background-color: #fac27e;
+.nav-sub-text {
+	padding-top: 10px;
+	background-color: #383838;
 }
 
-.wishlist-tab {
-	background-color: darkgrey;
+.top-bar-row {
+	background-color: black;
+	border: 2px solid #383838;
+	color: white;
+	padding: 10px;
 }
 
 p {
@@ -31,25 +43,29 @@ input {
 	padding: 5px;
 }
 
+select {
+	height: 40px;
+}
+
 .form-container {
-	background-color: #fac27e;
-	border-radius: 0 0 5px 5px;
+	background-color: #383838;
+	border-radius: 2px;
 	padding: 40px 20px;
-	margin: 0 -14px;
+	margin: 0 -15px;
 }
 
 .form-bowl {
 	background-color: white;
-	width: 70%;
+	width: 80%;
 	padding: 30px;
-	border-radius: 5px 5px 185px 185px;
+	border-radius: 5px 5px 180px 180px;
 	margin: 0 auto;
 }
 
 .bowl-base {
 	height: 23px;
 	background-color: white;
-	margin-left: 15px;
+	margin-left: 12px;
 }
 
 .back-btn {

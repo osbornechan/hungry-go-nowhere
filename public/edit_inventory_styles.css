@@ -2,28 +2,40 @@
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.nav-bar-col {
-	border: 1px solid white;
-	background-color: rgb(40,40,40);
+.nav-bar {
+	background-color: black;
+}
+
+.logo {
+	width: 100%;
+	padding: 0;
+}
+
+.nav-bar-row {
+	border: 1px solid #484848;
+	padding: 5px;
 	color: white;
-	padding: 20px;
 }
 
-.inventory-tab {
-	background-color: #94d1fc;
+.nav-text {
+	padding-top: 10px;
 }
 
-.delivery-tab {
-	background-color: darkgrey;
+.nav-sub-text {
+	padding-top: 10px;
+	background-color: #383838;
 }
 
-.wishlist-tab {
-	background-color: darkgrey;
+.top-bar-row {
+	background-color: black;
+	border: 2px solid #383838;
+	color: white;
+	padding: 10px;
 }
 
 .product-row {
-	border: 1px solid #94d1fc;
-	border-radius: 5px;
+	border: 1px solid #383838;
+	border-radius: 2px;
 	padding: 15px 20px 15px 0;
 	background-color: white;
 }
@@ -51,7 +63,7 @@ img {
 }
 
 .qty-box {
-	background-color: #94d1fc;
+	background-color: #383838;
 	border-radius: 5px;
 	padding: 15px 20px;
 	margin-right: 18px;
@@ -67,10 +79,10 @@ img {
 }
 
 .instructions {
-	background-color: #94d1fc;
-	border-radius: 0 0 5px 5px;
+	background-color: #383838;
+	border-radius: 0 0 2px 2px;
 	padding: 20px 20px;
-	margin: 0 -13px;
+	margin: 0 -15px;
 }
 
 .form-bowl {

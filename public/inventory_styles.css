@@ -2,27 +2,39 @@
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-.nav-bar-col {
-	border: 1px solid white;
+.nav-bar {
+	background-color: black;
+}
+
+.logo {
+	width: 100%;
+}
+
+.nav-bar-row {
+	border: 1px solid #484848;
+	padding: 5px;
 	color: white;
-	padding: 20px;
 }
 
-.inventory-tab {
-	background-color: #94d1fc;
+.nav-text {
+	padding-top: 10px;
 }
 
-.delivery-tab {
-	background-color: #fac27e;
+.nav-sub-text {
+	padding-top: 10px;
+	background-color: #383838;
 }
 
-.wishlist-tab {
-	background-color: #f5827c;
+.top-bar-row {
+	background-color: black;
+	border: 2px solid #383838;
+	color: white;
+	padding: 10px;
 }
 
 .product-row {
-	border: 1px solid #94d1fc;
-	border-radius: 5px;
+	border: 1px solid #383838;
+	border-radius: 3px;
 	padding: 20px 20px 20px 5px;
 	background-color: white;
 }
@@ -46,17 +58,11 @@ img {
 }
 
 .qty-box {
-	background-color: #94d1fc;
+	background-color: #484848;
 	border-radius: 5px;
-	padding: 20px 27px;
+	width: 50%;
+	padding: 20px 30px;
 	margin-right: 5px;
 	color: white;
 	height: 85%;
-}
-
-.add-button-col {
-	background-color: #94d1fc;
-	border: 1px solid white;
-	color: white;
-	padding: 10px 0 5px 0;
 }

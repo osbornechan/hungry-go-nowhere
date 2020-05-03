@@ -55,12 +55,14 @@ const sha256 = require('js-sha256');
     ================================================================ */
     let inventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         const whenModelIsDone = (err, allInventoryProducts) => {
             if (err) {
                 console.log('Query error', err);
             } else {
                 const data = {
+                    userName: userName,
                     allInventoryProducts: allInventoryProducts
                 }
                 response.render('inventory', data);
@@ -71,8 +73,10 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO INVENTORY -------
     let pastInventoryProductsControllerCallback = (request, response) => {
+        let userName = request.cookies['user_name'];
         db.model.getAllProducts((error, allProducts) => {
             const data = {
+                userName: userName,
                 allProducts: allProducts
             }
             response.render('inventory_products', data);
@@ -106,11 +110,13 @@ const sha256 = require('js-sha256');
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newInventoryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         db.model.getAllCategories((error, allCategories) => {
             const data = {
                 allCategories: allCategories,
-                userId: userId
+                userId: userId,
+                userName: userName
             }
             response.render('new_inventory_product', data);
         })
@@ -137,12 +143,14 @@ const sha256 = require('js-sha256');
     // ------- EDIT INVENTORY PRODUCT QUANTITY -------
     let inventoryDetailsControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         const whenModelIsDone = (error, allInventoryProducts) => {
             if (error) {
                 console.log('Query error', error);
             } else {
                 const data = {
+                    userName: userName,
                     allInventoryProducts: allInventoryProducts
                 }
                 response.render('edit_inventory', data);
@@ -183,12 +191,14 @@ const sha256 = require('js-sha256');
     ================================================================ */
     let deliveryControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         const whenModelIsDone = (err, deliveryData) => {
             if (err) {
                 console.log('Query error', err);
             } else {
                 const data = {
+                    userName: userName,
                     deliveryData: deliveryData
                 }
                 response.render('delivery', data);
@@ -199,7 +209,11 @@ const sha256 = require('js-sha256');
 
     // ---------- ADD NEW SUPERMARKET ------------
     let newSupermarketControllerCallback = (request, response) => {
-        response.render('new_supermarket');
+        let userName = request.cookies['user_name'];
+        const data = {
+            userName: userName
+        }
+        response.render('new_supermarket', data);
     }
 
     let addSupermarketControllerCallback = (request, response) => {
@@ -217,8 +231,10 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO DELIVERY -------
     let pastDeliveryProductsControllerCallback = (request, response) => {
+        let userName = request.cookies['user_name'];
         db.model.getAllDeliveryDetails((error, allDeliveryDetails) => {
             const data = {
+                userName: userName,
                 allDeliveryDetails: allDeliveryDetails
             }
             response.render('delivery_products', data);
@@ -252,8 +268,10 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD NEW PRODUCT TO DELIVERY -------
     let newDeliveryControllerCallback = (request, response) => {
+        let userName = request.cookies['user_name'];
         db.model.getAllNewDeliveryDetails((error, newDeliveryDetails) => {
             const data = {
+                userName: userName,
                 allSupermarkets: newDeliveryDetails.allSupermarkets,
                 allCategories: newDeliveryDetails.allCategories
             }
@@ -300,12 +318,14 @@ const sha256 = require('js-sha256');
     // ------- WISHLIST PAGE -------
     let wishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         const whenModelIsDone = (err, allWishlistProducts) => {
             if (err) {
                 console.log('Query error', err);
             } else {
                 const data = {
+                    userName: userName,
                     allWishlistProducts: allWishlistProducts
                 }
                 response.render('wishlist', data);
@@ -316,8 +336,10 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO WISHLIST -------
     let pastWishlistProductsControllerCallback = (request, response) => {
+        let userName = request.cookies['user_name'];
         db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
             const data = {
+                userName: userName,
                 allNonWishlistProducts: allNonWishlistProducts
             }
             response.render('wishlist_products', data);
@@ -351,11 +373,13 @@ const sha256 = require('js-sha256');
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newWishlistControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         db.model.getAllCategories((error, allCategories) => {
             const data = {
                 allCategories: allCategories,
-                userId: userId
+                userId: userId,
+                userName: userName
             }
             response.render('new_wishlist_product', data);
         })
@@ -381,12 +405,14 @@ const sha256 = require('js-sha256');
     // ------- EDIT WISHLIST PRODUCT QUANTITY -------
     let wishlistQtyControllerCallback = (request, response) => {
         let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
 
         const whenModelIsDone = (error, allWishlistProducts) => {
             if (error) {
                 console.log('Query error', error);
             } else {
                 const data = {
+                    userName: userName,
                     allWishlistProducts: allWishlistProducts
                 }
                 response.render('edit_wishlist', data);
@@ -417,7 +443,7 @@ const sha256 = require('js-sha256');
             if (error) {
                 console.log('Query error', error);
             } else {
-                response.redirect('/inventory/');
+                response.redirect('/delivery/');
             }
         }
         db.model.mergeDeliveryWithInventory(userId, deliveryProductId, whenModelIsDone);

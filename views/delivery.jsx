@@ -7,7 +7,7 @@ class Delivery extends React.Component {
         let supermarketPage = '/delivery/supermarket/' + supermarket.supermarket_name.replace(/\s+/g, '-');
         return (<div>
                     <div className='supermarket-banner row'>
-                        <a href={supermarket.website} target="_blank"><img src={supermarket.logo} style={{width:'40%', height:'90%', padding:'5px 20px', marginLeft:'250px'}}/></a>
+                        <a href={supermarket.website} target="_blank"><img src={supermarket.logo} className='supermarket-logo'/></a>
                     </div>
                     <div className='supermarket-container row justify-content-between' id={supermarket.supermarket_name}>
                     </div>
@@ -68,28 +68,36 @@ class Delivery extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-9'>
+                    <div className='nav-bar col-2'>
                         <div className='nav-bar-row row justify-content-center'>
-                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
-                            </div>
-                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                            </div>
-                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
-                            </div>
+                            <a href='/inventory/'><img src='../logo-reverse.png' className='logo'/></a>
                         </div>
-                        <div className='row justify-content-center'>
-                            <div className='add-button-col col-4 d-flex justify-content-center'>
-                                <h4><a href='/delivery/supermarket/new' className='text-white text-decoration-none'>+ Add Supermarket</a></h4>
-                            </div>
-                            <div className='add-button-col col-4 d-flex justify-content-center'>
-                                <h4><a href='/delivery/products' className='text-white text-decoration-none'>+ Add Delivery</a></h4>
-                            </div>
-                            <div className='add-button-col col-4 d-flex justify-content-center'>
-                                <h4><a href='#' className='text-white text-decoration-none'># Edit Delivery</a></h4>
-                            </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5>Welcome, {this.props.userName}!</h5>
+                            <button className='btn' style={{width:'100%'}}>Log Out</button>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/delivery/products' className='text-white text-decoration-none'>+ Add Delivery</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='#' className='text-white text-decoration-none'># Edit Delivery</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/delivery/supermarket/new' className='text-white text-decoration-none'>+ Add Supermarket</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h5>
+                        </div>
+                    </div>
+                    <div className='col-9'>
+                        <div className='top-bar-row row justify-content-center'>
+                            <h2>Delivery</h2>
                         </div>
                         {supermarketsList}
                         {allSupermarketProductsList}

@@ -17,17 +17,33 @@ class New_Inventory_Product extends React.Component {
         <body>
             <div className='container'>
                 <div className='row justify-content-center'>
-                    <div className='col-9'>
+                    <div className='nav-bar col-2'>
                         <div className='nav-bar-row row justify-content-center'>
-                            <div className='nav-bar-col inventory-tab col-4 nav-bar d-flex justify-content-center'>
-                                <h3><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h3>
-                            </div>
-                            <div className='nav-bar-col delivery-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h3>
-                            </div>
-                            <div className='nav-bar-col wishlist-tab col-4 d-flex justify-content-center'>
-                                <h3><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h3>
-                            </div>
+                            <a href='/inventory/'><img src='/logo-reverse.png' className='logo'/></a>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5>Welcome, {this.props.userName}!</h5>
+                            <button className='btn' style={{width:'100%'}}>Log Out</button>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/inventory/products' className='text-white text-decoration-none'>+ Add Product</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-sub-text row justify-content-center'>
+                            <h6><a href='/inventory/edit' className='text-white text-decoration-none'># Edit Inventory</a></h6>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/delivery/' className='text-white text-decoration-none'>Delivery</a></h5>
+                        </div>
+                        <div className='nav-bar-row nav-text row justify-content-center'>
+                            <h5><a href='/wishlist/' className='text-white text-decoration-none'>Wishlist</a></h5>
+                        </div>
+                    </div>
+                    <div className='col-9'>
+                        <div className='top-bar-row row justify-content-center'>
+                           <h2>Inventory</h2>
                         </div>
                         <div className='form-container'>
                             <div className='form-bowl'>
@@ -59,18 +75,13 @@ class New_Inventory_Product extends React.Component {
                                         </p>
                                     </div>
                                     <br/>
-                                    <div className='row justify-content-center'>
-                                        <div className='col-6 d-flex justify-content-end'>
-                                            <input type='submit' className='btn btn-primary' value='Submit'/>
-                                        </div>
-                                        <div  className='col-6'>
-                                            <button className='btn back-btn'><a href='/inventory/products' className='text-white text-decoration-none'>Back</a></button>
-                                        </div>
+                                    <div className='row justify-content-center' style={{marginLeft:'10px'}}>
+                                        <input type='submit' className='btn btn-primary' value='Submit'/>
                                     </div>
                                 </form>
                             </div>
                             <div className='row justify-content-center'>
-                                <div className='col-3 bowl-base'></div>
+                                <div className='col-4 bowl-base'></div>
                             </div>
                         </div>
                     </div>
