@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "## Background Getting prepared for COVID circuit breaker comes down to one basic thing - <strong>Food</strong>.<br/> Or toilet paper evidently, but really that only becomes a concern once you have had some food, if you think about it. (Okay, maybe don't think about it.)",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "scripts": {
+    "start": "node index.js"
+  },
+    "engines" : {
+    "node" : "^12.16.1"
   },
   "repository": {
     "type": "git",
