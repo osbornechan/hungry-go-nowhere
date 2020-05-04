@@ -46,6 +46,7 @@ const modelsObject = modelsFunction(pool);
  // ==============================
  //        MODULE EXPORTS
  // ==============================
+console.log(pool)
 
 module.exports = {
     //make queries directly from here
