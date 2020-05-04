@@ -8,11 +8,11 @@ module.exports = (app, allModels) => {
     const allControllers = require('./controllers/controller')(allModels);
 
     // ==== Main Page ====
-    app.get('/', allControllers.main);
+    app.get('/home', allControllers.main);
 
     // ==== Login Page ====
     app.get('/login/', allControllers.login);
-    app.post('/inventory/', allControllers.verifyLogin);
+    app.post('/inventory', allControllers.verifyLogin);
 
     // ==== Register Page =====
     app.get('/register/', allControllers.register);

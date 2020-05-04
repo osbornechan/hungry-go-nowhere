@@ -22,7 +22,7 @@ if (process.env.DATABASE_URL) {
 } else {
     configs = {
         user: 'chanosborne',
-        host: '127.0.0.1    ',
+        host: '127.0.0.1',
         database: 'hungrygonowhere',
         port: 5432
     };

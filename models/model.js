@@ -10,9 +10,9 @@ module.exports = (dbPoolInstance) => {
     ================================================================ */
 
     let getAllUsers = (callback) => {
-        let usersQuery = 'SELECT * FROM users';
+        let query = 'SELECT * FROM users';
 
-        dbPoolInstance.query(usersQuery, (error, result) => {
+        dbPoolInstance.query(query, (error, result) => {
             if (error) {
                 callback(error, null);
             } else {
