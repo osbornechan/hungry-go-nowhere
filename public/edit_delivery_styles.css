@@ -1,0 +1,106 @@
+.container {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.nav-bar {
+	background-color: black;
+}
+
+.logo {
+	width: 100%;
+}
+
+.nav-bar-row {
+	border: 1px solid #484848;
+	padding: 5px;
+	color: white;
+}
+
+.nav-text {
+	padding-top: 10px;
+}
+
+.nav-sub-text {
+	padding-top: 10px;
+	background-color: #383838;
+}
+
+.top-bar-row {
+	background-color: black;
+	border: 2px solid #383838;
+	color: white;
+	padding: 10px;
+}
+
+.product-row {
+	border: 1px solid #383838;
+	border-radius: 3px;
+	padding: 20px 20px 20px 5px;
+	background-color: white;
+}
+
+.col-6 {
+	padding-top: 20px;
+}
+
+.product-col-row {
+	margin: -10px;
+}
+
+.btn {
+	margin-top: 10px;
+}
+
+.btn-col {
+	margin-left: -13px;
+}
+
+img {
+	width: 110px;
+	height: 110px;
+	border-radius: 10px;
+}
+
+.qty-box {
+	background-color: #383838;
+	border-radius: 5px;
+	padding: 15px 20px;
+	margin-right: 18px;
+	color: white;
+}
+
+.input-qty {
+	border: 1px solid grey;
+	border-radius: 5px;
+	width: 70px;
+	height: 70px;
+	padding-left: 4px;
+}
+
+.instructions {
+	background-color: #383838;
+	border-radius: 0 0 2px 2px;
+	padding: 20px 20px;
+	margin: 0 -15px;
+}
+
+.form-bowl {
+	background-color: white;
+	width: 43%;
+	padding: 30px;
+	border-radius: 5px 5px 110px 110px;
+	margin: 0 auto;
+}
+
+.supermarket-banner {
+	border: 2px solid #383838;
+	border-radius: 1px;
+	padding: 10px 0 5px 10px;
+}
+
+.supermarket-logo {
+	width: 25%;
+	height: 100%;
+	padding: 5px 20px;
+	margin-left: 300px;
+}

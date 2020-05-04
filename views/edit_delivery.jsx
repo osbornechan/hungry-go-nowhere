@@ -1,6 +1,6 @@
 const React = require("react");
 
-class Delivery extends React.Component {
+class Edit_Delivery extends React.Component {
   render() {
 
     const supermarketsList = this.props.deliveryData.supermarkets.map(supermarket => {
@@ -23,25 +23,13 @@ class Delivery extends React.Component {
                         </div>
                         <div className='product-col col-6'>
                             <div className='product-col-row row'>
-                                <p>Delivery Date: {product.delivery_date}</p>
+                                <p>Delivery Date: <input type='text' name={product.delivery_product_id} value={product.delivery_date} placeholder='YYYY-MM-DD' style={{width:'90px'}}/></p>
                             </div>
                             <div className='product-col-row row'>
                                 <p>Product: <strong>{product.product_name}</strong></p>
                             </div>
                             <div className='product-col-row row'>
                                 <p>Brand: {product.brand}</p>
-                            </div>
-                            <div className='product-col-row row'>
-                                <form method='POST' action='/delivery/inventory/'>
-                                    <div className='btn-col col-3'>
-                                        <input type='submit' name={product.delivery_product_id} value='Merge' className='btn btn-info'/>
-                                    </div>
-                                </form>
-                                <form method='POST' action='/delivery?_method=delete'>
-                                    <div className='btn-col col-3'>
-                                        <input type='submit' name={product.delivery_product_id} value='Delete' className='btn btn-danger'/>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                         <div className='product-col col-2 d-flex justify-content-center'>
@@ -50,7 +38,7 @@ class Delivery extends React.Component {
                                     <p>Qty</p>
                                 </div>
                                 <div className='product-col-row row justify-content-center'>
-                                    <h1>{product.delivery_qty}</h1>
+                                    <h1><input type='number' min='1' name={product.delivery_product_id} value={product.delivery_qty} className='input-qty text-center'/></h1>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +50,7 @@ class Delivery extends React.Component {
       <html>
         <head>
             <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
-            <link rel='stylesheet' href='../delivery_styles.css'/>
+            <link rel='stylesheet' href='../edit_delivery_styles.css'/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
@@ -99,8 +87,24 @@ class Delivery extends React.Component {
                         <div className='top-bar-row row justify-content-center'>
                             <h2>Delivery</h2>
                         </div>
-                        {supermarketsList}
-                        {allSupermarketProductsList}
+                        <form method='POST' action='/delivery?_method=put'>
+                            <div className='instructions'>
+                                <div className='form-bowl'>
+                                    <div className='row justify-content-center'>
+                                        <h4>Edit product details below</h4>
+                                    </div>
+                                    <br/>
+                                    <div className='row justify-content-center' style={{marginLeft:'3px'}}>
+                                        <input type='submit' value='Submit' className='btn btn-primary'/>
+                                    </div>
+                                </div>
+                                <div className='row justify-content-center'>
+                                    <div className='col-2' style={{backgroundColor: 'white', height:'15px', marginLeft:'10px'}}></div>
+                                </div>
+                            </div>
+                            {supermarketsList}
+                            {allSupermarketProductsList}
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,4 +116,4 @@ class Delivery extends React.Component {
   }
 }
 
-module.exports = Delivery;
+module.exports = Edit_Delivery;

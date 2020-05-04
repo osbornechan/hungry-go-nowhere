@@ -46,8 +46,12 @@ module.exports = (app, allModels) => {
     app.post('/delivery/products', allControllers.insertPastProductToDelivery);
 
     // ----- Add new delivery order ------
-    app.get('/delivery/new', allControllers.newDelivery);
-    app.post('/delivery', allControllers.insertNewProductToDelivery);
+    app.get('/delivery/product/new', allControllers.newDelivery);
+    app.post('/delivery/product', allControllers.insertNewProductToDelivery);
+
+    // ----- Edit delivery -------
+    app.get('/delivery/edit', allControllers.deliveryDetails);
+    app.put('/delivery', allControllers.editDelivery);
 
     // ----- Merge with Inventory -------
     app.post('/delivery/inventory/', allControllers.mergeWithInventory);

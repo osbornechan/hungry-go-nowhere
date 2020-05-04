@@ -441,7 +441,7 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
-     // ---------- MARGE
+     // ---------- MERGE DELIVERY PRODUCT WITH INVENTORY ---------
     let mergeDeliveryWithInventory = (userId, deliveryProductId, callback) => {
         let query = 'SELECT * FROM deliveries_products WHERE delivery_product_id=' + deliveryProductId;
 
@@ -474,6 +474,46 @@ module.exports = (dbPoolInstance) => {
                 })
             }
         })
+    }
+
+    // --------- EDIT PRODUCT DETAILS IN DELIVERY -----------
+    let updateDeliveryProductDetails = (productDetailsToEdit, callback) => {
+        productDetailsToEdit.forEach((productDetails, index) => {
+            let deliveryProductId = productDetails[0];
+            let deliveryDate = productDetails[1][0];
+            let productQty = parseInt(productDetails[1][1]);
+            //Update delivery product quantity
+            let query = 'UPDATE deliveries_products SET delivery_qty=' + productQty + ' WHERE delivery_product_id=' + deliveryProductId;
+
+            dbPoolInstance.query(query, (error, result) => {
+                if (error) {
+                    callback(error, null);
+                } else {
+                    //Get delivery_id of updated delivery product
+                    query = 'SELECT delivery_id FROM deliveries_products WHERE delivery_product_id=' + deliveryProductId;
+                    dbPoolInstance.query(query, (error, result) => {
+                        if (error) {
+                            callback(error, null);
+                        } else {
+                            //Update delivery date
+                            let deliveryId = result.rows[0].delivery_id;
+                            query = "UPDATE deliveries SET delivery_date='" + deliveryDate + "' WHERE delivery_id=" + deliveryId;
+
+                            dbPoolInstance.query(query, (error, result) => {
+                                if (error) {
+                                    callback(error, null);
+                                } else {
+                                    if (index === productDetailsToEdit.length - 1) {
+                                        console.log('Updated delivery product details!');
+                                        callback(null, null);
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        });
     }
 
     // --------- DELETE PRODUCT FROM DELIVERY -----------
@@ -654,6 +694,7 @@ module.exports = (dbPoolInstance) => {
         getAllNewDeliveryDetails,
         insertNewDeliveryProduct,
         mergeDeliveryWithInventory,
+        updateDeliveryProductDetails,
         deleteFromDeliveryProduct,
         // WISHLIST QUERIES
         getAllWishlistProducts,

@@ -298,6 +298,38 @@ const sha256 = require('js-sha256');
         db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
     }
 
+    // ------- EDIT DELIVERY PRODUCTS --------
+    let deliveryDetailsControllerCallback = (request, response) => {
+        let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
+
+        const whenModelIsDone = (err, deliveryData) => {
+            if (err) {
+                console.log('Query error', err);
+            } else {
+                const data = {
+                    userName: userName,
+                    deliveryData: deliveryData
+                }
+                response.render('edit_delivery', data);
+            }
+        }
+        db.model.getAllDeliveryProducts(userId, whenModelIsDone);
+    }
+
+    let editDeliveryControllerCallback = (request, response) => {
+        let productDetailsToEdit = Object.entries(request.body);
+
+        const whenModelIsDone = (error, deliveryProductDetails) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/delivery/');
+            }
+        }
+        db.model.updateDeliveryProductDetails(productDetailsToEdit, whenModelIsDone);
+    }
+
     // ------- DELETE PRODUCT FROM DELIVERY -------
     let deleteDeliveryProductControllerCallback = (request, response) => {
         let deliveryProductIdToDelete = Object.keys(request.body)[0];
@@ -492,6 +524,8 @@ const sha256 = require('js-sha256');
     newDelivery: newDeliveryControllerCallback,
     insertNewProductToDelivery: insertNewProductToDeliveryControllerCallback,
     mergeWithInventory: mergeWithInventoryControllerCallback,
+    deliveryDetails: deliveryDetailsControllerCallback,
+    editDelivery: editDeliveryControllerCallback,
     deleteDeliveryProduct: deleteDeliveryProductControllerCallback,
     // WISHLIST CONTROLLERS
     wishlist: wishlistControllerCallback,

@@ -31,7 +31,7 @@ class New_Supermarket extends React.Component {
                             <h6><a href='/delivery/products' className='text-white text-decoration-none'>+ Add Delivery</a></h6>
                         </div>
                         <div className='nav-bar-row nav-sub-text row justify-content-center'>
-                            <h6><a href='#' className='text-white text-decoration-none'># Edit Delivery</a></h6>
+                            <h6><a href='/delivery/edit' className='text-white text-decoration-none'># Edit Delivery</a></h6>
                         </div>
                         <div className='nav-bar-row nav-sub-text row justify-content-center'>
                             <h6><a href='/delivery/supermarket/new' className='text-white text-decoration-none'>+ Add Supermarket</a></h6>

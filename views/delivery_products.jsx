@@ -74,7 +74,7 @@ class Delivery_Products extends React.Component {
                             <h6><a href='/delivery/products' className='text-white text-decoration-none'>+ Add Delivery</a></h6>
                         </div>
                         <div className='nav-bar-row nav-sub-text row justify-content-center'>
-                            <h6><a href='#' className='text-white text-decoration-none'># Edit Delivery</a></h6>
+                            <h6><a href='/delivery/edit' className='text-white text-decoration-none'># Edit Delivery</a></h6>
                         </div>
                         <div className='nav-bar-row nav-sub-text row justify-content-center'>
                             <h6><a href='/delivery/supermarket/new' className='text-white text-decoration-none'>+ Add Supermarket</a></h6>
@@ -110,7 +110,7 @@ class Delivery_Products extends React.Component {
                                     </div>
                                     <br/>
                                     <div className='row justify-content-center'>
-                                        <button className='btn btn-primary'><a href='/delivery/new/' className='text-white text-decoration-none'>Add New Product</a></button>
+                                        <button className='btn btn-primary'><a href='/delivery/product/new/' className='text-white text-decoration-none'>Add New Product</a></button>
                                     </div>
                                 </div>
                                 <div className='row'>
