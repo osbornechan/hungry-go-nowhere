@@ -96,7 +96,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllInventoryProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -114,7 +114,7 @@ const SALT = 'Just stay home lah';
                 response.render('inventory_products', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -144,7 +144,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertPastInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -165,7 +165,7 @@ const SALT = 'Just stay home lah';
                 response.render('new_inventory_product', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -189,7 +189,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, expiry, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -214,7 +214,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllInventoryProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -233,7 +233,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.updateInventoryProductDetails(productDetailsToEdit, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -253,7 +253,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.deleteFromInventoryProduct(inventoryProductIdToDelete, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -280,7 +280,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllDeliveryProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -295,7 +295,7 @@ const SALT = 'Just stay home lah';
             }
             response.render('new_supermarket', data);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -314,7 +314,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertSupermarket(newSupermarket, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -332,7 +332,7 @@ const SALT = 'Just stay home lah';
                 response.render('delivery_products', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -362,7 +362,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertPastDeliveryProduct(userId, productDetailsToAdd, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -382,7 +382,7 @@ const SALT = 'Just stay home lah';
                 response.render('new_delivery', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -407,7 +407,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -432,7 +432,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllDeliveryProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -451,7 +451,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.updateDeliveryProductDetails(productDetailsToEdit, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -471,7 +471,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.deleteFromDeliveryProduct(deliveryProductIdToDelete, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -499,7 +499,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllWishlistProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -517,7 +517,7 @@ const SALT = 'Just stay home lah';
                 response.render('wishlist_products', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -547,7 +547,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertPastWishlistProduct(userId, productIdToAdd, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -568,7 +568,7 @@ const SALT = 'Just stay home lah';
                 response.render('new_wishlist_product', data);
             })
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -591,7 +591,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -616,7 +616,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.getAllWishlistProducts(userId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -635,7 +635,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.updateWishlistProductQty(productIdToEdit, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -656,7 +656,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.mergeDeliveryWithInventory(userId, deliveryProductId, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 
@@ -677,7 +677,7 @@ const SALT = 'Just stay home lah';
             }
             db.model.deleteFromWishlistProduct(wishlistProductIdToDelete, whenModelIsDone);
         } else {
-            response.redirect('/home');
+            response.redirect('/');
         }
     }
 

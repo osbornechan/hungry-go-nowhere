@@ -8,7 +8,7 @@ module.exports = (app, allModels) => {
     const allControllers = require('./controllers/controller')(allModels);
 
     // ==== Main Page ====
-    app.get('/home', allControllers.main);
+    app.get('/', allControllers.main);
 
     // ==== Login Page ====
     app.get('/login/', allControllers.login);
