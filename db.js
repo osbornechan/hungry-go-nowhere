@@ -29,11 +29,13 @@ if (process.env.DATABASE_URL) {
 }
 
 const pool = new pg.Pool(configs);
-console.log(configs)
+//console.log(configs)
+console.log(pool)
 
 pool.on('error', function (err) {
     console.log('idle client error', err.message, err.stack);
 });
+
 
 
 // ==================================
@@ -42,11 +44,12 @@ pool.on('error', function (err) {
 
 const modelsFunction = require('./models/model');
 const modelsObject = modelsFunction(pool);
+console.log(modelsObject)
 
  // ==============================
  //        MODULE EXPORTS
  // ==============================
-console.log(pool)
+
 
 module.exports = {
     //make queries directly from here
