@@ -6,25 +6,44 @@ class Main extends React.Component {
     return (
       <html>
         <head>
+            <link href='/main_styles.css' rel='stylesheet'/>
             <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
         <body>
             <div className='container'>
                 <br/>
-                <h3 className='text-center'>HungryGoNowhere</h3>
-                <br/>
-                <h5 className='text-center'>Your Food Inventory Tracker</h5>
-                <h6 className='text-center'>Never again wonder what happened those tomatoes.</h6>
-                <br/>
-                <p className='text-center'>#sgunited #stayhomesg #ccb</p>
-                <br/>
                 <div className='row justify-content-center'>
-                    <button className='btn btn-primary'><a href='/login/' className='text-white text-decoration-none'>Login</a></button>
-                </div>
-                <br/>
-                <div className='row justify-content-center'>
-                    <p>New user? Register <a href='#'>here</a></p>
+                    <div className='bowl col-8'>
+                        <div className='img-row row justify-content-center'>
+                            <img src='../logo-reverse.png'/>
+                        </div>
+                        <div className='row justify-content-center'>
+                            <h4 className='text-center'>Your Food Inventory Tracker</h4>
+                        </div>
+                        <div className='row justify-content-center'>
+                            <p className='text-center'>Never again wonder what happened to those tomatoes.</p>
+                        </div>
+                        <br/>
+                        <div className='row justify-content-center'>
+                            <p className='text-center'>#sgunited #stayhomesg #ccb</p>
+                        </div>
+                    </div>
+                    <div className='space col-1'></div>
+                    <div className='cup col-3'>
+                        <div className='liquid'>
+                            <div className='row justify-content-center'>
+                                <button className='btn'><a href='/login/' className='btn-text'>Login</a></button>
+                            </div>
+                            <div className='row justify-content-center'>
+                                <p>New user? Register <a href='/register' className='register-link'>here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='bowl-base col-3'></div>
+                    <div className='base-space col-3'></div>
+                    <div className='cup-base col-3'></div>
+                    <div className='table row justify-content-center'></div>
                 </div>
             </div>
         </body>

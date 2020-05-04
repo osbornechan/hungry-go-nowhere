@@ -1,12 +1,12 @@
 const React = require("react");
 
-class Login extends React.Component {
+class Register extends React.Component {
   render() {
 
     return (
       <html>
         <head>
-            <link href='../login_styles.css' rel='stylesheet'/>
+            <link href='../register_styles.css' rel='stylesheet'/>
             <link href="https://fonts.googleapis.com/css2?family=B612&family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossOrigin="anonymous"/>
         </head>
@@ -19,12 +19,12 @@ class Login extends React.Component {
                             <img src='../logo-reverse.png'/>
                         </div>
                         <div className='row justify-content-center'>
-                            <h3 className='text-center'>Login</h3>
+                            <h3 className='text-center'>New Account</h3>
                         </div>
                         <br/>
                         <div className='row justify-content-center'>
                             <div className='row justify-content-center'>
-                                <form method='POST' action='/inventory'>
+                                <form method='POST' action='/register'>
                                     <div className='row justify-content-center'>
                                         <p>Username: <input type='text' name='user_name'/></p>
                                     </div>
@@ -55,4 +55,4 @@ class Login extends React.Component {
   }
 }
 
-module.exports = Login;
+module.exports = Register;

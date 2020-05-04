@@ -1,5 +1,6 @@
 module.exports = (db) => {
 const sha256 = require('js-sha256');
+const SALT = 'Just stay home lah';
 
     // ==============================
     //       CONTROLLER LOGIC
@@ -21,7 +22,6 @@ const sha256 = require('js-sha256');
 
     let verifyLoginControllerCallback = (request, response) => {
         const hashedPassword = sha256(request.body.password);
-        const hashedLoggedIn = sha256('true');
 
         db.model.getAllUsers((error, allUsers) => {
             let correctUsername = false;
@@ -41,6 +41,8 @@ const sha256 = require('js-sha256');
                 }
             })
 
+            const hashedLoggedIn = sha256(userId + 'logged' + SALT);
+
             if (correctUsername === true && correctPassword === true) {
                 response.cookie('loggedIn', hashedLoggedIn)
                 response.cookie('user_name', request.body.user_name);
@@ -52,13 +54,34 @@ const sha256 = require('js-sha256');
         })
     }
 
+    // ---- REGISTER PAGE ------
+    let registerControllerCallback = (request, response) => {
+        response.render('register');
+    }
+
+    // ---- ADD NEW USER --------
+    let registerUserControllerCallback = (request, response) => {
+        let userName = request.body.user_name;
+        let hashedPassword = sha256(request.body.password);
+
+        const whenModelIsDone = (error, result) => {
+            if (error) {
+                console.log('Query error', error);
+            } else {
+                response.redirect('/inventory/');
+            }
+        }
+        db.model.insertNewUser(userName, hashedPassword, whenModelIsDone);
+    }
+
     /* ================================================================
     ///////////////     *INVENTORY CONTROLLERS           /////////////
     ================================================================ */
     let inventoryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
-            let userId = request.cookies['user_id'];
-            let userName = request.cookies['user_name'];
+        let userId = request.cookies['user_id'];
+        let userName = request.cookies['user_name'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
 
             const whenModelIsDone = (err, allInventoryProducts) => {
                 if (err) {
@@ -79,7 +102,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO INVENTORY -------
     let pastInventoryProductsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userName = request.cookies['user_name'];
             db.model.getAllProducts((error, allProducts) => {
                 const data = {
@@ -95,7 +120,9 @@ const sha256 = require('js-sha256');
 
     // ----- ADD PAST PRODUCTS TO INVENTORY -------
     let insertPastProductToInventoryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             //Change key-value pairs in object into array of arrays
             let productDetailsList = Object.entries(request.body);
@@ -123,7 +150,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newInventoryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -142,7 +171,9 @@ const sha256 = require('js-sha256');
 
     // ------- ADD NEW PRODUCT TO INVENTORY --------
     let insertNewProductToInventoryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let inventoryProduct = request.body;
             let inventoryQty = inventoryProduct.qty;
@@ -164,7 +195,9 @@ const sha256 = require('js-sha256');
 
     // ------- EDIT INVENTORY PRODUCT QUANTITY -------
     let inventoryDetailsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -186,7 +219,9 @@ const sha256 = require('js-sha256');
     }
 
     let editInventoryDetailsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let productDetailsToEdit = Object.entries(request.body);
 
             const whenModelIsDone = (error, inventoryProductDetails) => {
@@ -204,7 +239,9 @@ const sha256 = require('js-sha256');
 
     // ------- DELETE PRODUCT FROM INVENTORY -------
     let deleteInventoryProductControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let inventoryProductIdToDelete = Object.keys(request.body)[0];
 
             const whenModelIsDone = (error, deleteInventoryProduct) => {
@@ -224,7 +261,9 @@ const sha256 = require('js-sha256');
     ///////////////     *DELIVERY CONTROLLERS           ///////////////
     ================================================================ */
     let deliveryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -247,7 +286,9 @@ const sha256 = require('js-sha256');
 
     // ---------- ADD NEW SUPERMARKET ------------
     let newSupermarketControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userName = request.cookies['user_name'];
             const data = {
                 userName: userName
@@ -259,7 +300,9 @@ const sha256 = require('js-sha256');
     }
 
     let addSupermarketControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let newSupermarket = request.body;
 
             const whenModelIsDone = (error, newSupermarket) => {
@@ -277,7 +320,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO DELIVERY -------
     let pastDeliveryProductsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userName = request.cookies['user_name'];
             db.model.getAllDeliveryDetails((error, allDeliveryDetails) => {
                 const data = {
@@ -293,7 +338,9 @@ const sha256 = require('js-sha256');
 
     // ----- ADD PAST PRODUCTS TO DELIVERY -------
     let insertPastProductToDeliveryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             //Change key-value pairs in object into array of arrays
             let productDetailsList = Object.entries(request.body);
@@ -322,7 +369,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD NEW PRODUCT TO DELIVERY -------
     let newDeliveryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userName = request.cookies['user_name'];
             db.model.getAllNewDeliveryDetails((error, newDeliveryDetails) => {
                 const data = {
@@ -339,7 +388,9 @@ const sha256 = require('js-sha256');
 
     // ------- ADD NEW PRODUCT TO DELIVERY --------
     let insertNewProductToDeliveryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let deliveryProduct = request.body;
             let deliveryQty = deliveryProduct.qty;
@@ -362,7 +413,9 @@ const sha256 = require('js-sha256');
 
     // ------- EDIT DELIVERY PRODUCTS --------
     let deliveryDetailsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -384,7 +437,9 @@ const sha256 = require('js-sha256');
     }
 
     let editDeliveryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let productDetailsToEdit = Object.entries(request.body);
 
             const whenModelIsDone = (error, deliveryProductDetails) => {
@@ -402,7 +457,9 @@ const sha256 = require('js-sha256');
 
     // ------- DELETE PRODUCT FROM DELIVERY -------
     let deleteDeliveryProductControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let deliveryProductIdToDelete = Object.keys(request.body)[0];
 
             const whenModelIsDone = (error, deleteDeliveryProduct) => {
@@ -423,7 +480,9 @@ const sha256 = require('js-sha256');
     ================================================================ */
     // ------- WISHLIST PAGE -------
     let wishlistControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -446,7 +505,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO WISHLIST -------
     let pastWishlistProductsControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userName = request.cookies['user_name'];
             db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
                 const data = {
@@ -462,7 +523,9 @@ const sha256 = require('js-sha256');
 
     // ----- ADD PAST PRODUCTS TO WISHLIST -------
     let insertPastProductToWishlistControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             //Change key-value pairs in object into array of arrays
             let productIdList = Object.entries(request.body);
@@ -490,7 +553,9 @@ const sha256 = require('js-sha256');
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newWishlistControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -509,7 +574,9 @@ const sha256 = require('js-sha256');
 
     // ------- ADD NEW PRODUCT TO WISHLIST --------
     let insertNewProductToWishlistControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let wishlistProduct = request.body;
             let wishlistQty = wishlistProduct.qty;
@@ -530,7 +597,9 @@ const sha256 = require('js-sha256');
 
     // ------- EDIT WISHLIST PRODUCT QUANTITY -------
     let wishlistQtyControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let userName = request.cookies['user_name'];
 
@@ -552,7 +621,9 @@ const sha256 = require('js-sha256');
     }
 
     let editWishlistQtyControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let productIdToEdit = Object.entries(request.body);
 
             const whenModelIsDone = (error, wishlistProductQty) => {
@@ -570,7 +641,9 @@ const sha256 = require('js-sha256');
 
 
     let mergeWithInventoryControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let userId = request.cookies['user_id'];
             let deliveryProductId = Object.keys(request.body)[0];
 
@@ -590,7 +663,9 @@ const sha256 = require('js-sha256');
 
     // ------- DELETE PRODUCT FROM WISHLIST -------
     let deleteWishlistProductControllerCallback = (request, response) => {
-        if (request.cookies['loggedIn'] === sha256('true')) {
+        let userId = request.cookies['user_id'];
+
+        if (request.cookies['loggedIn'] === sha256(userId + 'logged' + SALT)) {
             let wishlistProductIdToDelete = Object.keys(request.body)[0];
 
             const whenModelIsDone = (error, deleteWishlistProduct) => {
@@ -616,6 +691,8 @@ const sha256 = require('js-sha256');
     main: mainControllerCallback,
     login: loginControllerCallback,
     verifyLogin: verifyLoginControllerCallback,
+    register: registerControllerCallback,
+    registerUser: registerUserControllerCallback,
     // INVENTORY CONTROLLERS
     inventory: inventoryControllerCallback,
     pastInventoryProducts: pastInventoryProductsControllerCallback,

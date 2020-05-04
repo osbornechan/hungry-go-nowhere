@@ -3,6 +3,8 @@ const redMart = document.querySelector('#RedMart');
 const fairprice = document.querySelector('#Fairprice');
 const shengSiong = document.getElementById('Sheng Siong');
 
+console.log(shengSiong)
+
 const supermarketProducts = document.querySelectorAll('.supermarket-product');
 
 supermarketProducts.forEach(product => {

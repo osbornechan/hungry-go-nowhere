@@ -14,6 +14,9 @@ module.exports = (app, allModels) => {
     app.get('/login/', allControllers.login);
     app.post('/inventory/', allControllers.verifyLogin);
 
+    // ==== Register Page =====
+    app.get('/register/', allControllers.register);
+    app.post('/register', allControllers.registerUser);
 
     // ==== Inventory Page ====
     app.get('/inventory/', allControllers.inventory);

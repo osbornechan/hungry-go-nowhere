@@ -1,0 +1,68 @@
+.bowl {
+	background-color: black;
+	color: white;
+	border-radius: 5px 5px 245px 245px;
+	padding-bottom: 50px;
+	margin-top: 100px;
+}
+
+.img-row {
+	padding: 30px 20px;
+}
+
+img {
+	width: 40%;
+	margin-left: 40px;
+}
+
+.cup {
+	border-left: 15px solid black;
+	border-right: 15px solid black;
+	margin-top: 10px;
+}
+
+.bowl-base {
+	background-color: black;
+	height: 20px;
+	margin-left: 235px;
+}
+
+.cup-base {
+	background-color: black;
+	height: 20px;
+}
+
+.space {
+	margin-left: -50px;
+}
+
+.liquid {
+	background-color: black;
+	border-top: 10px solid black;
+	color: white;
+	margin-top: 150px;
+	margin-left: -8px;
+	margin-right: -8px;
+	height: 69%;
+}
+
+.btn {
+	background-color: white;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.btn-text {
+	color: black;
+}
+
+.register-link {
+	color: white;
+	text-decoration: underline;
+}
+
+.table {
+	background-color: black;
+	border: 1px solid white;
+	height: 40px;
+}

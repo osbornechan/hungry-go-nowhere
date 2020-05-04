@@ -25,6 +25,24 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
+    let insertNewUser = (userName, hashedPassword, callback) => {
+        let query = 'INSERT INTO users (user_name, password) VALUES ($1, $2)';
+        let values = [userName, hashedPassword];
+
+        dbPoolInstance.query(query, values, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else {
+                if (result.rows.length > 0) {
+                    console.log('Added new user!');
+                    callback(null, null);
+                } else {
+                    callback(null, null);
+                }
+            }
+        })
+    }
+
     let getAllCategories = (callback) => {
         let query = 'SELECT * FROM categories ORDER BY category_id ASC';
 
@@ -677,6 +695,7 @@ module.exports = (dbPoolInstance) => {
     return {
         // GENERAL QUERIES
         getAllUsers,
+        insertNewUser,
         getAllCategories,
         getAllProducts,
         // INVENTORY QUERIES
