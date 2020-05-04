@@ -20,7 +20,8 @@ const sha256 = require('js-sha256');
     }
 
     let verifyLoginControllerCallback = (request, response) => {
-        const hash = sha256(request.body.password)
+        const hashedPassword = sha256(request.body.password);
+        const hashedLoggedIn = sha256('true');
 
         db.model.getAllUsers((error, allUsers) => {
             let correctUsername = false;
@@ -30,7 +31,7 @@ const sha256 = require('js-sha256');
                 if (user.user_name === request.body.user_name) {
                     correctUsername = true;
                     userId = user.user_id;
-                    if (user.password === hash) {
+                    if (user.password === hashedPassword) {
                         correctPassword = true;
                     } else {
                         return;
@@ -41,6 +42,7 @@ const sha256 = require('js-sha256');
             })
 
             if (correctUsername === true && correctPassword === true) {
+                response.cookie('loggedIn', hashedLoggedIn)
                 response.cookie('user_name', request.body.user_name);
                 response.cookie('user_id', userId)
                 response.redirect('/inventory/');
@@ -54,294 +56,366 @@ const sha256 = require('js-sha256');
     ///////////////     *INVENTORY CONTROLLERS           /////////////
     ================================================================ */
     let inventoryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (err, allInventoryProducts) => {
-            if (err) {
-                console.log('Query error', err);
-            } else {
-                const data = {
-                    userName: userName,
-                    allInventoryProducts: allInventoryProducts
+            const whenModelIsDone = (err, allInventoryProducts) => {
+                if (err) {
+                    console.log('Query error', err);
+                } else {
+                    const data = {
+                        userName: userName,
+                        allInventoryProducts: allInventoryProducts
+                    }
+                    response.render('inventory', data);
                 }
-                response.render('inventory', data);
             }
+            db.model.getAllInventoryProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO INVENTORY -------
     let pastInventoryProductsControllerCallback = (request, response) => {
-        let userName = request.cookies['user_name'];
-        db.model.getAllProducts((error, allProducts) => {
-            const data = {
-                userName: userName,
-                allProducts: allProducts
-            }
-            response.render('inventory_products', data);
-        })
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userName = request.cookies['user_name'];
+            db.model.getAllProducts((error, allProducts) => {
+                const data = {
+                    userName: userName,
+                    allProducts: allProducts
+                }
+                response.render('inventory_products', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ----- ADD PAST PRODUCTS TO INVENTORY -------
     let insertPastProductToInventoryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        //Change key-value pairs in object into array of arrays
-        let productDetailsList = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            //Change key-value pairs in object into array of arrays
+            let productDetailsList = Object.entries(request.body);
 
-        //Add only edited product details to array
-        let productDetailsToAdd = [];
-        for (const i of productDetailsList) {
-            if (i[1][0] !== '') {
-                productDetailsToAdd.push(i);
+            //Add only edited product details to array
+            let productDetailsToAdd = [];
+            for (const i of productDetailsList) {
+                if (i[1][0] !== '') {
+                    productDetailsToAdd.push(i);
+                }
             }
-        }
 
-        const whenModelIsDone = (error, result) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/inventory/');
+            const whenModelIsDone = (error, result) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/inventory/');
+                }
             }
+            db.model.insertPastInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertPastInventoryProduct(userId, productDetailsToAdd, whenModelIsDone);
     }
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newInventoryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        db.model.getAllCategories((error, allCategories) => {
-            const data = {
-                allCategories: allCategories,
-                userId: userId,
-                userName: userName
-            }
-            response.render('new_inventory_product', data);
-        })
+            db.model.getAllCategories((error, allCategories) => {
+                const data = {
+                    allCategories: allCategories,
+                    userId: userId,
+                    userName: userName
+                }
+                response.render('new_inventory_product', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ------- ADD NEW PRODUCT TO INVENTORY --------
     let insertNewProductToInventoryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let inventoryProduct = request.body;
-        let inventoryQty = inventoryProduct.qty;
-        let category = inventoryProduct.category;
-        let expiry = inventoryProduct.expiry;
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let inventoryProduct = request.body;
+            let inventoryQty = inventoryProduct.qty;
+            let category = inventoryProduct.category;
+            let expiry = inventoryProduct.expiry;
 
-        const whenModelIsDone = (error, newInventoryProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/inventory/');
+            const whenModelIsDone = (error, newInventoryProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/inventory/');
+                }
             }
+            db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, expiry, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertNewInventoryProduct(userId, inventoryProduct, inventoryQty, category, expiry, whenModelIsDone);
     }
 
     // ------- EDIT INVENTORY PRODUCT QUANTITY -------
     let inventoryDetailsControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (error, allInventoryProducts) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                const data = {
-                    userName: userName,
-                    allInventoryProducts: allInventoryProducts
+            const whenModelIsDone = (error, allInventoryProducts) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    const data = {
+                        userName: userName,
+                        allInventoryProducts: allInventoryProducts
+                    }
+                    response.render('edit_inventory', data);
                 }
-                response.render('edit_inventory', data);
             }
+            db.model.getAllInventoryProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllInventoryProducts(userId, whenModelIsDone);
     }
 
     let editInventoryDetailsControllerCallback = (request, response) => {
-        let productDetailsToEdit = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let productDetailsToEdit = Object.entries(request.body);
 
-        const whenModelIsDone = (error, inventoryProductDetails) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/inventory/');
+            const whenModelIsDone = (error, inventoryProductDetails) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/inventory/');
+                }
             }
+            db.model.updateInventoryProductDetails(productDetailsToEdit, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.updateInventoryProductDetails(productDetailsToEdit, whenModelIsDone);
     }
 
     // ------- DELETE PRODUCT FROM INVENTORY -------
     let deleteInventoryProductControllerCallback = (request, response) => {
-        let inventoryProductIdToDelete = Object.keys(request.body)[0];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let inventoryProductIdToDelete = Object.keys(request.body)[0];
 
-        const whenModelIsDone = (error, deleteInventoryProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/inventory/');
+            const whenModelIsDone = (error, deleteInventoryProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/inventory/');
+                }
             }
+            db.model.deleteFromInventoryProduct(inventoryProductIdToDelete, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.deleteFromInventoryProduct(inventoryProductIdToDelete, whenModelIsDone);
     }
 
     /* ================================================================
     ///////////////     *DELIVERY CONTROLLERS           ///////////////
     ================================================================ */
     let deliveryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (err, deliveryData) => {
-            if (err) {
-                console.log('Query error', err);
-            } else {
-                const data = {
-                    userName: userName,
-                    deliveryData: deliveryData
+            const whenModelIsDone = (err, deliveryData) => {
+                if (err) {
+                    console.log('Query error', err);
+                } else {
+                    const data = {
+                        userName: userName,
+                        deliveryData: deliveryData
+                    }
+                    response.render('delivery', data);
                 }
-                response.render('delivery', data);
             }
+            db.model.getAllDeliveryProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
     // ---------- ADD NEW SUPERMARKET ------------
     let newSupermarketControllerCallback = (request, response) => {
-        let userName = request.cookies['user_name'];
-        const data = {
-            userName: userName
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userName = request.cookies['user_name'];
+            const data = {
+                userName: userName
+            }
+            response.render('new_supermarket', data);
+        } else {
+            response.redirect('/');
         }
-        response.render('new_supermarket', data);
     }
 
     let addSupermarketControllerCallback = (request, response) => {
-        let newSupermarket = request.body;
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let newSupermarket = request.body;
 
-        const whenModelIsDone = (error, newSupermarket) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, newSupermarket) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.insertSupermarket(newSupermarket, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertSupermarket(newSupermarket, whenModelIsDone);
     }
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO DELIVERY -------
     let pastDeliveryProductsControllerCallback = (request, response) => {
-        let userName = request.cookies['user_name'];
-        db.model.getAllDeliveryDetails((error, allDeliveryDetails) => {
-            const data = {
-                userName: userName,
-                allDeliveryDetails: allDeliveryDetails
-            }
-            response.render('delivery_products', data);
-        })
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userName = request.cookies['user_name'];
+            db.model.getAllDeliveryDetails((error, allDeliveryDetails) => {
+                const data = {
+                    userName: userName,
+                    allDeliveryDetails: allDeliveryDetails
+                }
+                response.render('delivery_products', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ----- ADD PAST PRODUCTS TO DELIVERY -------
     let insertPastProductToDeliveryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        //Change key-value pairs in object into array of arrays
-        let productDetailsList = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            //Change key-value pairs in object into array of arrays
+            let productDetailsList = Object.entries(request.body);
 
-        //Add only edited product details to array
-        let productDetailsToAdd = [];
-        for (const i of productDetailsList) {
-            if (i[1][0] !== '') {
-                productDetailsToAdd.push(i);
+            //Add only edited product details to array
+            let productDetailsToAdd = [];
+            for (const i of productDetailsList) {
+                if (i[1][0] !== '') {
+                    productDetailsToAdd.push(i);
+                }
             }
-        }
 
-        const whenModelIsDone = (error, result) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, result) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.insertPastDeliveryProduct(userId, productDetailsToAdd, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertPastDeliveryProduct(userId, productDetailsToAdd, whenModelIsDone);
     }
 
 
     // ----- FORM TO ADD NEW PRODUCT TO DELIVERY -------
     let newDeliveryControllerCallback = (request, response) => {
-        let userName = request.cookies['user_name'];
-        db.model.getAllNewDeliveryDetails((error, newDeliveryDetails) => {
-            const data = {
-                userName: userName,
-                allSupermarkets: newDeliveryDetails.allSupermarkets,
-                allCategories: newDeliveryDetails.allCategories
-            }
-            response.render('new_delivery', data);
-        })
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userName = request.cookies['user_name'];
+            db.model.getAllNewDeliveryDetails((error, newDeliveryDetails) => {
+                const data = {
+                    userName: userName,
+                    allSupermarkets: newDeliveryDetails.allSupermarkets,
+                    allCategories: newDeliveryDetails.allCategories
+                }
+                response.render('new_delivery', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ------- ADD NEW PRODUCT TO DELIVERY --------
     let insertNewProductToDeliveryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let deliveryProduct = request.body;
-        let deliveryQty = deliveryProduct.qty;
-        let category = deliveryProduct.category;
-        let supermarketName = deliveryProduct.supermarket;
-        let deliveryDate = deliveryProduct.delivery_date;
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let deliveryProduct = request.body;
+            let deliveryQty = deliveryProduct.qty;
+            let category = deliveryProduct.category;
+            let supermarketName = deliveryProduct.supermarket;
+            let deliveryDate = deliveryProduct.delivery_date;
 
-        const whenModelIsDone = (error, newDeliveryProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, newDeliveryProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertNewDeliveryProduct(userId, deliveryProduct, deliveryQty, category, supermarketName, deliveryDate, whenModelIsDone);
     }
 
     // ------- EDIT DELIVERY PRODUCTS --------
     let deliveryDetailsControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (err, deliveryData) => {
-            if (err) {
-                console.log('Query error', err);
-            } else {
-                const data = {
-                    userName: userName,
-                    deliveryData: deliveryData
+            const whenModelIsDone = (err, deliveryData) => {
+                if (err) {
+                    console.log('Query error', err);
+                } else {
+                    const data = {
+                        userName: userName,
+                        deliveryData: deliveryData
+                    }
+                    response.render('edit_delivery', data);
                 }
-                response.render('edit_delivery', data);
             }
+            db.model.getAllDeliveryProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllDeliveryProducts(userId, whenModelIsDone);
     }
 
     let editDeliveryControllerCallback = (request, response) => {
-        let productDetailsToEdit = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let productDetailsToEdit = Object.entries(request.body);
 
-        const whenModelIsDone = (error, deliveryProductDetails) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, deliveryProductDetails) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.updateDeliveryProductDetails(productDetailsToEdit, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.updateDeliveryProductDetails(productDetailsToEdit, whenModelIsDone);
     }
 
     // ------- DELETE PRODUCT FROM DELIVERY -------
     let deleteDeliveryProductControllerCallback = (request, response) => {
-        let deliveryProductIdToDelete = Object.keys(request.body)[0];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let deliveryProductIdToDelete = Object.keys(request.body)[0];
 
-        const whenModelIsDone = (error, deleteDeliveryProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, deleteDeliveryProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.deleteFromDeliveryProduct(deliveryProductIdToDelete, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.deleteFromDeliveryProduct(deliveryProductIdToDelete, whenModelIsDone);
     }
 
     /* ================================================================
@@ -349,151 +423,187 @@ const sha256 = require('js-sha256');
     ================================================================ */
     // ------- WISHLIST PAGE -------
     let wishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (err, allWishlistProducts) => {
-            if (err) {
-                console.log('Query error', err);
-            } else {
-                const data = {
-                    userName: userName,
-                    allWishlistProducts: allWishlistProducts
+            const whenModelIsDone = (err, allWishlistProducts) => {
+                if (err) {
+                    console.log('Query error', err);
+                } else {
+                    const data = {
+                        userName: userName,
+                        allWishlistProducts: allWishlistProducts
+                    }
+                    response.render('wishlist', data);
                 }
-                response.render('wishlist', data);
             }
+            db.model.getAllWishlistProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
     // ----- FORM TO ADD FROM PAST PRODUCTS TO WISHLIST -------
     let pastWishlistProductsControllerCallback = (request, response) => {
-        let userName = request.cookies['user_name'];
-        db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
-            const data = {
-                userName: userName,
-                allNonWishlistProducts: allNonWishlistProducts
-            }
-            response.render('wishlist_products', data);
-        })
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userName = request.cookies['user_name'];
+            db.model.getAllNonWishlistProducts((error, allNonWishlistProducts) => {
+                const data = {
+                    userName: userName,
+                    allNonWishlistProducts: allNonWishlistProducts
+                }
+                response.render('wishlist_products', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ----- ADD PAST PRODUCTS TO WISHLIST -------
     let insertPastProductToWishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        //Change key-value pairs in object into array of arrays
-        let productIdList = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            //Change key-value pairs in object into array of arrays
+            let productIdList = Object.entries(request.body);
 
-        let productIdToAdd = [];
-        for (const i of productIdList) {
-            //Push into new array only products that were added
-            if (i[1] !== '') {
-                productIdToAdd.push(i)
+            let productIdToAdd = [];
+            for (const i of productIdList) {
+                //Push into new array only products that were added
+                if (i[1] !== '') {
+                    productIdToAdd.push(i)
+                }
             }
-        }
 
-        const whenModelIsDone = (error, result) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/wishlist/');
+            const whenModelIsDone = (error, result) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/wishlist/');
+                }
             }
+            db.model.insertPastWishlistProduct(userId, productIdToAdd, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertPastWishlistProduct(userId, productIdToAdd, whenModelIsDone);
     }
 
     // ----- FORM TO ADD NEW PRODUCT TO WISHLIST -------
     let newWishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        db.model.getAllCategories((error, allCategories) => {
-            const data = {
-                allCategories: allCategories,
-                userId: userId,
-                userName: userName
-            }
-            response.render('new_wishlist_product', data);
-        })
+            db.model.getAllCategories((error, allCategories) => {
+                const data = {
+                    allCategories: allCategories,
+                    userId: userId,
+                    userName: userName
+                }
+                response.render('new_wishlist_product', data);
+            })
+        } else {
+            response.redirect('/');
+        }
     }
 
     // ------- ADD NEW PRODUCT TO WISHLIST --------
     let insertNewProductToWishlistControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let wishlistProduct = request.body;
-        let wishlistQty = wishlistProduct.qty;
-        let category = wishlistProduct.category;
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let wishlistProduct = request.body;
+            let wishlistQty = wishlistProduct.qty;
+            let category = wishlistProduct.category;
 
-        const whenModelIsDone = (error, newWishlistProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/wishlist/');
+            const whenModelIsDone = (error, newWishlistProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/wishlist/');
+                }
             }
+            db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.insertNewWishlistProduct(userId, wishlistProduct, wishlistQty, category, whenModelIsDone);
     }
 
     // ------- EDIT WISHLIST PRODUCT QUANTITY -------
     let wishlistQtyControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let userName = request.cookies['user_name'];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let userName = request.cookies['user_name'];
 
-        const whenModelIsDone = (error, allWishlistProducts) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                const data = {
-                    userName: userName,
-                    allWishlistProducts: allWishlistProducts
+            const whenModelIsDone = (error, allWishlistProducts) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    const data = {
+                        userName: userName,
+                        allWishlistProducts: allWishlistProducts
+                    }
+                    response.render('edit_wishlist', data);
                 }
-                response.render('edit_wishlist', data);
             }
+            db.model.getAllWishlistProducts(userId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.getAllWishlistProducts(userId, whenModelIsDone);
     }
 
     let editWishlistQtyControllerCallback = (request, response) => {
-        let productIdToEdit = Object.entries(request.body);
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let productIdToEdit = Object.entries(request.body);
 
-        const whenModelIsDone = (error, wishlistProductQty) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/wishlist/');
+            const whenModelIsDone = (error, wishlistProductQty) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/wishlist/');
+                }
             }
+            db.model.updateWishlistProductQty(productIdToEdit, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.updateWishlistProductQty(productIdToEdit, whenModelIsDone);
     }
 
 
     let mergeWithInventoryControllerCallback = (request, response) => {
-        let userId = request.cookies['user_id'];
-        let deliveryProductId = Object.keys(request.body)[0];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let userId = request.cookies['user_id'];
+            let deliveryProductId = Object.keys(request.body)[0];
 
-        const whenModelIsDone = (error, wishlistProductQty) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/delivery/');
+            const whenModelIsDone = (error, wishlistProductQty) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/delivery/');
+                }
             }
+            db.model.mergeDeliveryWithInventory(userId, deliveryProductId, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.mergeDeliveryWithInventory(userId, deliveryProductId, whenModelIsDone);
     }
 
 
     // ------- DELETE PRODUCT FROM WISHLIST -------
     let deleteWishlistProductControllerCallback = (request, response) => {
-        let wishlistProductIdToDelete = Object.keys(request.body)[0];
+        if (request.cookies['loggedIn'] === sha256('true')) {
+            let wishlistProductIdToDelete = Object.keys(request.body)[0];
 
-        const whenModelIsDone = (error, deleteWishlistProduct) => {
-            if (error) {
-                console.log('Query error', error);
-            } else {
-                response.redirect('/wishlist/');
+            const whenModelIsDone = (error, deleteWishlistProduct) => {
+                if (error) {
+                    console.log('Query error', error);
+                } else {
+                    response.redirect('/wishlist/');
+                }
             }
+            db.model.deleteFromWishlistProduct(wishlistProductIdToDelete, whenModelIsDone);
+        } else {
+            response.redirect('/');
         }
-        db.model.deleteFromWishlistProduct(wishlistProductIdToDelete, whenModelIsDone);
     }
 
     /**

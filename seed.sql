@@ -22,6 +22,10 @@ INSERT INTO products (product_name, brand, img, category_id) VALUES ('Egg Tofu',
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Pizza','Ristorante','https://www.waangoo.com/content/images/thumbs/0019546_dr-oetker-ristorante-mozzarella-pizza-frozen_600.jpeg',5);
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Vanilla Ice Cream','Movenpick','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/13002251_LXL1.jpg',5);
 INSERT INTO products (product_name, brand, img, category_id) VALUES ('Orange Juice',"Florida's Natural",'https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/12570035_LXL1.jpg',7);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Cream Crackers','Hup Seng','https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/12374819_LXL1.jpg',6);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Cream of Mushroom',"Campbell's",'https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/274663_LXL1.jpg',4);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Coconut Water','UFC','https://thesmartlocal.com/reviews/wp-content/uploads/2016/01/ufc-refresh-coconut-water-62-1453194498.jpg',7);
+INSERT INTO products (product_name, brand, img, category_id) VALUES ('Chocolate Peanuts',"M&M's",'https://s3-ap-southeast-1.amazonaws.com/www8.fairprice.com.sg/fpol/media/images/product/XL/12683734_LXL1.jpg',6);
 
 
 /* SEED DATA FOR CATEGORIES */
@@ -39,6 +43,7 @@ INSERT INTO categories (category_name) VALUES ('Spice & Condiment');
 INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('Fairprice', 'https://pluspng.com/img-png/fairprice-logo-png-ntuc-fairprice-logo-logotype-4380.png','https://www.fairprice.com.sg/');
 INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('Cold Storage', 'https://d3cmfj7epb3vcb.cloudfront.net/files/59a2498e49c5fbae02fe9276260607a750b2dda7e6fc2ff37ad477e8ba03d82f.png','https://coldstorage.com.sg/');
 INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('RedMart', 'https://dsgcp.com/assets/Uploads/redmart-logo-red.png','https://redmart.lazada.sg/#home');
+INSERT INTO supermarkets (supermarket_name, logo, website) VALUES ('Sheng Siong','https://supplierportal.shengsiong.com.sg/Images/ss-logo-short.png','https://www.allforyou.sg');
 
 
 /* SEED DATA FOR DELIVERIES */

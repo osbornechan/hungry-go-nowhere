@@ -39,7 +39,7 @@ class Delivery extends React.Component {
                                 </form>
                                 <form method='POST' action='/delivery?_method=delete'>
                                     <div className='btn-col col-3'>
-                                        <input type='submit' name={product.delivery_product_id} value='Delete' className='btn btn-danger'/>
+                                        <input type='submit' name={product.delivery_product_id} value='Remove' className='btn btn-danger'/>
                                     </div>
                                 </form>
                             </div>
