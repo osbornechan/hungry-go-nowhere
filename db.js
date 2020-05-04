@@ -29,6 +29,7 @@ if (process.env.DATABASE_URL) {
 }
 
 const pool = new pg.Pool(configs);
+console.log(configs)
 
 pool.on('error', function (err) {
     console.log('idle client error', err.message, err.stack);
@@ -53,7 +54,7 @@ module.exports = {
     },
 
     // get a reference to end the connection pool at server end
-    pool:pool,
+    pool: pool,
 
   /*
    * ADD APP MODELS HERE
