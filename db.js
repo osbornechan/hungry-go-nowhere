@@ -44,7 +44,6 @@ pool.on('error', function (err) {
 
 const modelsFunction = require('./models/model');
 const modelsObject = modelsFunction(pool);
-console.log(modelsObject)
 
  // ==============================
  //        MODULE EXPORTS
