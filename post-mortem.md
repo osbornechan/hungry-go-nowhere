@@ -4,7 +4,6 @@ Deploy early on Heroku. Take the time to learn React components instead of wasti
 
 ## What in my process and approach to this project went well that I would repeat next time?
 Breaking down a bigger functionality into smaller parts, and testing each part
---
 
 # Code and Code Design
 ## What in my code and program design in the project would I do differently next time?
@@ -15,8 +14,8 @@ Took the time to redo my ERD diagram, which was a huge asset throughout the deve
 
 ## For each, please include code examples.
 
-Code snippet up to 20 lines.
-Code design documents or architecture drawings / diagrams.
+## Code snippet up to 20 lines.
+## Code design documents or architecture drawings / diagrams.
 (Refer to README.md for ERD)
 
 # WDI Unit 2 Post Mortem
