@@ -7,8 +7,6 @@ const url = require('url');
 
 var configs;
 
-process.env.DATABASE_URL="postgres://dlqbxgkddsemvc:6abcd8f01d2550023a55477dec8648af21a65df7d9907b973722162a774e40d9@ec2-34-200-72-77.compute-1.amazonaws.com:5432/d5aa1ovjcad7tb"
-
 if (process.env.DATABASE_URL) {
     const params = url.parse(process.env.DATABASE_URL);
     const auth = params.auth.split(':');
