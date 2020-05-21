@@ -26,7 +26,7 @@ module.exports = (dbPoolInstance) => {
     }
 
     let insertNewUser = (userName, hashedPassword, callback) => {
-        let query = 'INSERT INTO users (user_name, password) VALUES ($1, $2)';
+        let query = 'INSERT INTO users (user_name, password) VALUES ($1, $2) RETURNING *';
         let values = [userName, hashedPassword];
 
         dbPoolInstance.query(query, values, (error, result) => {
@@ -35,7 +35,7 @@ module.exports = (dbPoolInstance) => {
             } else {
                 if (result.rows.length > 0) {
                     console.log('Added new user!');
-                    callback(null, null);
+                    callback(null, result.rows);
                 } else {
                     callback(null, null);
                 }

@@ -26,10 +26,10 @@ class Login extends React.Component {
                             <div className='row justify-content-center'>
                                 <form method='POST' action='/inventory'>
                                     <div className='row justify-content-center'>
-                                        <p>Username: <input type='text' name='user_name'/></p>
+                                        <p>Username: <input type='text' name='user_name' placeholder='Alice (Test Account)'/></p>
                                     </div>
                                     <div className='row justify-content-center'>
-                                        <p>Password:  <input type='password' name='password'/></p>
+                                        <p>Password:  <input type='password' name='password' placeholder='123' /></p>
                                     </div>
                                     <br/>
                                     <div className='row justify-content-center'>

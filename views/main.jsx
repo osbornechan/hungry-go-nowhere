@@ -34,6 +34,7 @@ class Main extends React.Component {
                         <div className='liquid'>
                             <div className='row justify-content-center'>
                                 <button className='btn'><a href='/login/' className='btn-text'>Login</a></button>
+                                <p class="text-muted">Click to login with test account</p>
                             </div>
                             <div className='row justify-content-center'>
                                 <p>New user? Register <a href='/register' className='register-link'>here</a></p>

@@ -68,6 +68,10 @@ const SALT = 'Just stay home lah';
             if (error) {
                 console.log('Query error', error);
             } else {
+                const hashedLoggedIn = sha256(result[0].user_id + 'logged' + SALT);
+                response.cookie('loggedIn', hashedLoggedIn)
+                response.cookie('user_name', result[0].user_name);
+                response.cookie('user_id', result[0].user_id)
                 response.redirect('/inventory/');
             }
         }
