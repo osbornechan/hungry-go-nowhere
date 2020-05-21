@@ -3,47 +3,43 @@ const React = require("react");
 class Inventory extends React.Component {
   render() {
 
-    if (this.props.allInventoryProducts.length === 0) {
-
-    } else {
-        const allInventoryProductsList = this.props.allInventoryProducts.map(product => {
-            return (<div className='product-row col-6'>
-                        <div className='row justify-content-center'>
-                            <div className='product-col col-4'>
-                                <img src={product.img} alt={product.product_name}/>
+    let allInventoryProductsList = this.props.allInventoryProducts.map(product => {
+        return (<div className='product-row col-6'>
+                    <div className='row justify-content-center'>
+                        <div className='product-col col-4'>
+                            <img src={product.img} alt={product.product_name}/>
+                        </div>
+                        <div className='product-col col-6'>
+                            <div className='product-col-row row'>
+                                <p>Product: <strong>{product.product_name}</strong></p>
                             </div>
-                            <div className='product-col col-6'>
-                                <div className='product-col-row row'>
-                                    <p>Product: <strong>{product.product_name}</strong></p>
-                                </div>
-                                <div className='product-col-row row'>
-                                    <p>Brand: {product.brand}</p>
-                                </div>
-                                <div className='product-col-row row'>
-                                    <p>Expiry Date: {product.expiry_date}</p>
-                                </div>
-                                <div className='product-col-row row'>
-                                    <form method='POST' action='/inventory?_method=delete'>
-                                        <div className='btn-col col-3'>
-                                            <input type='submit' name={product.inventory_product_id} value='Remove' className='btn btn-danger'/>
-                                        </div>
-                                    </form>
-                                </div>
+                            <div className='product-col-row row'>
+                                <p>Brand: {product.brand}</p>
                             </div>
-                            <div className='product-col col-2 d-flex justify-content-center'>
-                                <div className='qty-box'>
-                                    <div className='product-col-row row justify-content-center'>
-                                        <p>Qty</p>
+                            <div className='product-col-row row'>
+                                <p>Expiry Date: {product.expiry_date}</p>
+                            </div>
+                            <div className='product-col-row row'>
+                                <form method='POST' action='/inventory?_method=delete'>
+                                    <div className='btn-col col-3'>
+                                        <input type='submit' name={product.inventory_product_id} value='Remove' className='btn btn-danger'/>
                                     </div>
-                                    <div className='product-col-row row justify-content-center'>
-                                        <h1>{product.inventory_qty}</h1>
-                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className='product-col col-2 d-flex justify-content-center'>
+                            <div className='qty-box'>
+                                <div className='product-col-row row justify-content-center'>
+                                    <p>Qty</p>
+                                </div>
+                                <div className='product-col-row row justify-content-center'>
+                                    <h1>{product.inventory_qty}</h1>
                                 </div>
                             </div>
                         </div>
-                    </div>)
-        })
-    }
+                    </div>
+                </div>)
+    })
 
     return (
       <html>

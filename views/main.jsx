@@ -37,7 +37,7 @@ class Main extends React.Component {
                                 <p class="text-muted">Click to login with test account</p>
                             </div>
                             <div className='row justify-content-center'>
-                                <p>New user? Register <a href='/register' className='register-link'>here</a></p>
+                                {/* <p>New user? Register <a href='/register' className='register-link'>here</a></p> */}
                             </div>
                         </div>
                     </div>
