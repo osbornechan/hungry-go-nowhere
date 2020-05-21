@@ -19,7 +19,7 @@ class New_Supermarket extends React.Component {
                         </div>
                         <div className='nav-bar-row nav-text row justify-content-center'>
                             <h5>Welcome, {this.props.userName}!</h5>
-                            <button className='btn' style={{width:'100%'}}>Log Out</button>
+                            {/*<button className='btn' style={{width:'100%'}}>Log Out</button>*/}
                         </div>
                         <div className='nav-bar-row nav-text row justify-content-center'>
                             <h5><a href='/inventory/' className='text-white text-decoration-none'>Inventory</a></h5>
